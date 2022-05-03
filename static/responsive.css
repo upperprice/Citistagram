@@ -16,14 +16,23 @@
     .name_list{
         width:280px;
     }
+    .my_name{
+        width:280px;
+    }
     .description{
         width:130px;
+    }
+    .main_column{
+        margin-right:200px;
     }
 
 }
 @media screen and (max-width:1030px){
     .side_column{
         width:130px;
+    }
+    .my_name{
+        width:230px;
     }
     .name_list{
         width:230px;
@@ -47,6 +56,9 @@
     .picture_box{
         width:190px;
         height:190px;
+    }
+    .text{
+        font-size:0.7em
     }
 }
 

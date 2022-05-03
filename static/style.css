@@ -65,6 +65,7 @@ a {
 }
 .navbar_links li a i{
     color:antiquewhite;
+    font-size: 1em;
 }
 /*=================== main page ====================*/
 .main_page_all {
@@ -84,7 +85,7 @@ a {
     background-color: #080615;
     margin-right:100px;
     padding-top:37px;
-    /*width: 600px;*/
+
 }
 .first_bar{
     bbackground-color: #080615;
@@ -355,6 +356,7 @@ a {
     border-radius: 5px;
     margin-right:10px;
     paddin-top:11px;
+    width:100%
 
 }
 .my_name img{
@@ -575,12 +577,12 @@ a {
             justify-content: center;
 
         }
-        .padding2{
-            width:40px;
-        }
+
         .first-row button{
             background-color: transparent;
             border:none;
+            margin-left:20px;
+            margin-right:20px
 
         }
         .first-row :hover{
@@ -590,10 +592,6 @@ a {
             color: #080615;
             border-radius: 2px;
         }
-        .padding2 :hover{
-            background-color: #080615;
-        }
-
         .for_padding{
             height: 90px;
             width: 100%;
@@ -648,7 +646,9 @@ a {
             font-size: 1.2em;
             text-align: center;
             visibility: hidden;
-            padding: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .text i{
             color:#C7B0FFFF;
