@@ -1,0 +1,73 @@
+@media screen and (min-width:600px){
+    .main_column{
+        width:580px;
+    }
+    .card{
+        width:580px;
+    }
+}
+/*-------    여기 까지 min-width  -------*/
+
+@media screen and (max-width:1230px){
+
+    .side_column{
+        width:280px;
+    }
+    .name_list{
+        width:280px;
+    }
+    .description{
+        width:130px;
+    }
+
+}
+@media screen and (max-width:1030px){
+    .side_column{
+        width:130px;
+    }
+    .name_list{
+        width:230px;
+    }
+    .my_profile{
+        display: none;
+    }
+    .description{
+        width:110px;
+    }
+}
+
+@media screen and (max-width:820px) {
+    .side_column {
+        display: none;
+    }
+
+    .main_column {
+        margin-right: 0;
+    }
+    .picture_box{
+        width:190px;
+        height:190px;
+    }
+}
+
+@media screen and (max-width:650px) {
+
+    .navbar_search{
+        display:none;
+    }
+    .main_column{
+        width:100%;
+        margin-left:0;
+
+    }
+    .navbar_links li {
+        padding-left: 0;
+    }
+    .picture_box{
+        width:150px;
+        height:150px;
+    }
+}
+
+
+
