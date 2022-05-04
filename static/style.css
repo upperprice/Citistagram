@@ -326,9 +326,11 @@ a {
     magin-bottom:20px;
 }
 .form-control {
-
+    background: #1a1a1a;
+    border: 2px solid #3a3a3a;
     magin-bottom:20px;
     width:90%;
+    font-size: 12px;
 }
 .card_bottom a {
 
@@ -662,3 +664,32 @@ a {
         .picture_box:hover .images2{
             visibility: visible;
         }
+
+/*회원가입_페이지CSS*/
+.sign_up_BOX{
+    display: table;
+    margin: 35px auto auto auto;
+    width: 100%;
+    max-width: 300px;
+    height: 450px;
+    border: 1px solid gray;
+}
+.btn-primary{
+    margin-top: 15px;
+    font-family: sys;
+    width: 90%;
+    height: 30px;
+    font-size: 10px;
+}
+.return_to_loginpage{
+    display: table;
+    margin: 10px auto auto auto;
+    width: 100%;
+    max-width: 300px;
+    height: 60px;
+    border: 1px solid gray;
+}
+.ALIGN_CENTER{
+    display: table;
+    margin: 20px auto auto auto;
+}
