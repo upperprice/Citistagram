@@ -298,6 +298,7 @@ a {
 }
 
 .comment_box{
+    display: none;
     background-color: transparent;
     border:none;
     font-size: 0.9em;
@@ -306,7 +307,7 @@ a {
     color:#88F3FFFF;
 }
 .comment-list{
-    display:none;
+    display:block;
 }
 .time_passed{
     font-size: 0.8em;
