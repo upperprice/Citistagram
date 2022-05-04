@@ -1,20 +1,20 @@
-    <!--================1.onclick 하트 좋아요수 증가==================-->
-var counter1=0
-$('#like-heart1').click(function(){
+<!--================1.onclick 하트 좋아요수 증가==================-->
+var counter1 = 0
+$('#like-heart1').click(function () {
     counter1++;
     $('#counter-click1').text(counter1);
 });
 
-var counter2=0
-$('#like-heart2').click(function(){
+var counter2 = 0
+$('#like-heart2').click(function () {
     counter2++;
     $('#counter-click2').text(counter2);
 });
 
-var counter3=0
-    $('#like-heart3').click(function(){
+var counter3 = 0
+$('#like-heart3').click(function () {
     counter3++;
-$('#counter-click3').text(counter3);
+    $('#counter-click3').text(counter3);
 });
 
 
@@ -42,28 +42,24 @@ bookmark3.addEventListener("click", function () {
     this.firstElementChild.style.transition = 'color 1.5s ease 1.25s, font-size 0.75s ease-out';
 }, false);
 
-    <!--================3.댓글 보기 토글====================-->
- $(function() {
-    $('#comment_box1').click(function () {
-        $('#comment-lists1').slideToggle();
-    })
+<!--================3.댓글 보기 토글====================-->
 
-});
-$(function() {
+
+$(function () {
     $('#comment_box2').click(function () {
         $('#comment-lists2').slideToggle();
     })
 
 });
 
-$(function() {
+$(function () {
     $('#comment_box3').click(function () {
         $('#comment-lists3').slideToggle();
     })
 
 });
-    <!--================4.댓글 남기기====================-->
- $(document).ready(function(){
+<!--================4.댓글 남기기====================-->
+$(document).ready(function () {
     show_comment()
 });
 
@@ -73,20 +69,25 @@ function show_comment() {
         url: "/insta_comment",
         data: {},
         success: function (response) {
-            let rows = response['comments']
+
+            let rows = response.comments;
 
             for (let i = 0; i < rows.length; i++) {
                 let comment = rows[i]['comment']
-
                 let temp_html = `<p>${comment}</p>`
-                $('#comment-lists1').append(temp_html)
-                $('#comment-number1').text(rows.length)
+                $('#comment-lists').append(temp_html);
+            }
+            let rows_length = rows.length;
+             $("#comment_box").text('댓글 ' + rows_length + '개 모두 보기');
 
-
+            if (rows_length > 3) {
+                $('#comment-lists').hide();
+                $('#comment_box').show();
             }
         }
     });
 }
+
 function save_comment() {
     let comment = $('#uploading_comment1').val()
     $.ajax({
@@ -99,10 +100,11 @@ function save_comment() {
         }
     })
 }
+
 <!--================4.2 댓글기능 2번째 코멘트====================-->
- $(document).ready(function(){
+$(document).ready(function () {
     show_comment2()
- });
+});
 
 function show_comment2() {
     $.ajax({
@@ -124,6 +126,7 @@ function show_comment2() {
         }
     });
 }
+
 function save_comment2() {
     let comment = $('#uploading_comment2').val()
     $.ajax({
@@ -136,11 +139,12 @@ function save_comment2() {
         }
     })
 }
+
 <!--================4.3 3번째 댓글 만들기====================-->
 
-$(document).ready(function(){
+$(document).ready(function () {
     show_comment3()
- });
+});
 
 function show_comment3() {
     $.ajax({
@@ -162,6 +166,7 @@ function show_comment3() {
         }
     });
 }
+
 function save_comment3() {
     let comment = $('#uploading_comment3').val()
     $.ajax({
@@ -174,10 +179,11 @@ function save_comment3() {
         }
     })
 }
+
 <!--================4.4 4번째 댓글 만들기====================-->
-$(document).ready(function(){
+$(document).ready(function () {
     show_comment4()
- });
+});
 
 function show_comment4() {
     $.ajax({
@@ -197,6 +203,7 @@ function show_comment4() {
         }
     });
 }
+
 function save_comment4() {
     let comment = $('#uploading_comment4').val()
     $.ajax({
