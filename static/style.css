@@ -663,6 +663,16 @@ a {
         .picture_box:hover .images2{
             visibility: visible;
         }
+/*로그인_페이지CSS*/
+.login_BOX{
+    display: table;
+    margin: 60px auto auto auto;
+    width: 100%;
+    max-width: 300px;
+    height: 330px;
+    border: 1px solid gray;
+}
+
 
 /*회원가입_페이지CSS*/
 .sign_up_BOX{
