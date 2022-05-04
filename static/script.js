@@ -212,19 +212,16 @@ function save_comment4() {
 
 <!--================5.새 게시물 만들기====================-->
 //1단계. 드래그 드랍시 가장 상위 모달창만 반응하도록 하기.
-$('#addition_modal_box')
-  .on("dragover", dragOver)
-  .on("dragleave", dragOver)
-  .on("drop", uploadFiles);
+$('#image_upload')
+    .on("dragover", dragOver)
+    .on("dragleave", dragOver)
+    .on("drop", uploadFiles);
 
-function uploadFiles(e){
-  e.stopPropagation();// 현재 이벤트가 아래 페이지로 전파되지 않도록 중단한다
-  e.preventDefault();// 현재 이벤트의 기본동작을 중단한다
-}
 //2단계. 드래그오버시 시각적으로 다른 느낌으로 주도록 구현
 function dragOver(e) {
     e.stopPropagation();
     e.preventDefault();
+    console.log(e)
     if (e.type == "dragover") {
         $(e.target).css({
             "background-color": "white",
@@ -232,8 +229,8 @@ function dragOver(e) {
         });
     } else {
         $(e.target).css({
-            "background-color": "gray",
+            "background-color":"transparent",
             "outline-offset": "-10px"
         });
     }
-}
+};

@@ -78,23 +78,30 @@ a {
     justify-content: space-between;
     flex-direction:column;
 }
-.addition_modal_content :nth-child(1){
-    background-color: tomato;
+.addition_modal_head{
+    /*background-color: tomato;*/
     width:100%;
     height:35px;
     border-bottom: 1px solid antiquewhite;
     display: flex;
     align-items: center;
     justify-content: center;
+    color:#C7B0FFFF;
+    font-size: 1em;
 
 }
 .addition_modal_body{
     height:100%;
-    background-color: turquoise;
+    /*background-color: turquoise;*/
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction:column;
+    outline: 2px dashed #88F3FFFF ;
+    outline-offset:-10px;
+}
+.addition_modal_body p{
+    color:#88F3FFFF;
 }
 /*=================== main page ====================*/
 .main_page_all {
@@ -169,6 +176,7 @@ a {
 .modal-title{
     width:100%;
     text-align:center;
+    color: #c7b0ff;
 }
 .modal-footer{
     justify-content:center;
