@@ -73,12 +73,19 @@ function show_comment() {
             let rows = response.comments;
 
             for (let i = 0; i < rows.length; i++) {
+                let user = rows[i]['user']
                 let comment = rows[i]['comment']
-                let temp_html = `<p>${comment}</p>`
+
+                let temp_html = `<div>
+                                    <a href="/" alt="계정">${user}</a>
+                                    <span>${comment}</span>
+                                </div>`
                 $('#comment-lists').append(temp_html);
             }
-            let rows_length = rows.length;
-             $("#comment_box").text('댓글 ' + rows_length + '개 모두 보기');
+
+            let rows_length = Object.keys(rows).length;
+            // let rows_length = rows.length;
+            $("#comment_box").text('댓글 ' + rows_length + '개 모두 보기');
 
             if (rows_length > 3) {
                 $('#comment-lists').hide();
@@ -93,9 +100,9 @@ function save_comment() {
     $.ajax({
         type: 'POST',
         url: '/insta_comment',
-        data: {comment_give: comment},
+        data: {user_give: 'someone', comment_give: comment},
         success: function (response) {
-            alert(response['msg'])
+            // alert(response['msg'])
             window.location.reload()
         }
     })
@@ -218,35 +225,29 @@ function save_comment4() {
 }
 
 <!--================4.5 게시글 더보기 생성====================-->
- $(document).ready(function () {
-            desc_hide_show();
-        });
+$(document).ready(function () {
+    desc_hide_show();
+});
 
+let desc_text = $('#shown_desc').text();
 
-        function count_text_length() {
-            let text_legnth = $('#shown_desc').text().length;
-            return text_legnth
-        }
+function desc_hide_show() {
+    $('#hidden_desc').hide();
+    let limit_length = 10
+    let text_legnth = $('#shown_desc').text().length;
+    if (text_legnth > limit_length) {
+        let cut_text = $('#shown_desc').text().substring(0, limit_length);
+        $('#shown_desc').text(cut_text + '...');
 
-        let desc_text = $('#shown_desc').text();
+        $('#desc_read_more_button').show();
+    } else {
+        $('#desc_read_more_button').hide();
+    }
+};
 
-        function desc_hide_show() {
-            $('#hidden_desc').hide();
-            let limit_length = 10
-            let text_legnth = $('#shown_desc').text().length;
-            if (text_legnth > limit_length) {
-                let cut_text = $('#shown_desc').text().substring(0, limit_length);
-                $('#shown_desc').text(cut_text + '...');
-
-                $('#desc_read_more_button').show();
-            } else {
-                $('#desc_read_more_button').hide();
-            }
-        };
-
-        function desc_read_more() {
-            $('#shown_desc').text().substring(0, desc_text);
-            $('#desc_read_more_button').hide();
-            $('#hidden_desc').show();
-            $('#shown_desc').hide();
-        }
+function desc_read_more() {
+    $('#shown_desc').text().substring(0, desc_text);
+    $('#desc_read_more_button').hide();
+    $('#hidden_desc').show();
+    $('#shown_desc').hide();
+}
