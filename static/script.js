@@ -216,3 +216,41 @@ function save_comment4() {
         }
     })
 }
+
+<!--================4.5 게시글 더보기 생성====================-->
+ $(document).ready(function () {
+            desc_hide_show();
+        });
+
+
+        function count_text_length() {
+            let text_legnth = $('#shown_desc').text().length;
+            return text_legnth
+        }
+
+        let desc_text = $('#shown_desc').text();
+
+        function desc_hide_show() {
+            $('#hidden_desc').hide();
+            let limit_length = 10
+            let text_legnth = $('#shown_desc').text().length;
+            if (text_legnth > limit_length) {
+                let cut_text = $('#shown_desc').text().substring(0, limit_length);
+                $('#shown_desc').text(cut_text + '...');
+
+                $('#desc_read_more_button').show();
+            } else {
+                $('#desc_read_more_button').hide();
+            }
+        };
+
+        function desc_read_more() {
+            $('#shown_desc').text().substring(0, desc_text);
+            $('#desc_read_more_button').hide();
+            $('#hidden_desc').show();
+            $('#shown_desc').hide();
+        }
+
+        function show_all_comment() {
+
+        }
