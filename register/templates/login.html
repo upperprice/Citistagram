@@ -11,7 +11,7 @@
 
         <!-- JS -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="static/script.js"></script>
+        <script src="/static/script.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
         <script>
@@ -26,7 +26,11 @@
                 <div class="id_field">
                     <input id="input-username" type="text" placeholder="아이디">
                     <div id="btn-check-dup">
-                        <button onclick="check_dup()">중복확인</button>
+                        <button onclick="check_dup()">아이디 중복확인</button>
+                    </div>
+                    <input id="input-nickname" type="text" placeholder="닉네임">
+                    <div id="btn-check-nickname-dup">
+                        <button onclick="check_nickname_dup()">닉네임 중복확인</button>
                     </div>
                 </div>
 

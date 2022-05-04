@@ -2,6 +2,7 @@ function toggle_sign_up() {
     $("#sign-up-box").toggleClass("is-hidden")
     $("#div-sign-in-or-up").toggleClass("is-hidden")
     $("#btn-check-dup").toggleClass("is-hidden")
+    $("#btn-check-nickname-dup").toggleClass("is-hidden")
     $("#help-id").toggleClass("is-hidden")
     $("#help-password").toggleClass("is-hidden")
     $("#help-password2").toggleClass("is-hidden")
@@ -39,7 +40,7 @@ function check_dup() {
         },
         success: function (response) {
 
-            if (response["exists"]) {
+            if (response["exists_id"]) {
                 $("#help-id").text("이미 존재하는 아이디입니다.").removeClass("is-safe").addClass("is-danger")
                 $("#input-username").focus()
             } else {
@@ -51,11 +52,46 @@ function check_dup() {
     });
 }
 
+function check_nickname_dup() {
+    let nickname = $("#input-nickname").val()
+    console.log(nickname)
+    if (nickname == "") {
+        $("#help-id").text("닉네임을 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+        $("#input-nickname").focus()
+        return;
+    }
+    if (!is_nickname(nickname)) {
+        $("#help-id").text("닉네임의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이").removeClass("is-safe").addClass("is-danger")
+        $("#input-username").focus()
+        return;
+    }
+    $("#help-id").addClass("is-loading")
+    $.ajax({
+        type: "POST",
+        url: "/sign_up/check_nickname_dup",
+        data: {
+            nickname_give: nickname
+        },
+        success: function (response) {
+
+            if (response["exists_nickname"]) {
+                $("#help-id").text("이미 존재하는 닉네임입니다.").removeClass("is-safe").addClass("is-danger")
+                $("#input-nickname").focus()
+            } else {
+                $("#help-id").text("사용할 수 있는 닉네임입니다.").removeClass("is-danger").addClass("is-success")
+            }
+            $("#help-id").removeClass("is-loading")
+
+        }
+    });
+}
+
 function sign_up() {
     let username = $("#input-username").val()
     let password = $("#input-password").val()
+    let nickname = $("#input-password").val()
     let password2 = $("#input-password2").val()
-    console.log(username, password, password2)
+    console.log(username, nickname, password, password2)
 
 
     if ($("#help-id").hasClass("is-danger")) {
@@ -93,7 +129,8 @@ function sign_up() {
         url: "/sign_up/save",
         data: {
             username_give: username,
-            password_give: password
+            password_give: password,
+            nickname_give: nickname
         },
         success: function (response) {
             alert("회원가입을 축하드립니다!")
