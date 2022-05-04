@@ -17,7 +17,7 @@ a {
     justify-content: space-between;
     position:fixed;
     width: 100%;
-    z-index: 3;
+    z-index: 1;
     height: 70px;
 }
 
@@ -66,6 +66,16 @@ a {
 .navbar_links li a i{
     color:antiquewhite;
     font-size: 1em;
+}
+.addition_modal-content{
+    width:700px;
+    height:500px;
+    background-color: #080615;
+    border: 1px solid antiquewhite;
+    border-radius:8px;
+    opacity: 0.8;
+    display:flex;
+    justify-content: space-between;
 }
 /*=================== main page ====================*/
 .main_page_all {
@@ -611,8 +621,6 @@ a {
         }
 
 
-
-   /*================== 수정중====================*/
         .picture_box{
             width: 280px;
             height: 280px;
