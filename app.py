@@ -40,6 +40,10 @@ def profile():
 def sign_up_page():
    return render_template('sign_up.html')
 
+@app.route('/login_page')
+def login_page():
+   return render_template('login.html')
+
 
 
 ####################로그인 창############################################

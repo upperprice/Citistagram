@@ -163,6 +163,11 @@ function sign_up_page() {
     window.location.href = '/sign_up_page'
 }
 
+function login_page() {
+    alert('로그인페이지 이동!')
+    window.location.href = '/login'
+}
+
 <!--================로그인==================-->
 
 function sign_in() {
