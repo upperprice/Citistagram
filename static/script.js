@@ -212,15 +212,79 @@ function save_comment4() {
 
 <!--================5.새 게시물 만들기====================-->
 
-window.addEventListener('load', function() {
-  document.querySelector('input[type="file"]').addEventListener('change', function() {
-      if (this.files && this.files[0]) {
-          var img = document.querySelector('img');
-          img.onload = () => {
-              URL.revokeObjectURL(img.src);  // no longer needed, free memory
-          }
+$('#nav_bar_add_box').click(function (){
+            $('#first_modal').css({
+                display: 'flex'
+            });
+            $(document.body).css({
+                overflow:'hidden'
+            })
+        });
+        $('#modal_x_box').click(function (){
+            $('.modal_overlay').css({
+                display: 'none'
+            });
+            $(document.body).css({
+                overflow:'visible'
+            })
+        });
+        $('#modal_x_box2').click(function (){
+            $('.modal_overlay').css({
+                display: 'none'
+            });
+            $(document.body).css({
+                overflow:'visible'
+            })
+        });
 
-          img.src = URL.createObjectURL(this.files[0]); // set src to blob url
-      }
-  });
-});
+
+        $('.addition_modal_body')
+            .on("dragover", dragOver)
+            .on("dragleave", dragOver)
+            .on("drop", uploadFiles);
+
+        function dragOver(e){
+            e.stopPropagation();
+            e.preventDefault();
+
+            if (e.type == "dragover") {
+                $(e.target).css({
+                    "outline-offset": "-20px",
+                    "border-radius" : "8px"
+                });
+            } else {
+                $(e.target).css({
+                    "background-color": "black",
+                    "outline-offset": "-10px"
+                });
+            }
+        }
+        function uploadFiles(e){
+        e.stopPropagation();
+        e.preventDefault();
+
+        e.dataTransfer = e.originalEvent.dataTransfer;
+        var files =  e.dataTransfer.files;
+
+        if (files.length > 1) {
+            alert('하나만 올려 주세요');
+            return;
+        }
+        //파일이 인식되면 배경 이미지 바뀌게 만듬
+        if (files[0].type.match(/image.*/)) {
+            $('#first_modal').css({
+                display: 'none'
+            });
+            $('#second_modal').css({
+                display: 'flex'
+            });
+            $('.img_upload_space').css({
+                "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                "outline": "none",
+                "background-size": "100% 100%"});
+        }else{
+            alert('이미지가 아닙니다.');
+            return;
+        }
+
+    }
