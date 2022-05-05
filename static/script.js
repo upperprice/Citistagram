@@ -211,26 +211,16 @@ function save_comment4() {
 }
 
 <!--================5.새 게시물 만들기====================-->
-//1단계. 드래그 드랍시 가장 상위 모달창만 반응하도록 하기.
-$('#image_upload')
-    .on("dragover", dragOver)
-    .on("dragleave", dragOver)
-    .on("drop", uploadFiles);
 
-//2단계. 드래그오버시 시각적으로 다른 느낌으로 주도록 구현
-function dragOver(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    console.log(e)
-    if (e.type == "dragover") {
-        $(e.target).css({
-            "background-color": "white",
-            "outline-offset": "-20px"
-        });
-    } else {
-        $(e.target).css({
-            "background-color":"transparent",
-            "outline-offset": "-10px"
-        });
-    }
-};
+window.addEventListener('load', function() {
+  document.querySelector('input[type="file"]').addEventListener('change', function() {
+      if (this.files && this.files[0]) {
+          var img = document.querySelector('img');
+          img.onload = () => {
+              URL.revokeObjectURL(img.src);  // no longer needed, free memory
+          }
+
+          img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+      }
+  });
+});

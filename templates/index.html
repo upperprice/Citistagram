@@ -27,6 +27,40 @@
     <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="../static/responsive.css">
     <script src="../script.js"></script>
+    <script type="text/javascript"></script>
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+    <style>
+        .modal_overlay {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(0, 0, 0, 0.8);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+        z-index:1050
+    }
+
+    .modal_window {
+        background-color: #080615;
+        opacity: 0.8;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid antiquewhite;
+        width: 550px;
+        height: 600px;
+        position: relative;
+        padding: 10px;
+
+    }
+    </style>
 
 
 </head>
@@ -51,22 +85,22 @@
         <ul class="navbar_links">
             <li><a href="/"><i class="fa fa-home-fi"></i></a></li>
             <li><a href=""><i class="fa fa-paper-plane" style="width:28px"></i></a></li>
-            <li><button class="modal_button" data-toggle="modal" data-target="#addition_modal_box"><i class="fa fa-plus"></i></button></li>
+            <li><button id="nav_bar_add_box" class="modal_button" data-toggle="modal" data-target="#addition_modal_box"><i class="fa fa-plus"></i></button></li>
             <li><a href=""><i class="fa fa-compass"></i></a></li>
             <li><a href=""><i class="fa fa-heart"></i></a></li>
         </ul>
         <span></span>
     </nav>
     <!--더하기 버튼 모달(새게시물 만들기)-->
-    <div class="modal" tabindex="-1" id="addition_modal_box">
-        <div class="modal-dialog" >
-            <div class="addition_modal_content">
-                <div class="addition_modal_head">
-                    <p class="modal-title" >새 게시물 만들기</p>
-                </div>
-                <div id="image_upload" class="addition_modal_body">
-                    <p>사진과 동영상을 여기에 끌어다 놓으세요.</p>
-                </div>
+    <div class="modal_overlay">
+        <div class="modal_window">
+            <div class="addition_modal_head">
+                <p class="modal-title" >새 게시물 만들기</p>
+                <button id="modal_x_box" ><i class="fa fa-x"></i></button>
+            </div>
+            <div id="image_upload" class="addition_modal_body">
+                사진과 동영상을 여기에 끌어다 놓으세요
+
             </div>
         </div>
     </div>
@@ -476,6 +510,70 @@
     </div>
 </div>
 <!--================4. FOOTER END====================-->
+    <script>
+        $('#nav_bar_add_box').click(function (){
+            $('.modal_overlay').css({
+                display: 'flex'
+            });
+            $(document.body).css({
+                overflow:'hidden'
+            })
+        });
+        $('#modal_x_box').click(function (){
+            $('.modal_overlay').css({
+                display: 'none'
+            });
+            $(document.body).css({
+                overflow:'visible'
+            })
+        });
+        $('.addition_modal_body')
+            .on("dragover", dragOver)
+            .on("dragleave", dragOver)
+            .on("drop", uploadFiles);
+
+        function dragOver(e){
+            e.stopPropagation();
+            e.preventDefault();
+
+            if (e.type == "dragover") {
+                $(e.target).css({
+                    "background-color": "#C7B0FFFF",
+                    "outline-offset": "-20px",
+                    "border-radius" : "8px"
+                });
+            } else {
+                $(e.target).css({
+                    "background-color": "black",
+                    "outline-offset": "-10px"
+                });
+            }
+        }
+        function uploadFiles(e){
+        e.stopPropagation();
+        e.preventDefault();
+
+        e.dataTransfer = e.originalEvent.dataTransfer;
+        var files =  e.dataTransfer.files;
+
+        if (files.length > 1) {
+            alert('하나만 올려 주세요');
+            return;
+        }
+        //파일이 인식되면 배경 이미지 바뀌게 만듬
+        if (files[0].type.match(/image.*/)) {
+            $(e.target).css({
+                "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                "outline": "none",
+                "background-size": "100% 100%"});
+        }else{
+            alert('이미지가 아닙니다.');
+            return;
+        }
+
+    }
+
+    </script>
 
     <script type="text/javascript" src="../static/script.js"></script>
     </body>
