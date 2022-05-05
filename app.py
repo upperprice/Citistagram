@@ -81,25 +81,24 @@ def insta_comment_get4():
     all_comment = list(db.insta_comment4.find({}, {'_id': False}))
     return jsonify({'comments':all_comment})
 
+###################좋아요 갯수 카트########################################
+@app.route("/like_number1", methods=["POST"])
+def post_like_number():
+    like_receive = request.form['like_give1']
+    doc = {'likes1':like_receive}
+    db.like_number1.insert_one(doc)
+    return jsonify({'msg':'좋아요 감사합니다.'})
 
 ###################인스타 피드 업로드 ########################################
-@app.route("/insta_feed_test", methods=["POST"])
+@app.route("/insta_feed", methods=["POST"])
 def feed_post():
 
-    content1_receive = request.form['content1_give']
-    user_id_receive = request.form['user_id_give']
-    image_receive = request.form['image_give']
-    print(content1_receive)
-    print(user_id_receive)
-    print(image_receive)
+    fd = request.form['fd']
+    doc = {'fd':fd}
+    db.insta_feed.insert_one(doc)
 
-    doc = {
-        'content':content1_receive,
-        'user_id':user_id_receive,
-        'image':image_receive,
-    }
-    db.insta_feed_test.insert_one(doc)
-    return jsonify({'msg':'피드 작성 감사합니다 :)'})
+
+
 
 
 if __name__ == '__main__':
