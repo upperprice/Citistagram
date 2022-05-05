@@ -94,6 +94,16 @@ def post_like_number():
     db.like_number1.insert_one(doc)
     return jsonify({'msg':'좋아요 감사합니다.'})
 
+###################인스타 피드 업로드 ########################################
+@app.route("/insta_feed", methods=["POST"])
+def feed_post():
+
+    fd = request.form['fd']
+    doc = {'fd':fd}
+    db.insta_feed.insert_one(doc)
+
+
+
 
 
 if __name__ == '__main__':

@@ -224,6 +224,7 @@ function save_comment4() {
     })
 }
 
+<<<<<<< HEAD
 <!--================4.5 게시글 더보기 생성====================-->
 $(document).ready(function () {
     desc_hide_show();
@@ -251,3 +252,86 @@ function desc_read_more() {
     $('#hidden_desc').show();
     $('#shown_desc').hide();
 }
+=======
+<!--================5.새 게시물 만들기====================-->
+    let files //파일 계속 사용할거니까 전역변수 선언
+
+    $('#nav_bar_add_box').click(function () { //+버튼 클릭시 1번모달창 나타나기
+        $('#first_modal').css({
+            display: 'flex'
+        });
+        $(document.body).css({   //+버튼 클릭시 전체화면 스크롤바 사라짐
+            overflow: 'hidden'
+        })
+    });
+    $('#modal_x_box').click(function () {   //x버튼 클릭시 1번모달창 사라짐
+        $('.modal_overlay').css({
+            display: 'none'
+        });
+        $(document.body).css({
+            overflow: 'visible'
+        })
+    });
+    $('#modal_x_box2').click(function () {   //x버튼 클릭시 2번모달창 사라짐
+        $('.modal_overlay').css({
+            display: 'none'
+        });
+        $(document.body).css({
+            overflow: 'visible'
+        })
+    });
+
+
+    $('.addition_modal_body')    //모달창에 드래그앤 드롭 기능 구현하겠다
+        .on("dragover", dragOver)
+        .on("dragleave", dragOver)
+        .on("drop", uploadFiles);
+
+    function dragOver(e) {     //드래그오버 함수
+        e.stopPropagation();   //드래그오버시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
+        e.preventDefault();
+
+        if (e.type == "dragover") {  //드래그오버하면 outline이 가운데로 몰림
+            $(e.target).css({
+                "outline-offset": "-20px",
+                "border-radius": "8px"
+            });
+        } else {
+            $(e.target).css({
+                "background-color": "black",
+                "outline-offset": "-10px"
+            });
+        }
+    }
+
+    function uploadFiles(e) {  //업로드파일 함수
+        e.stopPropagation();  //업로드파일시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
+        e.preventDefault();
+
+        e.dataTransfer = e.originalEvent.dataTransfer;
+        files = e.dataTransfer.files;
+
+        if (files.length > 1) {    //파일갯수가 여러개면 하나만 올려주세요 창이 뜸
+            alert('하나만 올려 주세요');
+            return;
+        }
+        //파일이 인식되면 배경 이미지 바뀌게 만듬
+        if (files[0].type.match(/image.*/)) {
+            $('#first_modal').css({
+                display: 'none'
+            });
+            $('#second_modal').css({
+                display: 'flex'
+            });
+            $('.img_upload_space').css({
+                "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+                "outline": "none",
+                "background-size": "100% 100%"
+            });
+        } else {
+            alert('이미지가 아닙니다.');
+            return;
+        }
+
+    }
+>>>>>>> origin/새게시물만들기
