@@ -2,10 +2,10 @@ from flask import Flask, render_template, request, jsonify
 app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@cluster0.3puso.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.dbsparta
-# client = MongoClient('localhost', 27017)
-# db = client.campProject
+# client = MongoClient('mongodb+srv://test:sparta@cluster0.3puso.mongodb.net/Cluster0?retryWrites=true&w=majority')
+# db = client.dbsparta
+client = MongoClient('localhost', 27017)
+db = client.campProject
 
 
 
@@ -19,7 +19,7 @@ def profile():
 
 
 
-####################첫번째 코멘트창########################################
+# 코멘트 작성
 @app.route("/comment", methods=["POST"])
 def comment_post():
     user_receive = request.form['user_give']
@@ -32,61 +32,14 @@ def comment_post():
     db.citista_comments.insert_one(doc)
     return jsonify({'msg':'게시물 생성 완료'})
 
-
+# 코멘트 보기
 @app.route("/comment", methods=["GET"])
 def comment_get():
     comments = list(db.citista_comments.find({}, {'_id': False}))
     return jsonify({'comments':comments})
 
-####################두번째 코멘트창########################################
-@app.route("/insta_comment2", methods=["POST"])
-def insta_comment_post2():
 
-    comment_receive = request.form['comment_give']
-
-    doc = {'comment':comment_receive}
-    db.insta_comment2.insert_one(doc)
-    return jsonify({'msg':'소중한 댓글 감사합니다'})
-
-
-@app.route("/insta_comment2", methods=["GET"])
-def insta_comment_get2():
-    all_comment = list(db.insta_comment2.find({}, {'_id': False}))
-    return jsonify({'comments':all_comment})
-
-####################세번째 코멘트창########################################
-@app.route("/insta_comment3", methods=["POST"])
-def insta_comment_post3():
-
-    comment_receive = request.form['comment_give']
-
-    doc = {'comment':comment_receive}
-    db.insta_comment3.insert_one(doc)
-    return jsonify({'msg':'소중한 댓글 감사합니다'})
-
-
-@app.route("/insta_comment3", methods=["GET"])
-def insta_comment_get3():
-    all_comment = list(db.insta_comment3.find({}, {'_id': False}))
-    return jsonify({'comments':all_comment})
-
-####################네번째 코멘트창########################################
-@app.route("/insta_comment4", methods=["POST"])
-def insta_comment_post4():
-
-    comment_receive = request.form['comment_give']
-
-    doc = {'comment':comment_receive}
-    db.insta_comment4.insert_one(doc)
-    return jsonify({'msg':'소중한 댓글 감사합니다'})
-
-
-@app.route("/insta_comment4", methods=["GET"])
-def insta_comment_get4():
-    all_comment = list(db.insta_comment4.find({}, {'_id': False}))
-    return jsonify({'comments':all_comment})
-
-###################좋아요 갯수 카운트########################################
+# 좋아요 올리기
 @app.route("/like", methods=["POST"])
 def like_up():
     user_receive = int(request.form['user_give'])
@@ -98,15 +51,14 @@ def like_up():
 
     return jsonify({'msg':'좋아요 감사합니다.'})
 
-
+# 좋아요 개수 보이기
 @app.route("/like", methods=["GET"])
 def show_like():
     likes = list(db.citista_likes.find({}, {'_id': False}))
     return jsonify({'likes':likes})
 
 
-### 임시게시물 생성
-
+# (임시) 게시물 생성
 @app.route("/create_content", methods=["POST"])
 def create_content():
 
@@ -129,14 +81,11 @@ def create_content():
     return jsonify({'msg':'게시물 생성'})
 
 
+# (임시) 게시물 보이기
 @app.route("/create_content", methods=["GET"])
 def show_content():
     contents = list(db.citista_contents.find({}, {'_id': False}))
     return jsonify({'contents': contents})
-
-
-
-
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
