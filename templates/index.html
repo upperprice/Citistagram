@@ -52,13 +52,57 @@
         opacity: 0.8;
         backdrop-filter: blur(13.5px);
         -webkit-backdrop-filter: blur(13.5px);
-        border-radius: 10px;
+        border-radius: 5px;
         border: 1px solid antiquewhite;
         width: 550px;
         height: 600px;
         position: relative;
         padding: 10px;
 
+    }
+    .modal_window2{
+        background-color: #080615;
+        opacity: 0.8;
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 5px;
+        border: 1px solid antiquewhite;
+
+
+    }
+    .modal_x_box{
+        background-color: transparent;
+        border: none;
+        margin-bottom: 10px;
+    }
+    .modal_x_box i{
+        color:#C7B0FFFF;
+    }
+    .img_upload_space{
+        background-color: #C7B0FFFF; width: 500px; height: 500px;
+    }
+    .img_description_space{
+        color:#C7B0FFFF;
+    }
+    .addition_modal_body2{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .img_description_space{
+        display: flex;
+        flex-direction: column;
+
+    }
+    .img_description_box{
+        width: 350px;
+        height: 380px;
+        margin:15px;
+        border: 1px solid #C7B0FFFF;
+    }
+    .img_description_box_bottom{
+        margin:15px;
+        border: 1px solid #C7B0FFFF;
     }
     </style>
 
@@ -91,19 +135,45 @@
         </ul>
         <span></span>
     </nav>
-    <!--더하기 버튼 모달(새게시물 만들기)-->
-    <div class="modal_overlay">
+    <!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
+    <div id="first_modal" class="modal_overlay">
         <div class="modal_window">
             <div class="addition_modal_head">
+                <div style="width:40px"></div>
                 <p class="modal-title" >새 게시물 만들기</p>
-                <button id="modal_x_box" ><i class="fa fa-x"></i></button>
+                <button id="modal_x_box" class="modal_x_box"><i class="fa fa-x"></i></button>
             </div>
             <div id="image_upload" class="addition_modal_body">
-                사진과 동영상을 여기에 끌어다 놓으세요
+                사진을 여기에 끌어다 놓으세요
 
             </div>
         </div>
     </div>
+    <!--더하기 버튼 모달(새게시물 만들기)//두번째-->
+    <div id="second_modal" class="modal_overlay">
+        <div class="modal_window2">
+
+            <div class="addition_modal_head">
+                새 게시물 만들기
+                <button id="modal_x_box2" class="modal_x_box"><i class="fa fa-x"></i></button>
+            </div>
+            <div class="addition_modal_body2">
+                <div class="img_upload_space" ></div>
+                <div class="img_description_space">
+                    <div class="img_description_box">
+                        <textarea style="width:100%;height: 100%">내용을 써주세요^^</textarea>
+
+                    </div>
+                    <div style="justify-content: center;display: flex">
+                        <button style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
 
 <!--================1.Navbar END====================-->
 
@@ -512,7 +582,7 @@
 <!--================4. FOOTER END====================-->
     <script>
         $('#nav_bar_add_box').click(function (){
-            $('.modal_overlay').css({
+            $('#first_modal').css({
                 display: 'flex'
             });
             $(document.body).css({
@@ -527,6 +597,16 @@
                 overflow:'visible'
             })
         });
+        $('#modal_x_box2').click(function (){
+            $('.modal_overlay').css({
+                display: 'none'
+            });
+            $(document.body).css({
+                overflow:'visible'
+            })
+        });
+
+
         $('.addition_modal_body')
             .on("dragover", dragOver)
             .on("dragleave", dragOver)
@@ -538,7 +618,6 @@
 
             if (e.type == "dragover") {
                 $(e.target).css({
-                    "background-color": "#C7B0FFFF",
                     "outline-offset": "-20px",
                     "border-radius" : "8px"
                 });
@@ -562,7 +641,13 @@
         }
         //파일이 인식되면 배경 이미지 바뀌게 만듬
         if (files[0].type.match(/image.*/)) {
-            $(e.target).css({
+            $('#first_modal').css({
+                display: 'none'
+            });
+            $('#second_modal').css({
+                display: 'flex'
+            });
+            $('.img_upload_space').css({
                 "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
                 "outline": "none",
                 "background-size": "100% 100%"});
