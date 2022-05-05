@@ -1,17 +1,17 @@
     <!--================1.onclick 하트 좋아요수 증가==================-->
-var counter1=0
+let counter1=0
 $('#like-heart1').click(function(){
     counter1++;
     $('#counter-click1').text(counter1);
 });
 
-var counter2=0
+let counter2=0
 $('#like-heart2').click(function(){
     counter2++;
     $('#counter-click2').text(counter2);
 });
 
-var counter3=0
+let counter3=0
     $('#like-heart3').click(function(){
     counter3++;
 $('#counter-click3').text(counter3);
@@ -211,7 +211,7 @@ function save_comment4() {
 }
 
 <!--================5.새 게시물 만들기====================-->
-    let files //파일 계속 사용할거니까 전역변수 선언
+    let files; //파일 계속 사용할거니까 전역변수 선언
 
     $('#nav_bar_add_box').click(function () { //+버튼 클릭시 1번모달창 나타나기
         $('#first_modal').css({
@@ -287,7 +287,30 @@ function save_comment4() {
             });
         } else {
             alert('이미지가 아닙니다.');
-            return;
+
         }
 
+    }
+////////////////////////////이거 작동함 file 제외...ㅜㅜ
+    function creating_feed (){
+
+        let image = files[0].name;
+        let content = $('#input_feed_content').val();
+        let user_id = "Tasha Han"
+        $.ajax({
+            type: 'POST',
+            url: '/insta_feed_test',
+            processData: false,
+            contentType: false,
+            data: {
+                image_give:image,
+                content1_give:content,
+                user_id_give:user_id,
+            },
+            success: function (response) {
+                alert(response['msg'])
+                window.location.reload()
+            }
+
+        });
     }
