@@ -116,17 +116,18 @@
         <!--▼▼가입정보 입력칸▼▼-->
         <div class="p-2">
             <div class="form-group" style="font-size: 15px">
-                <label for="formGroupExampleInput" style="margin-top: 10px"></label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="ID" style="margin-bottom: 10px">
-                <input type="password" class="form-control mx-sm-3" placeholder="PASSWORD" aria-describedby="passwordHelpInline">
-                <button type="button" class="btn btn-primary">로그인</button>
+                <label for="input-username" style="margin-top: 10px"></label>
+                <input type="text" class="form-control" id="input-username" placeholder="ID" style="margin-bottom: 10px">
+                <input type="password" class="form-control mx-sm-3" id="input-password" placeholder="PASSWORD" aria-describedby="passwordHelpInline">
+                <button type="button" class="btn btn-primary" onclick="sign_in()">로그인</button>
             </div>
         </div>
     </div>
 </div>
 <!--계정보유자 로그인창으로 돌리는 박스-->
 <div class="return_to_loginpage">
-    <h6 class="ALIGN_CENTER">계정이 없으신가요? <a href="sign_up.html">회원가입</a></h6>
+    <h6 class="ALIGN_CENTER">계정이 없으신가요?</h6><button onclick="sign_up_page()">회원가입</button>
+
     <!--로그인 클릭시 로그인창으로 되돌리는 하이퍼링크 입력해야함-->
 </div>
 <!--■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■주내용 파트 끝■■■■■-->

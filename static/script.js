@@ -102,7 +102,7 @@ function check_nickname_dup() {
 function sign_up() {
     let username = $("#input-username").val()
     let password = $("#input-password").val()
-    let nickname = $("#input-password").val()
+    let nickname = $("#input-nickname").val()
     let password2 = $("#input-password2").val()
     console.log(username, nickname, password, password2)
 
@@ -158,6 +158,11 @@ function logout() {
     window.location.href = '/login'
 }
 
+function sign_up_page() {
+    alert('회원가입페이지 이동!')
+    window.location.href = '/sign_up_page'
+}
+
 <!--================로그인==================-->
 
 function sign_in() {
@@ -197,8 +202,12 @@ function sign_in() {
     });
 }
 
+<!--================로그아욱==================-->
 
-
+function logout(){
+    alert('로그아웃!')
+    window.location.href='/login'
+}
 
 
 

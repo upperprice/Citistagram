@@ -36,6 +36,12 @@ def home():
 def profile():
    return render_template('profile_page.html')
 
+@app.route('/sign_up_page')
+def sign_up_page():
+   return render_template('sign_up.html')
+
+
+
 ####################로그인 창############################################
 
 @app.route('/login')
