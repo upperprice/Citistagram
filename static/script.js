@@ -1,12 +1,232 @@
-// 댓글 작성
-function save_comment(user_id) {
+// <!--===============로그인 팝업 창===================-->
 
-    let user = parseInt(user_id)
-    let input_val = $('#comment_input' + user).val();
+function toggle_sign_up() {
+    $("#sign-up-box").toggleClass("is-hidden")
+    $("#div-sign-in-or-up").toggleClass("is-hidden")
+    $("#btn-check-dup").toggleClass("is-hidden")
+    $("#btn-check-nickname-dup").toggleClass("is-hidden")
+    $("#help-id").toggleClass("is-hidden")
+    $("#help-password").toggleClass("is-hidden")
+    $("#help-password2").toggleClass("is-hidden")
+}
+
+// <!--===============회원가입 아이디 비밀번호 규칙==================-->
+
+function is_nickname(asValue) {
+    var regExp = /^(?=.*[a-zA-Z])[-a-zA-Z0-9_.]{2,10}$/;
+    return regExp.test(asValue);
+}
+
+function is_password(asValue) {
+    var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
+    return regExp.test(asValue);
+}
+
+
+// <!--==============아이디 중복 확인====================-->
+
+function check_dup() {
+    let username = $("#input-username").val()
+    console.log(username)
+    if (username == "") {
+        $("#help-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+        $("#input-username").focus()
+        return;
+    }
+    if (!is_nickname(username)) {
+        $("#help-id").text("아이디의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이").removeClass("is-safe").addClass("is-danger")
+        $("#input-username").focus()
+        return;
+    }
+    $("#help-id").addClass("is-loading")
+    $.ajax({
+        type: "POST",
+        url: "/sign_up/check_dup",
+        data: {
+            username_give: username
+        },
+        success: function (response) {
+
+            if (response["exists_id"]) {
+                $("#help-id").text("이미 존재하는 아이디입니다.").removeClass("is-safe").addClass("is-danger")
+                $("#input-username").focus()
+            } else {
+                $("#help-id").text("사용할 수 있는 아이디입니다.").removeClass("is-danger").addClass("is-success")
+            }
+            $("#help-id").removeClass("is-loading")
+
+        }
+    });
+}
+
+
+// <!--==============닉네임 중복 확인====================-->
+
+function check_nickname_dup() {
+    let nickname = $("#input-nickname").val()
+    console.log(nickname)
+    if (nickname == "") {
+        $("#help-id").text("닉네임을 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+        $("#input-nickname").focus()
+        return;
+    }
+    if (!is_nickname(nickname)) {
+        $("#help-id").text("닉네임의 형식을 확인해주세요. 영문과 숫자, 일부 특수문자(._-) 사용 가능. 2-10자 길이").removeClass("is-safe").addClass("is-danger")
+        $("#input-username").focus()
+        return;
+    }
+    $("#help-id").addClass("is-loading")
+    $.ajax({
+        type: "POST",
+        url: "/sign_up/check_nickname_dup",
+        data: {
+            nickname_give: nickname
+        },
+        success: function (response) {
+
+            if (response["exists_nickname"]) {
+                $("#help-id").text("이미 존재하는 닉네임입니다.").removeClass("is-safe").addClass("is-danger")
+                $("#input-nickname").focus()
+            } else {
+                $("#help-id").text("사용할 수 있는 닉네임입니다.").removeClass("is-danger").addClass("is-success")
+            }
+            $("#help-id").removeClass("is-loading")
+
+        }
+    });
+}
+
+
+// <!--================회원가입==================-->
+
+function sign_up() {
+    let username = $("#input-username").val()
+    let password = $("#input-password").val()
+    let nickname = $("#input-nickname").val()
+    let password2 = $("#input-password2").val()
+    console.log(username, nickname, password, password2)
+
+
+    if ($("#help-id").hasClass("is-danger")) {
+        alert("아이디를 다시 확인해주세요.")
+        return;
+    } else if (!$("#help-id").hasClass("is-success")) {
+        alert("아이디 중복확인을 해주세요.")
+        return;
+    }
+
+    if (password == "") {
+        $("#help-password").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+        $("#input-password").focus()
+        return;
+    } else if (!is_password(password)) {
+        $("#help-password").text("비밀번호의 형식을 확인해주세요. 영문과 숫자 필수 포함, 특수문자(!@#$%^&*) 사용가능 8-20자").removeClass("is-safe").addClass("is-danger")
+        $("#input-password").focus()
+        return
+    } else {
+        $("#help-password").text("사용할 수 있는 비밀번호입니다.").removeClass("is-danger").addClass("is-success")
+    }
+    if (password2 == "") {
+        $("#help-password2").text("비밀번호를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
+        $("#input-password2").focus()
+        return;
+    } else if (password2 != password) {
+        $("#help-password2").text("비밀번호가 일치하지 않습니다.").removeClass("is-safe").addClass("is-danger")
+        $("#input-password2").focus()
+        return;
+    } else {
+        $("#help-password2").text("비밀번호가 일치합니다.").removeClass("is-danger").addClass("is-success")
+    }
+    $.ajax({
+        type: "POST",
+        url: "/sign_up/save",
+        data: {
+            username_give: username,
+            password_give: password,
+            nickname_give: nickname
+        },
+        success: function (response) {
+            alert("회원가입을 축하드립니다!")
+            window.location.replace("/login")
+        }
+    });
+
+}
+function logout() {
+    $.removeCookie('mytoken');
+    alert('로그아웃!')
+    window.location.href = '/login'
+}
+
+function sign_up_page() {
+    alert('회원가입페이지 이동!')
+    window.location.href = '/sign_up_page'
+}
+
+function login_page() {
+    alert('로그인페이지 이동!')
+    window.location.href = '/login'
+}
+
+// <!--================로그인==================-->
+
+function sign_in() {
+    let username = $("#input-username").val()
+    let password = $("#input-password").val()
+
+    if (username == "") {
+        $("#help-id-login").text("아이디를 입력해주세요.")
+        $("#input-username").focus()
+        return;
+    } else {
+        $("#help-id-login").text("")
+    }
+
+    if (password == "") {
+        $("#help-password-login").text("비밀번호를 입력해주세요.")
+        $("#input-password").focus()
+        return;
+    } else {
+        $("#help-password-login").text("")
+    }
+    $.ajax({
+        type: "POST",
+        url: "/sign_in",
+        data: {
+            username_give: username,
+            password_give: password
+        },
+        success: function (response) {
+            if (response['result'] == 'success') {
+                $.cookie('mytoken', response['token'], {path: '/'});
+                window.location.replace("/")
+            } else {
+                alert(response['msg'])
+            }
+        }
+    });
+}
+
+// <!--================로그아웃==================-->
+
+function logout(){
+    alert('로그아웃!')
+    window.location.href='/login'
+}
+
+
+
+
+
+// 댓글 작성
+function save_comment(user_id, post_id) {
+
+    let post = parseInt(post_id)
+    let input_val = $('#comment_input' + post).val();
     $.ajax({
         type: 'POST',
         url: '/comment',
-        data: {user_give: user, comment_give: input_val},
+        data: {user_give: user_id, post_give: post, comment_give: input_val},
         success: function (response) {
             window.location.reload()
         }
@@ -23,18 +243,18 @@ function show_comment() {
             let rows = response.comments;
             for (let i = 0; i < rows.length; i++) {
                 let user_id = rows[i]['user_id']
+                let post_id = rows[i]['post_id']
                 let comment = rows[i]['comment']
 
-                let comment_lists = $('#comment_lists'+ user_id)
-                let comment_box = $('#comment_box'+ user_id)
+                let comment_lists = $('#comment_lists'+ post_id)
 
                 let temp_html = `<div>
-                                    <a href="/" alt="계정">${user_id}</a>
+                                    <a href="/" alt="계정" name="${post_id}">${user_id}</a>
                                     <span>${comment}</span>
                                 </div>`
                 comment_lists.append(temp_html);
 
-                hide_show_comment(user_id)
+                hide_show_comment(post_id)
 
             }
         }
@@ -42,9 +262,9 @@ function show_comment() {
 }
 
 // 댓글 자동 숨김
-function hide_show_comment(user_id) {
-    let comment_lists = $('#comment_lists'+ user_id);
-    let comment_box = $('#comment_box'+ user_id);
+function hide_show_comment(post_id) {
+    let comment_lists = $('#comment_lists'+ post_id);
+    let comment_box = $('#comment_box'+ post_id);
 
     let comment_count = comment_lists.children('div').length;
     comment_box.text('댓글 ' + comment_count + '개 모두 보기');
@@ -57,11 +277,11 @@ function hide_show_comment(user_id) {
 
 
 // 게시글 더보기 자동 숨김
-function hide_show_desc(user_id) {
-    let user = parseInt(user_id)
-    let hidden = $('#hidden_desc' + user);
-    let shown = $('#shown_desc' + user);
-    let read_more = $('#desc_read_more_button' + user);
+function hide_show_desc(post_id) {
+    let post = parseInt(post_id)
+    let hidden = $('#hidden_desc' + post);
+    let shown = $('#shown_desc' + post);
+    let read_more = $('#desc_read_more_button' + post);
 
     hidden.hide();
     let limit_length = 10
@@ -77,11 +297,11 @@ function hide_show_desc(user_id) {
 };
 
 // 게시글 더보기 버튼
-function desc_read_more(user_id) {
-    let user = parseInt(user_id)
-    let hidden = $('#hidden_desc' + user);
-    let shown = $('#shown_desc' + user);
-    let read_more = $('#desc_read_more_button' + user);
+function desc_read_more(post_id) {
+    let post = parseInt(post_id)
+    let hidden = $('#hidden_desc' + post);
+    let shown = $('#shown_desc' + post);
+    let read_more = $('#desc_read_more_button' + post);
 
     hidden.show();
     shown.hide();
@@ -89,11 +309,11 @@ function desc_read_more(user_id) {
 }
 
 // 좋아요 수 올리기
-function like_up(user_id) {
+function like_up(user_id, post_id) {
     $.ajax({
         type: 'POST',
         url: '/like',
-        data: {user_give: user_id},
+        data: {user_give: user_id, post_give: post_id},
         success: function (response) {
             window.location.reload()
         }
@@ -109,10 +329,10 @@ function show_like() {
         success: function (response) {
             let rows = response['likes']
             for (let i = 0; i < rows.length; i++) {
-                let user_id = rows[i]['user_id']
+                let post_id = rows[i]['post_id']
                 let like = rows[i]['like']
 
-                $('span[name='+ user_id +']').text(like)
+                $('span[name='+ post_id +']').text(like)
             }
         }
     });
@@ -139,8 +359,8 @@ function show_content() {
         success: function (response) {
             let rows = response['contents']
             for (let i = 0; i < rows.length; i++) {
-                let content_id = rows[i]['_id']
-                let user_id = rows[i]['user_id']
+                let user_id = rows[i]['user_id'] 
+                let post_id = rows[i]['post_id']
                 let img = rows[i]['img']
                 let desc = rows[i]['desc']
                 let timestamp = rows[i]['timestamp']
@@ -215,7 +435,7 @@ function show_content() {
                                         <div class="icon_bar">
                                             <div class="icon_bar_left">
                                                 <div id="like-heart1">
-                                                    <button onclick="like_up(${user_id})"><i class="fa fa-heart"></i></button>
+                                                    <button onclick="like_up('${user_id}', ${post_id})"><i class="fa fa-heart"></i></button>
                                                 </div>
                                                 <div>
                                                     <button><i class="fa fa-chat-bubble"></i></button>
@@ -227,12 +447,12 @@ function show_content() {
                                             <button id="bookmark1" class="bookmark"><i class="fa fa-bookmark"></i></button>
                                         </div>
                                         <div class="card-text">
-                                            <p id="counter-text1">좋아요 <span id="counter-click1" class="counter-click" name="${user_id}">0</span>개</p>
-                                            <div id="shown_desc${user_id}" class="card_comment" >${desc}</div>
-                                            <button id="desc_read_more_button${user_id}" class="" onclick="desc_read_more(${user_id})" >더 보기</button>
-                                            <div id="hidden_desc${user_id}" class="card_comment">${desc}</div>
+                                            <p id="counter-text1">좋아요 <span id="counter-click1" class="counter-click" name="${post_id}">0</span>개</p>
+                                            <div id="shown_desc${post_id}" class="card_comment" >${desc}</div>
+                                            <button id="desc_read_more_button${post_id}" class="" onclick="desc_read_more(${post_id})" >더 보기</button>
+                                            <div id="hidden_desc${post_id}" class="card_comment">${desc}</div>
                                             <div style="height:20px"></div>
-                                            <button id="comment_box${user_id}" class="comment_box" data-toggle="modal" data-target="#modal_card">댓글 00개 모두
+                                            <button id="comment_box${post_id}" class="comment_box" data-toggle="modal" data-target="#modal_card">댓글 00개 모두
                                                 보기
                                             </button>
                                             <!--댓글 상세 모달-->
@@ -289,23 +509,106 @@ function show_content() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div id="comment_lists${user_id}" class="comment-list">
+                                            <div id="comment_lists${post_id}" class="comment-list">
                                             </div>
                                             <p class="time_passed">${timestamp}시간 전</p>
                                         </div>
                                         <div class="card_bottom">
                                             <input class="form-control" placeholder="댓글 달기..." style="background-color: black; border: 3px solid black"
-                                                      id="comment_input${user_id}">
-                                            <button class="comment_upload_button" onclick="save_comment(${user_id})">게시</button>
+                                                      id="comment_input${post_id}">
+                                            <button class="comment_upload_button" onclick="save_comment('${user_id}', ${post_id})">게시</button>
                                         </div>
                                     </div>
                                 </div>`
 
                 $('#card_box').append(temp_html);
 
-                show_like(user_id);
-                hide_show_desc(user_id);
+                show_like(post_id);
+                hide_show_desc(post_id);
             }
         }
     });
 }
+
+
+// // 게시물 생성
+// let files //파일 계속 사용할거니까 전역변수 선언
+
+// $('#nav_bar_add_box').click(function () { //+버튼 클릭시 1번모달창 나타나기
+//     $('#first_modal').css({
+//         display: 'flex'
+//     });
+//     $(document.body).css({   //+버튼 클릭시 전체화면 스크롤바 사라짐
+//         overflow: 'hidden'
+//     })
+// });
+// $('#modal_x_box').click(function () {   //x버튼 클릭시 1번모달창 사라짐
+//     $('.modal_overlay').css({
+//         display: 'none'
+//     });
+//     $(document.body).css({
+//         overflow: 'visible'
+//     })
+// });
+// $('#modal_x_box2').click(function () {   //x버튼 클릭시 2번모달창 사라짐
+//     $('.modal_overlay').css({
+//         display: 'none'
+//     });
+//     $(document.body).css({
+//         overflow: 'visible'
+//     })
+// });
+
+
+// $('.addition_modal_body')    //모달창에 드래그앤 드롭 기능 구현하겠다
+//     .on("dragover", dragOver)
+//     .on("dragleave", dragOver)
+//     .on("drop", uploadFiles);
+
+// function dragOver(e) {     //드래그오버 함수
+//     e.stopPropagation();   //드래그오버시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
+//     e.preventDefault();
+
+//     if (e.type == "dragover") {  //드래그오버하면 outline이 가운데로 몰림
+//         $(e.target).css({
+//             "outline-offset": "-20px",
+//             "border-radius": "8px"
+//         });
+//     } else {
+//         $(e.target).css({
+//             "background-color": "black",
+//             "outline-offset": "-10px"
+//         });
+//     }
+// }
+
+// function uploadFiles(e) {  //업로드파일 함수
+//     e.stopPropagation();  //업로드파일시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
+//     e.preventDefault();
+
+//     e.dataTransfer = e.originalEvent.dataTransfer;
+//     files = e.dataTransfer.files;
+
+//     if (files.length > 1) {    //파일갯수가 여러개면 하나만 올려주세요 창이 뜸
+//         alert('하나만 올려 주세요');
+//         return;
+//     }
+//     //파일이 인식되면 배경 이미지 바뀌게 만듬
+//     if (files[0].type.match(/image.*/)) {
+//         $('#first_modal').css({
+//             display: 'none'
+//         });
+//         $('#second_modal').css({
+//             display: 'flex'
+//         });
+//         $('.img_upload_space').css({
+//             "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+//             "outline": "none",
+//             "background-size": "100% 100%"
+//         });
+//     } else {
+//         alert('이미지가 아닙니다.');
+//         return;
+//     }
+
+// }
