@@ -61,7 +61,7 @@ footer
 ---
 
 ## DB
-![image](https://user-images.githubusercontent.com/100769423/167070847-90c5bec9-726a-4b9e-a02b-2ee082d5d03f.png)
+![image](https://user-images.githubusercontent.com/100769423/167077920-e6ff091a-7b7d-4ce8-b167-aa81824fa37d.png)
 
 ---
 
