@@ -1,101 +1,221 @@
-from flask import Flask, render_template, request, jsonify
-app = Flask(__name__)
+# from flask import Flask, render_template, request, jsonify
+# app = Flask(__name__)
 
 from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@cluster0.3puso.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.dbsparta
+# # client = MongoClient('mongodb+srv://test:sparta@cluster0.3puso.mongodb.net/Cluster0?retryWrites=true&w=majority')
+# # db = client.dbsparta
+client = MongoClient('localhost', 27017)
+db = client.campProject
 
+
+
+# @app.route('/')
+# def home():
+#    return render_template('index.html')
+
+# @app.route('/profile_page')
+# def profile():
+#    return render_template('profile_page.html')
+
+import certifi  # mongodb 인증 라이브러리
+# from pymongo import MongoClient
+import jwt
+import datetime
+import hashlib
+from flask import Flask, render_template, jsonify, request, redirect, url_for
+from werkzeug.utils import secure_filename
+from datetime import datetime, timedelta
+
+# client = MongoClient('mongodb+srv://test:sparta@cluster0.vpnjl.mongodb.net/Cluster0?retryWrites=true&w=majority',
+#                      tlsCAFile=certifi.where())  # 인증을 위한 코드 추가
+# db = client.dbsparta_plus_week4
+
+app = Flask(__name__)
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
+
+SECRET_KEY = 'SPARTA'
 
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+
+
+        return render_template('index.html')
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 @app.route('/profile_page')
 def profile():
-    return render_template('profile_page.html')
+   return render_template('profile_page.html')
+
+@app.route('/sign_up_page')
+def sign_up_page():
+   return render_template('sign_up.html')
+
+@app.route('/login_page')
+def login_page():
+   return render_template('login.html')
+
+
+####################로그인 창############################################
+
+@app.route('/login')
+def login():
+    msg = request.args.get("msg")
+    return render_template('login.html', msg=msg)
+
+
+# 아이디 중복 확인 서버
+@app.route('/sign_up/check_dup', methods=['POST'])
+def check_dup():
+    username_receive = request.form['username_give']
+    exists_id = bool(db.users.find_one({"username": username_receive}))
+    return jsonify({'result': 'success', 'exists': exists_id})
 
 
 
-####################첫번째 코멘트창########################################
-@app.route("/insta_comment", methods=["POST"])
-def insta_comment_post():
+# 닉네임 중복 확인 서버
+@app.route('/sign_up/check_nickname_dup', methods=['POST'])
+def check_nickname_dup():
+    nickname_receive = request.form['nickname_give']
+    exists_nickname = bool(db.users.find_one({"nickname": nickname_receive}))
+    return jsonify({'result': 'success', 'exists': exists_nickname})
 
+
+# 회원가입
+@app.route('/sign_up/save', methods=['POST'])
+def sign_up():
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
+    nickname_receive = request.form['nickname_give']
+    password_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    doc = {
+        "username": username_receive,  # 아이디
+        "password": password_hash,  # 비밀번호
+        "nickname": nickname_receive,  # 프로필 이름 기본값은 아이디
+        "profile_pic": "",  # 프로필 사진 파일 이름
+        "profile_pic_real": "profile_pics/profile_placeholder.png",  # 프로필 사진 기본 이미지
+        "profile_info": "",  # 프로필 한 마디
+        "token": 0
+    }
+    db.users.insert_one(doc)
+    return jsonify({'result': 'success'})
+
+
+# 로그인서버
+@app.route('/sign_in', methods=['POST'])
+def sign_in():
+    # 로그인
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
+
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
+
+    if result is not None:
+        payload = {
+            'id': username_receive,
+            'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+
+        db.users.update_one({'username': username_receive}, {'$set': {'token': token}}) # 유저 정보에 토큰 저장
+
+        return jsonify({'result': 'success', 'token': token})
+    # 찾지 못하면
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+
+
+
+
+
+# 코멘트 작성
+@app.route("/comment", methods=["POST"])
+def comment_post():
+    user_receive = request.form['user_give']
+    post_receive = request.form['post_give']
     comment_receive = request.form['comment_give']
 
-    doc = {'comment': comment_receive}
-    db.insta_comment.insert_one(doc)
-    return jsonify({'msg': '소중한 댓글 감사합니다'})
+    doc = {
+        'user_id': user_receive,
+        'post_id': post_receive,
+        'comment': comment_receive
+     }
+    db.citista_comments.insert_one(doc)
+    return jsonify({'msg':'게시물 생성 완료'})
+
+# 코멘트 보기
+@app.route("/comment", methods=["GET"])
+def comment_get():
+    comments = list(db.citista_comments.find({}, {'_id': False}))
+    return jsonify({'comments':comments})
 
 
-@app.route("/insta_comment", methods=["GET"])
-def insta_comment_get():
-    all_comment = list(db.insta_comment.find({}, {'_id': False}))
-    return jsonify({'comments':all_comment})
+# 좋아요 올리기
+@app.route("/like", methods=["POST"])
+def like_up():
+    post_receive = int(request.form['post_give'])
+    likes = db.citista_likes.find_one({'post_id': post_receive})
 
-####################두번째 코멘트창########################################
-@app.route("/insta_comment2", methods=["POST"])
-def insta_comment_post2():
+    current_like = likes['like']
+    new_like = current_like + 1
+    db.citista_likes.update_one({'post_id': post_receive}, {'$set': {'like': new_like}})
 
-    comment_receive = request.form['comment_give']
+    return jsonify({'msg':'좋아요 감사합니다.'})
 
-    doc = {'comment':comment_receive}
-    db.insta_comment2.insert_one(doc)
-    return jsonify({'msg':'소중한 댓글 감사합니다'})
-
-
-@app.route("/insta_comment2", methods=["GET"])
-def insta_comment_get2():
-    all_comment = list(db.insta_comment2.find({}, {'_id': False}))
-    return jsonify({'comments':all_comment})
-
-####################세번째 코멘트창########################################
-@app.route("/insta_comment3", methods=["POST"])
-def insta_comment_post3():
-
-    comment_receive = request.form['comment_give']
-
-    doc = {'comment': comment_receive}
-    db.insta_comment3.insert_one(doc)
-    return jsonify({'msg':'소중한 댓글 감사합니다'})
+# 좋아요 개수 보이기
+@app.route("/like", methods=["GET"])
+def show_like():
+    likes = list(db.citista_likes.find({}, {'_id': False}))
+    return jsonify({'likes':likes})
 
 
-@app.route("/insta_comment3", methods=["GET"])
-def insta_comment_get3():
-    all_comment = list(db.insta_comment3.find({}, {'_id': False}))
-    return jsonify({'comments':all_comment})
+# (임시) 게시물 생성
+@app.route("/create_content", methods=["POST"])
+def create_content():
 
-####################네번째 코멘트창########################################
-@app.route("/insta_comment4", methods=["POST"])
-def insta_comment_post4():
+    token_receive = request.cookies.get('mytoken')
+    # try:
+    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
-    comment_receive = request.form['comment_give']
+    user = db.users.find_one({'token': token_receive})
 
-    doc = {'comment': comment_receive}
-    db.insta_comment4.insert_one(doc)
-    return jsonify({'msg':'소중한 댓글 감사합니다'})
+    username = user['username']
 
+    content_num = db.citista_contents.find({}, {'_id': False}).collection.estimated_document_count()
 
-@app.route("/insta_comment4", methods=["GET"])
-def insta_comment_get4():
-    all_comment = list(db.insta_comment4.find({}, {'_id': False}))
-    return jsonify({'comments':all_comment})
+    current_time = datetime.now()
 
-# 인스타 업로드 여기서부터
+    doc_cotents = {
+        'user_id': username,
+        'post_id': content_num + 1,
+        'img':'0',
+        'desc':'동해물과 백두산이 마르고 닳도록 하느님이 도우하사 우리 나라 만세 무궁화 삼천리 화려강산 대한 사람 대한으로 길이 보전하세.',
+        'timestamp': current_time
+    }
+    db.citista_contents.insert_one(doc_cotents)
 
-@app.route("/insta_feed1", methods=["POST"])
-def feed_post():
-    file = request.files['file']
-    image = request.form['image']
-    content = request.form['content']
-    user_id = request.form['user_id']
+    doc_likes = {
+        'post_id': content_num + 1,
+        'like': 0
+    }
+    db.citista_likes.insert_one(doc_likes)
 
-    doc = {'file': file, 'image': image, 'content': content, 'user_id': user_id}
-    db.insta_feed1.insert_one(doc)
-    return jsonify({'msg': '사진이 업로드 되었습니다.'})
-
+    return jsonify({'msg':'게시물 생성'})
 
 
+# (임시) 게시물 보이기
+@app.route("/create_content", methods=["GET"])
+def show_content():
+    contents = list(db.citista_contents.find({}, {'_id': False}))
+    return jsonify({'contents': contents})
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
