@@ -75,7 +75,7 @@ def login():
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
     username_receive = request.form['username_give']
-    exists_id = bool(db.users.find_one({"username": username_receive}))
+    exists_id = bool(db.citista_users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists_id})
 
 
@@ -84,7 +84,7 @@ def check_dup():
 @app.route('/sign_up/check_nickname_dup', methods=['POST'])
 def check_nickname_dup():
     nickname_receive = request.form['nickname_give']
-    exists_nickname = bool(db.users.find_one({"nickname": nickname_receive}))
+    exists_nickname = bool(db.citista_users.find_one({"nickname": nickname_receive}))
     return jsonify({'result': 'success', 'exists': exists_nickname})
 
 
@@ -104,7 +104,7 @@ def sign_up():
         "profile_info": "",  # 프로필 한 마디
         "token": 0
     }
-    db.users.insert_one(doc)
+    db.citista_users.insert_one(doc)
     return jsonify({'result': 'success'})
 
 
@@ -116,7 +116,7 @@ def sign_in():
     password_receive = request.form['password_give']
 
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
+    result = db.citista_users.find_one({'username': username_receive, 'password': pw_hash})
 
     if result is not None:
         payload = {
@@ -125,7 +125,7 @@ def sign_in():
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
-        db.users.update_one({'username': username_receive}, {'$set': {'token': token}}) # 유저 정보에 토큰 저장
+        db.citista_users.update_one({'username': username_receive}, {'$set': {'token': token}}) # 유저 정보에 토큰 저장
 
         return jsonify({'result': 'success', 'token': token})
     # 찾지 못하면
@@ -133,25 +133,51 @@ def sign_in():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
+@app.route('/logout', methods=['POST'])
+def log_out():
+    
+    # 로그아웃
+    token_receive = request.cookies.get('mytoken')
+    # try:
+    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+
+    user = db.citista_users.find_one({'token': token_receive})
+
+    user_id = user['username']
+
+    db.citista_users.update_one({'username': user_id}, {'$set': {'token': 0}}) # 유저 정보 토큰 리셋(0)
+
+    return jsonify({'result': 'success', 'msg': '로그아웃 완료'})
 
 
 
-# 코멘트 작성
+
+
+
+# 댓글 작성
 @app.route("/comment", methods=["POST"])
 def comment_post():
-    user_receive = request.form['user_give']
+
     post_receive = request.form['post_give']
     comment_receive = request.form['comment_give']
 
+    token_receive = request.cookies.get('mytoken')
+    # try:
+    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+
+    user = db.citista_users.find_one({'token': token_receive})
+
+    user_id = user['username']
+
     doc = {
-        'user_id': user_receive,
+        'user_id': user_id,
         'post_id': post_receive,
         'comment': comment_receive
      }
     db.citista_comments.insert_one(doc)
     return jsonify({'msg':'게시물 생성 완료'})
 
-# 코멘트 보기
+# 댓글 보기
 @app.route("/comment", methods=["GET"])
 def comment_get():
     comments = list(db.citista_comments.find({}, {'_id': False}))
@@ -181,23 +207,26 @@ def show_like():
 @app.route("/create_content", methods=["POST"])
 def create_content():
 
+    image_receive = request.form['image_give']
+    desc_receive = request.form['desc_give']
+
     token_receive = request.cookies.get('mytoken')
     # try:
     #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
-    user = db.users.find_one({'token': token_receive})
+    user = db.citista_users.find_one({'token': token_receive})
 
-    username = user['username']
+    user_id = user['username']
 
     content_num = db.citista_contents.find({}, {'_id': False}).collection.estimated_document_count()
 
     current_time = datetime.now()
 
     doc_cotents = {
-        'user_id': username,
+        'user_id': user_id,
         'post_id': content_num + 1,
-        'img':'0',
-        'desc':'동해물과 백두산이 마르고 닳도록 하느님이 도우하사 우리 나라 만세 무궁화 삼천리 화려강산 대한 사람 대한으로 길이 보전하세.',
+        'img':image_receive,
+        'desc':desc_receive,
         'timestamp': current_time
     }
     db.citista_contents.insert_one(doc_cotents)
@@ -217,6 +246,56 @@ def show_content():
     contents = list(db.citista_contents.find({}, {'_id': False}))
     return jsonify({'contents': contents})
 
+
+# # 게시물 생성
+# @app.route("/writing_new", methods=["POST"])
+# def new_writing():
+#     token_receive = request.cookies.get('mytoken')
+#     try:
+#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+#         user_info = db.user.find_one({"user_id": payload['user_id']})
+
+#         desc_receive = request.form['desc_give']
+#         photo = request.files['photo_give']
+#         if desc_receive == "":
+#             desc_receive = ""
+#         else:
+#             desc_receive = desc_receive
+
+#         extension = photo.filename.split('.')[-1]
+#         today = datetime.datetime.now()
+#         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+#         filename = f'{mytime}.{extension}'
+#         save_to = f'/static/images/post-contents/{filename}'
+
+#         test = os.path.abspath(__file__)
+#         print(test)
+#         parent_path = Path(test).parent
+#         abs_path = str(parent_path) + save_to
+
+#         photo.save(abs_path)
+
+#         container_content = {
+#             'desc': desc_receive,
+#             'photo': filename,
+#             'comment': [],
+#             'like': 0,
+#             'like_user': []
+#         }
+
+#         db.post_content.update_one({'user_id': user_info['user_id']}, {
+#             '$addToSet': {'container': container_content}})
+
+#         return jsonify({'msg': '등록완료'})
+#     except jwt.ExpiredSignatureError:
+#         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
+#     except jwt.exceptions.DecodeError:
+#         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
+
+
+
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)
+
+
 

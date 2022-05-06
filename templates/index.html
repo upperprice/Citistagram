@@ -56,13 +56,12 @@
         <li><button id="nav_bar_add_box" class="modal_button" data-toggle="modal" data-target="#addition_modal_box"><i class="fa fa-plus"></i></button></li>
         <li><a href=""><i class="fa fa-compass"></i></a></li>
         <li><a href=""><i class="fa fa-heart"></i></a></li>
+        <li style="display: flex; align-items: center;"><button style="width: 70px; height: 30px; font-size: 15px; cursor: pointer; border: 0;" onclick="logout()">logout</button></li>
     </ul>
     <span></span>
 </nav>
-
-
-<!-- 더하기 버튼 모달(새게시물 만들기)//첫번째 -->
-<!-- <div id="first_modal" class="modal_overlay">
+<!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
+<div id="first_modal" class="modal_overlay">
     <div class="modal_window">
         <div class="addition_modal_head">
             <div style="width:40px"></div>
@@ -74,11 +73,9 @@
 
         </div>
     </div>
-</div> -->
-
-
-<!-- 더하기 버튼 모달(새게시물 만들기)//두번째 -->
-<!-- <div id="second_modal" class="modal_overlay">
+</div>
+<!--더하기 버튼 모달(새게시물 만들기)//두번째-->
+<div id="second_modal" class="modal_overlay">
     <div class="modal_window2">
 
         <div class="addition_modal_head">
@@ -93,13 +90,12 @@
 
                 </div>
                 <div style="justify-content: center;display: flex">
-                    <button id="feed_create_button" style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
+                    <button id="feed_create_button" onclick="uploading_files()" style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
                 </div>
             </div>
         </div>
     </div>
-</div> -->
-
+</div>
 
 
 <!--================1.Navbar END====================-->
@@ -110,7 +106,6 @@
         <div class="first_bar">
             <div class="other_menus">
                 <span></span>
-                <botton style="width: 50px; height: 30px; cursor: pointer" onclick="create_content()">게시물 생성</botton>
                 <div>
                     <img width="70px" src="../static/img/리스트1.png" alt="">
                     <p>Music</p>
@@ -235,6 +230,7 @@
     </div>
 </div>
 <!--================4. FOOTER END====================-->
+
 
 <script type="text/javascript" src="../static/script.js"></script>
 </body>
