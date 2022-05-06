@@ -210,8 +210,18 @@ function sign_in() {
 // <!--================로그아웃==================-->
 
 function logout(){
-    alert('로그아웃!')
-    window.location.href='/login'
+    $.ajax({
+        type: "POST",
+        url: "/logout",
+        data: {},
+        success: function (response) {
+            if (response['result'] == 'success') {
+                // $.cookie('mytoken', response['token'], {path: '/'});
+                window.location.replace("/login");
+                console.log(response['msg']);
+            }
+        }
+    });
 }
 
 
@@ -219,14 +229,14 @@ function logout(){
 
 
 // 댓글 작성
-function save_comment(user_id, post_id) {
+function save_comment(post_id) {
 
     let post = parseInt(post_id)
     let input_val = $('#comment_input' + post).val();
     $.ajax({
         type: 'POST',
         url: '/comment',
-        data: {user_give: user_id, post_give: post, comment_give: input_val},
+        data: {post_give: post, comment_give: input_val},
         success: function (response) {
             window.location.reload()
         }
@@ -338,19 +348,19 @@ function show_like() {
     });
 }
 
-// (임시)게시물 생성
-function create_content() {
-    $.ajax({
-        type: 'POST',
-        url: '/create_content',
-        data: {},
-        success: function (response) {
-            window.location.reload()
-        }
-    })
-}
+// // (임시)게시물 생성
+// function create_content() {
+//     $.ajax({
+//         type: 'POST',
+//         url: '/create_content',
+//         data: {},
+//         success: function (response) {
+//             window.location.reload()
+//         }
+//     })
+// }
 
-// (임시)게시물 보이기
+// 게시물 보이기
 function show_content() {
     $.ajax({
         type: "GET",
@@ -358,6 +368,7 @@ function show_content() {
         data: {},
         success: function (response) {
             let rows = response['contents']
+            console.log(rows)
             for (let i = 0; i < rows.length; i++) {
                 let user_id = rows[i]['user_id'] 
                 let post_id = rows[i]['post_id']
@@ -411,14 +422,14 @@ function show_content() {
                                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                         <div class="carousel-inner">
                                             <div class="carousel-item active">
-                                                <img class="d-block w-100" src="${img}"
+                                                <img class="d-block w-100" src="/static/img/${img}"
                                                      alt="First slide">
                                             </div>
                                             <div class="carousel-item">
-                                                <img class="d-block w-100" src="${img}" alt="Second slide">
+                                                <img class="d-block w-100" src="/static/img/${img}" alt="Second slide">
                                             </div>
                                             <div class="carousel-item">
-                                                <img class="d-block w-100" src="${img}" alt="Third slide">
+                                                <img class="d-block w-100" src="/static/img/${img}" alt="Third slide">
                                             </div>
                                         </div>
                                         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
@@ -448,9 +459,10 @@ function show_content() {
                                         </div>
                                         <div class="card-text">
                                             <p id="counter-text1">좋아요 <span id="counter-click1" class="counter-click" name="${post_id}">0</span>개</p>
-                                            <div id="shown_desc${post_id}" class="card_comment" >${desc}</div>
+                                            <a href="/" alt="계정" name="${post_id}">${user_id}</a>
+                                            <span id="shown_desc${post_id}" class="card_comment" >${desc}</span>
                                             <button id="desc_read_more_button${post_id}" class="" onclick="desc_read_more(${post_id})" >더 보기</button>
-                                            <div id="hidden_desc${post_id}" class="card_comment">${desc}</div>
+                                            <span id="hidden_desc${post_id}" class="card_comment">${desc}</span>
                                             <div style="height:20px"></div>
                                             <button id="comment_box${post_id}" class="comment_box" data-toggle="modal" data-target="#modal_card">댓글 00개 모두
                                                 보기
@@ -516,7 +528,7 @@ function show_content() {
                                         <div class="card_bottom">
                                             <input class="form-control" placeholder="댓글 달기..." style="background-color: black; border: 3px solid black"
                                                       id="comment_input${post_id}">
-                                            <button class="comment_upload_button" onclick="save_comment('${user_id}', ${post_id})">게시</button>
+                                            <button class="comment_upload_button" onclick="save_comment(${post_id})">게시</button>
                                         </div>
                                     </div>
                                 </div>`
@@ -531,84 +543,91 @@ function show_content() {
 }
 
 
-// // 게시물 생성
-// let files //파일 계속 사용할거니까 전역변수 선언
+//<!--================5.새 게시물 만들기====================-->
 
-// $('#nav_bar_add_box').click(function () { //+버튼 클릭시 1번모달창 나타나기
-//     $('#first_modal').css({
-//         display: 'flex'
-//     });
-//     $(document.body).css({   //+버튼 클릭시 전체화면 스크롤바 사라짐
-//         overflow: 'hidden'
-//     })
-// });
-// $('#modal_x_box').click(function () {   //x버튼 클릭시 1번모달창 사라짐
-//     $('.modal_overlay').css({
-//         display: 'none'
-//     });
-//     $(document.body).css({
-//         overflow: 'visible'
-//     })
-// });
-// $('#modal_x_box2').click(function () {   //x버튼 클릭시 2번모달창 사라짐
-//     $('.modal_overlay').css({
-//         display: 'none'
-//     });
-//     $(document.body).css({
-//         overflow: 'visible'
-//     })
-// });
-
-
-// $('.addition_modal_body')    //모달창에 드래그앤 드롭 기능 구현하겠다
-//     .on("dragover", dragOver)
-//     .on("dragleave", dragOver)
-//     .on("drop", uploadFiles);
-
-// function dragOver(e) {     //드래그오버 함수
-//     e.stopPropagation();   //드래그오버시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
-//     e.preventDefault();
-
-//     if (e.type == "dragover") {  //드래그오버하면 outline이 가운데로 몰림
-//         $(e.target).css({
-//             "outline-offset": "-20px",
-//             "border-radius": "8px"
-//         });
-//     } else {
-//         $(e.target).css({
-//             "background-color": "black",
-//             "outline-offset": "-10px"
-//         });
-//     }
-// }
-
-// function uploadFiles(e) {  //업로드파일 함수
-//     e.stopPropagation();  //업로드파일시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
-//     e.preventDefault();
-
-//     e.dataTransfer = e.originalEvent.dataTransfer;
-//     files = e.dataTransfer.files;
-
-//     if (files.length > 1) {    //파일갯수가 여러개면 하나만 올려주세요 창이 뜸
-//         alert('하나만 올려 주세요');
-//         return;
-//     }
-//     //파일이 인식되면 배경 이미지 바뀌게 만듬
-//     if (files[0].type.match(/image.*/)) {
-//         $('#first_modal').css({
-//             display: 'none'
-//         });
-//         $('#second_modal').css({
-//             display: 'flex'
-//         });
-//         $('.img_upload_space').css({
-//             "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
-//             "outline": "none",
-//             "background-size": "100% 100%"
-//         });
-//     } else {
-//         alert('이미지가 아닙니다.');
-//         return;
-//     }
-
-// }
+// let files = '' //파일 계속 사용할거니까 전역변수 선언
+$('#nav_bar_add_box').click(function () { //+버튼 클릭시 1번모달창 나타나기
+    $('#first_modal').css({
+        display: 'flex'
+    });
+    $(document.body).css({   //+버튼 클릭시 전체화면 스크롤바 사라짐
+        overflow: 'hidden'
+    })
+});
+$('#modal_x_box').click(function () {   //x버튼 클릭시 1번모달창 사라짐
+    $('.modal_overlay').css({
+        display: 'none'
+    });
+    $(document.body).css({
+        overflow: 'visible'
+    })
+});
+$('#modal_x_box2').click(function () {   //x버튼 클릭시 2번모달창 사라짐
+    $('.modal_overlay').css({
+        display: 'none'
+    });
+    $(document.body).css({
+        overflow: 'visible'
+    })
+});
+$('.addition_modal_body')    //모달창에 드래그앤 드롭 기능 구현하겠다
+    .on("dragover", dragOver)
+    .on("dragleave", dragOver)
+    .on("drop", uploadFiles);
+function dragOver(e) {     //드래그오버 함수
+    e.stopPropagation();   //드래그오버시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
+    e.preventDefault();
+    if (e.type=="dragover") {  //드래그오버하면 outline이 가운데로 몰림
+        $(e.target).css({
+            "outline-offset": "-20px",
+            "border-radius": "8px"
+        });
+    } else {
+        $(e.target).css({
+            "background-color": "black",
+            "outline-offset": "-10px"
+        });
+    }
+}
+function uploadFiles(e) {  //업로드파일 함수
+    e.stopPropagation();  //업로드파일시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
+    e.preventDefault();
+    e.dataTransfer = e.originalEvent.dataTransfer;
+    files = e.dataTransfer.files;
+    if (files.length > 1) {    //파일갯수가 여러개면 하나만 올려주세요 창이 뜸
+        alert('하나만 올려 주세요');
+        return;
+    }
+    //파일이 이미지로 인식되면 배경 이미지 바뀌게 만듬
+    if (files[0].type.match(/image.*/)) {
+        $('#first_modal').css({
+            display: 'none'
+        });
+        $('#second_modal').css({
+            display: 'flex'
+        });
+        $('.img_upload_space').css({
+            "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
+            "outline": "none",
+            "background-size": "100% 100%"
+        });
+    } else {
+        alert('이미지가 아닙니다.');
+    }
+}
+//파일 업로드 여기서부터 시작
+function uploading_files(){
+    let file = files; //실제 파일
+    let image = files[0].name; //파일명
+    let content = $('#input_feed_content').val(); //이미지 밑에 쓴 글
+    console.log(content)
+    $.ajax({
+        type: 'POST',
+        url: '/create_content',
+        data: {image_give:image, desc_give:content},
+        success: function (response){
+            // alert(response['msg'])
+            window.location.reload()
+        }
+    });
+}

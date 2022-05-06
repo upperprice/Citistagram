@@ -1,25 +1,24 @@
 <!doctype html>
 <html lang="en">
-    <head>
+<head>
 
-        <!-- Webpage Title -->
-        <title>Log In</title>
+    <!-- Webpage Title -->
+    <title>Log In</title>
 
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- JS -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="static/script.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="static/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
-        <script>
-						// 자바스크립트 파트
-        </script>
+    <script>
+        // 자바스크립트 파트
+    </script>
 
-    </head>
-
+</head>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +40,7 @@
             crossorigin="anonymous"></script>
 
     <script src="https://use.fortawesome.com/99966411.js"></script>
-
+    <script src="script.js"></script>
 
     <!-- main css -->
     <link rel="stylesheet" href="../static/style.css">
@@ -56,25 +55,29 @@
 <!--★★상단 그라데이션 바★★-->
 <!--■■■■■■■■■■■■■■■■■■■■■■■■■■■■■■주내용 파트■■■■■-->
 <!--회원가입 정보입력창-->
-<div class="login_BOX">
+<div class="login_">
     <div class="d-flex flex-column" align="center">
         <!--로고 클릭시 다른 페이지로 이동하게 끔 주소 넣어야 합니다!-->
-        <div class="p-2" style="margin-top: 20px"><img src="" width="100px" height="100px"></div>
-        <div class="p-2" style="margin-top: 15px"><a href=""><img src=""></a></div>
+        <div class="p-2" style="margin-top: 20px"><img src="../static/img/symbol.png" width="100px" height="100px">
+        </div>
+        <div class="p-2" style="margin-top: 15px"><a href=""><img src="../static/img/LOGO_white.png"></a></div>
         <!--▼▼가입정보 입력칸▼▼-->
         <div class="p-2">
             <div class="form-group" style="font-size: 15px">
                 <label for="input-username" style="margin-top: 10px"></label>
-                <input type="text" class="form-control" id="input-username" placeholder="ID" style="margin-bottom: 10px">
-                <input type="password" class="form-control mx-sm-3" id="input-password" placeholder="PASSWORD" aria-describedby="passwordHelpInline">
+                <input type="text" class="form-control" id="input-username" placeholder="ID"
+                       style="margin-bottom: 10px">
+                <input type="password" class="form-control mx-sm-3" id="input-password" placeholder="PASSWORD"
+                       aria-describedby="passwordHelpInline">
                 <button type="button" class="btn btn-primary" onclick="sign_in()">로그인</button>
             </div>
         </div>
     </div>
 </div>
 <!--계정보유자 로그인창으로 돌리는 박스-->
-<div class="return_to_loginpage">
-    <h6 class="ALIGN_CENTER">계정이 없으신가요?</h6><button onclick="sign_up_page()">회원가입</button>
+<div class="return_to_loginpage" style="max-width: 300px">
+    <div class="ALIGN_CENTER"><h6>계정이 없으신가요? <a href="/sign_up_page">회원가입</a></h6>
+    </div>
 
     <!--로그인 클릭시 로그인창으로 되돌리는 하이퍼링크 입력해야함-->
 </div>
@@ -102,7 +105,7 @@
         <li><a href="">해시태그</a></li>
     </ul>
     <div>
-        <div>한국어  ©2022 Citistagram by Tasha</div>
+        <div>한국어 ©2022 Citistagram by Tasha</div>
     </div>
 </div>
 <!--================FOOTER====================-->
