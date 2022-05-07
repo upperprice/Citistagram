@@ -710,7 +710,7 @@ a {
 /*==================게시글 모달 관련 CSS 시작====================*/
 .modal_overlay {
     width: 100%;
-    height: 700px;
+    height: 100%;
     position: absolute;
     left: 0;
     top: 0;

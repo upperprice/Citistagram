@@ -2,10 +2,10 @@
 # app = Flask(__name__)
 
 from pymongo import MongoClient
-# # client = MongoClient('mongodb+srv://test:sparta@cluster0.3puso.mongodb.net/Cluster0?retryWrites=true&w=majority')
-# # db = client.dbsparta
-client = MongoClient('localhost', 27017)
-db = client.campProject
+client = MongoClient('mongodb+srv://test:sparta@cluster0.3puso.mongodb.net/Cluster0?retryWrites=true&w=majority')
+db = client.dbsparta
+# client = MongoClient('localhost', 27017)
+# db = client.campProject
 
 
 
@@ -203,9 +203,10 @@ def show_like():
     return jsonify({'likes':likes})
 
 
-# (임시) 게시물 생성
+# 게시물 생성
 @app.route("/create_content", methods=["POST"])
 def create_content():
+
 
     image_receive = request.form['image_give']
     desc_receive = request.form['desc_give']
@@ -225,8 +226,8 @@ def create_content():
     doc_cotents = {
         'user_id': user_id,
         'post_id': content_num + 1,
-        'img':image_receive,
-        'desc':desc_receive,
+        'img': image_receive,
+        'desc': desc_receive,
         'timestamp': current_time
     }
     db.citista_contents.insert_one(doc_cotents)
@@ -239,58 +240,28 @@ def create_content():
 
     return jsonify({'msg':'게시물 생성'})
 
+@app.route("/create_content1", methods=["POST"])
+def create_content1():
+    file = request.files['file']
+    extension = file.filename.split('.')[-1] # 여기서 부터 파일 서버 컴퓨터에 저장
+    today = datetime.now()
+    print(today)
+    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
+    filename = f'{mytime}.{extension}'
+    save_to = f'/static/images/post-contents/{filename}'
+    print(filename)
+    file.save(save_to)
+    return jsonify({'msg': '게시물 저장'})
 
-# (임시) 게시물 보이기
+
+
+# 게시물 보이기
 @app.route("/create_content", methods=["GET"])
 def show_content():
     contents = list(db.citista_contents.find({}, {'_id': False}))
     return jsonify({'contents': contents})
 
 
-# # 게시물 생성
-# @app.route("/writing_new", methods=["POST"])
-# def new_writing():
-#     token_receive = request.cookies.get('mytoken')
-#     try:
-#         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-#         user_info = db.user.find_one({"user_id": payload['user_id']})
-
-#         desc_receive = request.form['desc_give']
-#         photo = request.files['photo_give']
-#         if desc_receive == "":
-#             desc_receive = ""
-#         else:
-#             desc_receive = desc_receive
-
-#         extension = photo.filename.split('.')[-1]
-#         today = datetime.datetime.now()
-#         mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
-#         filename = f'{mytime}.{extension}'
-#         save_to = f'/static/images/post-contents/{filename}'
-
-#         test = os.path.abspath(__file__)
-#         print(test)
-#         parent_path = Path(test).parent
-#         abs_path = str(parent_path) + save_to
-
-#         photo.save(abs_path)
-
-#         container_content = {
-#             'desc': desc_receive,
-#             'photo': filename,
-#             'comment': [],
-#             'like': 0,
-#             'like_user': []
-#         }
-
-#         db.post_content.update_one({'user_id': user_info['user_id']}, {
-#             '$addToSet': {'container': container_content}})
-
-#         return jsonify({'msg': '등록완료'})
-#     except jwt.ExpiredSignatureError:
-#         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
-#     except jwt.exceptions.DecodeError:
-#         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
 
 
 
