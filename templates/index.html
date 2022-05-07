@@ -34,13 +34,29 @@
 
 
     </script>
+    <style>
+        .heart_tooltip{
+            position: absolute;
+            right: 0;
+            width: 400px;
+            height: 300px;
+            margin-top:60px;
+            float:right;
+            margin-right: 60px;
+            z-index: 4;
+            border:1px solid antiquewhite;
+            border-radius: 5px;
+            background-color: #080615;
+            display: none;
+        }
+    </style>
 
 </head>
 
 <body>
 <!--================1.Navbar파트====================-->
-
-<nav class="navbar">
+<div>
+    <nav class="navbar">
     <span></span>
     <a class="navbar-brand logo_h" href="/">
         <img class="img_logo"
@@ -54,51 +70,54 @@
     </div>
     <ul class="navbar_links">
         <li><a href="/"><i class="fa fa-home-fi"></i></a></li>
-        <li><a href=""><i class="fa fa-paper-plane" style="width:28px"></i></a></li>
+        <li><a href="/dm_page"><i class="fa fa-paper-plane" style="width:28px"></i></a></li>
         <li><button id="nav_bar_add_box" class="modal_button" data-toggle="modal" data-target="#addition_modal_box"><i class="fa fa-plus"></i></button></li>
         <li><a href=""><i class="fa fa-compass"></i></a></li>
-        <li><a href=""><i class="fa fa-heart"></i></a></li>
+        <li><button id="navbar_heart" class="modal_button"><i class="fa fa-heart"></i></button></li>
         <li style="display: flex; align-items: center;"><button style="width: 70px; height: 30px; font-size: 15px; cursor: pointer; border: 0;" onclick="logout()">logout</button></li>
     </ul>
-    <span></span>
-</nav>
-<!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
-<div id="first_modal" class="modal_overlay">
-    <div class="modal_window">
-        <div class="addition_modal_head">
-            <div style="width:40px"></div>
-            <p class="modal-title" >새 게시물 만들기</p>
-            <button id="modal_x_box" class="modal_x_box"><i class="fa fa-x"></i></button>
-        </div>
-        <div id="image_upload" class="addition_modal_body">
-            사진을 여기에 끌어다 놓으세요
 
+</nav>
+    <!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
+    <div id="first_modal" class="modal_overlay">
+        <div class="modal_window">
+            <div class="addition_modal_head">
+                <div style="width:40px"></div>
+                <p class="modal-title" >새 게시물 만들기</p>
+                <button id="modal_x_box" class="modal_x_box"><i class="fa fa-x"></i></button>
+            </div>
+            <div id="image_upload" class="addition_modal_body">
+                사진을 여기에 끌어다 놓으세요
+
+            </div>
         </div>
     </div>
-</div>
-<!--더하기 버튼 모달(새게시물 만들기)//두번째-->
-<div id="second_modal" class="modal_overlay">
-    <div class="modal_window2">
+    <!--더하기 버튼 모달(새게시물 만들기)//두번째-->
+    <div id="second_modal" class="modal_overlay">
+        <div class="modal_window2">
 
-        <div class="addition_modal_head">
-            새 게시물 만들기
-            <button id="modal_x_box2" class="modal_x_box"><i class="fa fa-x"></i></button>
-        </div>
-        <div class="addition_modal_body2">
-            <div class="img_upload_space" ></div>
-            <div class="img_description_space">
-                <div class="img_description_box">
-                    <textarea id="input_feed_content" style="width:100%;height: 100%">내용을 써주세요^^</textarea>
+            <div class="addition_modal_head">
+                새 게시물 만들기
+                <button id="modal_x_box2" class="modal_x_box"><i class="fa fa-x"></i></button>
+            </div>
+            <div class="addition_modal_body2">
+                <div class="img_upload_space" ></div>
+                <div class="img_description_space">
+                    <div class="img_description_box">
+                        <textarea id="input_feed_content" style="width:100%;height: 100%">내용을 써주세요^^</textarea>
 
-                </div>
-                <div style="justify-content: center;display: flex">
-                    <button id="feed_create_button" onclick="uploading_files()" style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
+                    </div>
+                    <div style="justify-content: center;display: flex">
+                        <button id="feed_create_button" onclick="uploading_files()" style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <!--하트:tooltip-->
+    <div id="heart_tooltip" class="heart_tooltip">
+    </div>
 </div>
-
 
 <!--================1.Navbar END====================-->
 
@@ -132,6 +151,7 @@
     </div>
 
     <!--================2.메인 카드 섹션 END===============-->
+
     <!--================3. 사이드 바 START=================-->
 
     <div class="side_column">
@@ -206,6 +226,7 @@
 </div>
 
 <!--================3. 사이드 바 END==================-->
+
 <!--================4. FOOTER START==================-->
 <div class="footer">
     <ul class="footer-contents">
@@ -233,6 +254,8 @@
 </div>
 <!--================4. FOOTER END====================-->
 <script>
+ //navbar 하트버튼
+$('#navbar_heart').click(function(){$('#heart_tooltip').toggle();});
 let files;
 $('#nav_bar_add_box').click(function(){
     $('#first_modal').css({

@@ -62,6 +62,10 @@ def sign_up_page():
 def login_page():
    return render_template('login.html')
 
+@app.route('/dm_page')
+def dm_page():
+   return render_template('dm.html')
+
 
 ####################로그인 창############################################
 
