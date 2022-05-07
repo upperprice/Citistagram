@@ -12,8 +12,10 @@
       <change beforePath="$PROJECT_DIR$/static/html.html" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/static/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/dm.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dm.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/profile_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile_page.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/sign_up.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sign_up.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -141,7 +143,8 @@
       <workItem from="1651842092960" duration="2410000" />
       <workItem from="1651876674130" duration="131000" />
       <workItem from="1651876834717" duration="12000" />
-      <workItem from="1651877951420" duration="10334000" />
+      <workItem from="1651877951420" duration="13441000" />
+      <workItem from="1651924941570" duration="4775000" />
     </task>
     <servers />
   </component>
@@ -160,7 +163,7 @@
     </option>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/make_Citistagram$Flask__app_py_.coverage" NAME="Flask (app.py) 커버리지 결과" MODIFIED="1651903232364" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/make_Citistagram$Flask__app_py_.coverage" NAME="Flask (app.py) 커버리지 결과" MODIFIED="1651914898026" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/make_Citistagram$make_Citistagram.coverage" NAME="make_Citistagram Coverage Results" MODIFIED="1651623825427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

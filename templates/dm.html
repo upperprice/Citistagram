@@ -27,17 +27,24 @@
     <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="../static/responsive.css">
     <style>
+
+
+        .dm_main_body{
+            width: 100vw;
+            height: 100vh;
+            background-color: #080615;
+        }
         .left_column{
             width: 300px;
-            height: 1000px;
-            background-color: pink;
+            height: 700px;
+            background-color: #080615;
             float: left;
 
         }
         .right_column{
             width: 550px;
-            height: 1000px;
-            background-color: violet;
+            height: 700px;
+            background-color: #080615;
             float: left;
     }
         .dm_main_body{
@@ -46,20 +53,24 @@
         }
         .dm_name_card{
             width: 100%;
-            height: 800px;
+            height: 650px;
             margin-top: 100px;
             margin-bottom: 100px;
-            background-color: mediumpurple;
+            background-color: #080615;
+            border: 1px solid antiquewhite;
+            border-radius: 7px;
         }
         .dm_page{
            width: 100%;
-            height: 800px;
+            height: 650px;
             margin-top: 100px;
             margin-bottom: 100px;
-            background-color: cornflowerblue;
+            background-color: #080615;
+            border: 1px solid antiquewhite;
+            border-radius: 7px;
         }
         .dm_name_card_top{
-            height: 40px;
+            height: 50px;
             border-bottom: 1px solid antiquewhite;
             display:flex;
             flex-direction: row;
@@ -68,12 +79,37 @@
             padding-right: 30px;
             padding-top: 10px;
 
-        }
-        .dm_name_card_top p{
 
         }
-        .dm_name_card_top i{
 
+        .dm_name_card_body{
+            width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            overflow-x: hidden;
+
+        }
+        .dm_name_slot{
+            width: 100%;
+            height: 70px;
+            background-color: #080615;
+            margin: 25px 25px 0 10px;
+            float: left;
+            display: flex;
+
+        }
+        .dm_profile_image{
+            width: 75px;
+            height: 75px;
+            border-radius: 70%;
+        }
+        .dm_profile_text{
+            margin: 10px 0 0 15px;
+        }
+        .dm_message{
+            background-color: #080615;
+            text-align: center;
+            padding-top: 150px;
         }
 
 
@@ -111,7 +147,6 @@
             <div class="dm_name_card">
                 <div class="dm_name_card_top">
                     <div>
-
                     </div>
                     <div>
                         <p>Tasha Han</p>
@@ -122,12 +157,69 @@
 
 
                 </div>
-                <div class="dm_name_card_body"></div>
+                <div class="dm_name_card_body">
+                    <div class="dm_name_slot">
+                        <img class="dm_profile_image" src="../static/img/프로필1.png">
+                        <div class="dm_profile_text">
+                            <h6>Profile Name</h6>
+                            <p>아무말 주저리주저리</p>
+
+                        </div>
+
+
+                    </div>
+                    <div class="dm_name_slot">
+                        <img class="dm_profile_image" src="../static/img/프로필1.png">
+                        <div class="dm_profile_text">
+                            <h6>Profile Name</h6>
+                            <p>아무말 주저리주저리</p>
+
+                        </div>
+
+
+                    </div>
+                    <div class="dm_name_slot">
+                        <img class="dm_profile_image" src="../static/img/프로필1.png">
+                        <div class="dm_profile_text">
+                            <h6>Profile Name</h6>
+                            <p>아무말 주저리주저리</p>
+
+                        </div>
+
+
+                    </div>
+                    <div class="dm_name_slot">
+                        <img class="dm_profile_image" src="../static/img/프로필1.png">
+                        <div class="dm_profile_text">
+                            <h6>Profile Name</h6>
+                            <p>아무말 주저리주저리</p>
+
+                        </div>
+
+
+                    </div>
+                    <div class="dm_name_slot">
+                        <img class="dm_profile_image" src="../static/img/프로필1.png">
+                        <div class="dm_profile_text">
+                            <h6>Profile Name</h6>
+                            <p>아무말 주저리주저리</p>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
 
             </div>
         </div>
         <div class="right_column">
             <div class="dm_page">
+                <div class="dm_message">
+                    <h3>내 메시지</h3>
+                    <p>친구나 그룹에 비공개 사진과 메시지를 보내보세요.</p>
+                    <button class="colorful_buttons">메시지 보내기</button>
+                </div>
 
             </div>
         </div>
@@ -136,5 +228,30 @@
 
 
 
+<div class="footer" style="z-index:500">
+    <ul class="footer-contents">
+        <li><a href="">소개</a></li>
+        <li>/</li>
+        <li><a href="">블로그</a></li>
+        <li>/</li>
+        <li><a href="">채용정보</a></li>
+        <li>/</li>
+        <li><a href="">도움말</a></li>
+        <li>/</li>
+        <li><a href="">API</a></li>
+        <li>/</li>
+        <li><a href="">개인정보처리방침</a>
+        <li>/</li>
+        <li><a href="">약관</a></li>
+        <li>/</li>
+        <li><a href="">인기계정</a></li>
+        <li>/</li>
+        <li><a href="">해시태그</a></li>
+    </ul>
+    <div>
+        <div>한국어  ©2022 Citistagram by Tasha</div>
+    </div>
+</div>
+        <script type="text/javascript" src="../static/script.js"></script>
 </body>
 </html>
