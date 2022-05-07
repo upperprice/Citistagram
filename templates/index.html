@@ -36,7 +36,6 @@
     </script>
     <style>
         .heart_tooltip{
-            position: absolute;
             right: 0;
             width: 400px;
             height: 300px;
@@ -48,6 +47,7 @@
             border-radius: 5px;
             background-color: #080615;
             display: none;
+            position: fixed;
         }
     </style>
 
@@ -229,7 +229,8 @@
 
 <!--================4. FOOTER START==================-->
 <div class="footer">
-    <ul class="footer-contents">
+    <div>
+        <ul class="footer-contents">
         <li><a href="">소개</a></li>
         <li>/</li>
         <li><a href="">블로그</a></li>
@@ -248,8 +249,11 @@
         <li>/</li>
         <li><a href="">해시태그</a></li>
     </ul>
-    <div>
-        <div>한국어 ©2022 Citistagram by Tasha</div>
+    </div>
+
+    <div class="footer2">
+        <div>한국어 ©2022 Citistagram by </div>
+        <img style="height:11px;" src="../static/img/logo.png">
     </div>
 </div>
 <!--================4. FOOTER END====================-->
