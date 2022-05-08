@@ -3,16 +3,18 @@
     font-family: 'Gugi', cursive;
     color: #b4ab9f;
 
+
 }
 a {
         color:#c7b0ff;
       }
+body{
+    background-color: #080615;
+}
 /*=================== navbar ====================*/
 .navbar{
     background-color: #c7b0ff;
-    background-image: -moz-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
-    background-image: -ms-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     display: flex;
     justify-content: space-between;
     position:fixed;
@@ -26,12 +28,8 @@ a {
     margin:0;
 
 }
-.navbar_logo{
-    padding:0;
-    margin:0;
 
 
-}
 .img_logo{
     padding: 0px;
     margin: 0px;
@@ -67,6 +65,38 @@ a {
     color:antiquewhite;
     font-size: 1em;
 }
+
+.modal_button{
+    background-color:transparent;
+    border:none;
+
+}
+.modal_button i{
+    color:antiquewhite;
+}
+.modal_button i :hover {
+    color: #c00000;
+     text-shadow: 0 0 10px blue;
+}
+.navbar_links :nth-child(2) a i {
+    font-size:0.8em;
+    padding-left:5px;
+}
+
+.heart_tooltip{
+    right: 0;
+    width: 400px;
+    height: 300px;
+    margin-top:60px;
+    float:right;
+    margin-right: 60px;
+    z-index: 4;
+    border:1px solid antiquewhite;
+    border-radius: 5px;
+    background-color: #080615;
+    display: none;
+    position: fixed;
+}
 /*=================== main page ====================*/
 .main_page_all {
     padding-top: 85px;
@@ -75,6 +105,8 @@ a {
     justify-content: center;
     z-index: 1;
     background-color: #080615;
+    width:100vw;
+    height:100vh;
 
 }
 
@@ -143,12 +175,14 @@ a {
 }
 .modal-footer{
     justify-content:center;
+    z-index:500;
 }
 .modal_dismiss_button{
     background-color:#080615;
     color:#c7b0ff;
     border:none;
 }
+
 .modal-top-line{
 
     height:40px;
@@ -214,12 +248,7 @@ a {
     float:left;
 }
 
-.modar{
-    border:none;
-}
-
-.modal_button{
-    background-color:transparent;
+.modal{
     border:none;
 }
 
@@ -436,8 +465,21 @@ a {
     background-image: -ms-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     width:100%;
     z-index: 4;
-    height: 70px;
+    height: 50px;
     padding-top:5px;
+    position : fixed;
+    bottom:0
+
+}
+.footer2{
+    position:absolute;
+    bottom:0;
+    left:43%
+}
+.footer2 img{
+    position:absolute;
+    bottom: 5px;
+    left:220px;
 }
 
 .footer-contents{
@@ -496,19 +538,14 @@ a {
 .buttons button{
     border: none;
 }
-.buttons button:nth-child(1){
+.colorful_buttons{
 
     background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     border: none;
     color: #080615;
 }
 
-.buttons button:nth-child(2){
 
-    background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
-    border: none;
-    color: #080615;
-}
 .buttons button:nth-child(3){
     border: none;
 }
@@ -711,7 +748,7 @@ a {
 /*==================게시글 모달 관련 CSS 시작====================*/
 .modal_overlay {
     width: 100%;
-    height: 700px;
+    height: 100%;
     position: absolute;
     left: 0;
     top: 0;
