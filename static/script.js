@@ -282,6 +282,7 @@ function show_comment() {
 
                 hide_show_comment(post_id)
                 hide_show_desc(post_id)
+                show_like(post_id);
 
             }
         }
@@ -342,25 +343,44 @@ function like_up(user_id, post_id) {
         url: '/like',
         data: {user_give: user_id, post_give: post_id},
         success: function (response) {
+            alert(response.msg)
             window.location.reload()
         }
     })
 }
+    
+
+// // 좋아요 개수 보기
+// function show_like() {
+//     $.ajax({
+//         type: "GET",
+//         url: "/like",
+//         data: {},
+//         success: function (response) {
+//             let rows = response['likes']
+//             for (let i = 0; i < rows.length; i++) {
+//                 let post_id = rows[i]['post_id']
+//                 let like = rows[i]['like']
+                
+//                 $('span[name='+ post_id +']').text(like)
+//             }
+//         }
+//     });
+// }
 
 // 좋아요 개수 보기
-function show_like() {
+function show_like(post_id) {
     $.ajax({
         type: "GET",
         url: "/like",
         data: {},
         success: function (response) {
             let rows = response['likes']
-            for (let i = 0; i < rows.length; i++) {
-                let post_id = rows[i]['post_id']
-                let like = rows[i]['like']
+            let like = rows.filter(function(element) {
+                return element.post_id == post_id;
+            }).length;
 
-                $('span[name='+ post_id +']').text(like)
-            }
+            $('span[name='+ post_id +']').text(like)
         }
     });
 }

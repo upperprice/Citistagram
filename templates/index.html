@@ -31,6 +31,7 @@
         $(document).ready(function () {
             // show_content();
             show_comment();
+            // show_like();
         });
     </script>
 
@@ -195,8 +196,11 @@
                 <div class="card_body">
                     <div class="icon_bar">
                         <div class="icon_bar_left">
-                            <div id="like-heart1">
+                            <div id="like-heart{{content.post_id}}" style="display: block;">
                                 <button onclick="like_up('{{content.user_id}}', '{{content.post_id}}')"><i class="fa fa-heart"></i></button>
+                            </div>
+                            <div id="liked-heart{{content.post_id}}" style="display: none;">
+                                <button onclick="like_up('{{content.user_id}}', '{{content.post_id}}')"><i class="fa fa-heart" style="color:red;"></i></button>
                             </div>
                             <div>
                                 <button><i class="fa fa-chat-bubble" data-toggle="modal" data-target="#modal_card{{content.post_id}}"></i></button>

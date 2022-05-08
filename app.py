@@ -175,10 +175,10 @@ def comment_post():
 
     user = db.citista_users.find_one({'token': token_receive})
 
-    user_id = user['username']
+    user_receive = user['username']
 
     doc = {
-        'user_id': user_id,
+        'user_id': user_receive,
         'post_id': post_receive,
         'comment': comment_receive
      }
@@ -192,17 +192,39 @@ def comment_get():
     return jsonify({'comments':comments})
 
 
+# # 좋아요 올리기
+# @app.route("/like", methods=["POST"])
+# def like_up():
+#     post_receive = int(request.form['post_give'])
+#     likes = db.citista_likes.find_one({'post_id': post_receive})
+
+#     current_like = likes['like']
+#     new_like = current_like + 1
+#     db.citista_likes.update_one({'post_id': post_receive}, {'$set': {'like': new_like}})
+#     return jsonify({'msg':'좋아요 감사합니다.'})
+
+
 # 좋아요 올리기
 @app.route("/like", methods=["POST"])
 def like_up():
     post_receive = int(request.form['post_give'])
-    likes = db.citista_likes.find_one({'post_id': post_receive})
 
-    current_like = likes['like']
-    new_like = current_like + 1
-    db.citista_likes.update_one({'post_id': post_receive}, {'$set': {'like': new_like}})
+    token_receive = request.cookies.get('mytoken')
+    user = db.citista_users.find_one({'token': token_receive})
+    user_receive = user['username']
 
-    return jsonify({'msg':'좋아요 감사합니다.'})
+    liked = db.citista_likes.find_one({'post_id': post_receive}, {'user_id': user_receive})  
+
+    if liked != None:
+        return jsonify({'msg':'이미 좋아요를 하셨어요.'})
+    else:
+        doc = {
+            'user_id': user_receive,
+            'post_id': post_receive,
+        }
+        db.citista_likes.insert_one(doc)
+        return jsonify({'msg': '좋아요 감사합니다.'})
+
 
 # 좋아요 개수 보이기
 @app.route("/like", methods=["GET"])
