@@ -152,11 +152,11 @@ function sign_up() {
     });
 
 }
-function logout() {
-    $.removeCookie('mytoken');
-    alert('로그아웃!')
-    window.location.href = '/login'
-}
+// function logout() {
+//     $.removeCookie('mytoken');
+//     alert('로그아웃!')
+//     window.location.href = '/login'
+// }
 
 function sign_up_page() {
     alert('회원가입페이지 이동!')
@@ -210,15 +210,14 @@ function sign_in() {
 // <!--================로그아웃==================-->
 
 function logout(){
+    // $.removeCookie('mytoken', { path: '/' });
     $.ajax({
         type: "POST",
         url: "/logout",
         data: {},
         success: function (response) {
             if (response['result'] == 'success') {
-                // $.cookie('mytoken', response['token'], {path: '/'});
-                window.location.replace("/login");
-                console.log(response['msg']);
+                window.location.href = '/login';
             }
         }
     });
@@ -243,6 +242,21 @@ function save_comment(post_id) {
     })
 }
 
+// 모달 댓글 작성
+function save_modal_comment(post_id) {
+
+    let post = parseInt(post_id)
+    let input_val = $('#modal_comment_input' + post).val();
+    $.ajax({
+        type: 'POST',
+        url: '/comment',
+        data: {post_give: post, comment_give: input_val},
+        success: function (response) {
+            window.location.reload()
+        }
+    })
+}
+
 // 댓글 보이기
 function show_comment() {
     $.ajax({
@@ -257,12 +271,14 @@ function show_comment() {
                 let comment = rows[i]['comment']
 
                 let comment_lists = $('#comment_lists'+ post_id)
+                let modal_comment_lists = $('#modal_comment_lists'+ post_id)
 
                 let temp_html = `<div>
                                     <a href="/" alt="계정" name="${post_id}">${user_id}</a>
                                     <span>${comment}</span>
                                 </div>`
                 comment_lists.append(temp_html);
+                modal_comment_lists.append(temp_html);
 
                 hide_show_comment(post_id)
 
@@ -293,91 +309,7 @@ function hide_show_desc(post_id) {
     let shown = $('#shown_desc' + post);
     let read_more = $('#desc_read_more_button' + post);
 
-<<<<<<< HEAD
-function show_comment3() {
-    $.ajax({
-        type: "GET",
-        url: "/insta_comment3",
-        data: {},
-        success: function (response) {
-            let rows = response['comments']
-
-            for (let i = 0; i < rows.length; i++) {
-                let comment = rows[i]['comment']
-
-                let temp_html = `<p>${comment}</p>`
-                $('#comment-lists3').append(temp_html)
-                $('#comment-number3').text(rows.length)
-
-
-            }
-        }
-    });
-}
-
-function save_comment3() {
-    let comment = $('#uploading_comment3').val()
-    $.ajax({
-        type: 'POST',
-        url: '/insta_comment3',
-        data: {comment_give: comment},
-        success: function (response) {
-            alert(response['msg'])
-            window.location.reload()
-        }
-    })
-}
-
-<!--================4.4 4번째 댓글 만들기====================-->
-$(document).ready(function () {
-    show_comment4()
-});
-
-function show_comment4() {
-    $.ajax({
-        type: "GET",
-        url: "/insta_comment4",
-        data: {},
-        success: function (response) {
-            console.log(response)
-            let rows = response['comments']
-            for (let i = 0; i < rows.length; i++) {
-                let comment = rows[i]['comment']
-                console.log(comment)
-                let temp_html = `<p>${comment}</p>`
-                $('#sli').append(temp_html)
-            }
-
-        }
-    });
-}
-
-function save_comment4() {
-    let comment = $('#uploading_comment4').val()
-    $.ajax({
-        type: 'POST',
-        url: '/insta_comment4',
-        data: {comment_give: comment},
-        success: function (response) {
-            alert(response['msg'])
-            window.location.reload()
-        }
-    })
-}
-
-<<<<<<< HEAD
-<!--================4.5 게시글 더보기 생성====================-->
-$(document).ready(function () {
-    desc_hide_show();
-});
-
-let desc_text = $('#shown_desc').text();
-
-function desc_hide_show() {
-    $('#hidden_desc').hide();
-=======
     hidden.hide();
->>>>>>> eom
     let limit_length = 10
     let text_legnth = shown.text().length;
     if (text_legnth > limit_length) {
@@ -390,97 +322,6 @@ function desc_hide_show() {
     }
 };
 
-<<<<<<< HEAD
-function desc_read_more() {
-    $('#shown_desc').text().substring(0, desc_text);
-    $('#desc_read_more_button').hide();
-    $('#hidden_desc').show();
-    $('#shown_desc').hide();
-}
-=======
-<!--================5.새 게시물 만들기====================-->
-    let files //파일 계속 사용할거니까 전역변수 선언
-
-    $('#nav_bar_add_box').click(function () { //+버튼 클릭시 1번모달창 나타나기
-        $('#first_modal').css({
-            display: 'flex'
-        });
-        $(document.body).css({   //+버튼 클릭시 전체화면 스크롤바 사라짐
-            overflow: 'hidden'
-        })
-    });
-    $('#modal_x_box').click(function () {   //x버튼 클릭시 1번모달창 사라짐
-        $('.modal_overlay').css({
-            display: 'none'
-        });
-        $(document.body).css({
-            overflow: 'visible'
-        })
-    });
-    $('#modal_x_box2').click(function () {   //x버튼 클릭시 2번모달창 사라짐
-        $('.modal_overlay').css({
-            display: 'none'
-        });
-        $(document.body).css({
-            overflow: 'visible'
-        })
-    });
-
-
-    $('.addition_modal_body')    //모달창에 드래그앤 드롭 기능 구현하겠다
-        .on("dragover", dragOver)
-        .on("dragleave", dragOver)
-        .on("drop", uploadFiles);
-
-    function dragOver(e) {     //드래그오버 함수
-        e.stopPropagation();   //드래그오버시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
-        e.preventDefault();
-
-        if (e.type == "dragover") {  //드래그오버하면 outline이 가운데로 몰림
-            $(e.target).css({
-                "outline-offset": "-20px",
-                "border-radius": "8px"
-            });
-        } else {
-            $(e.target).css({
-                "background-color": "black",
-                "outline-offset": "-10px"
-            });
-        }
-    }
-
-    function uploadFiles(e) {  //업로드파일 함수
-        e.stopPropagation();  //업로드파일시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
-        e.preventDefault();
-
-        e.dataTransfer = e.originalEvent.dataTransfer;
-        files = e.dataTransfer.files;
-
-        if (files.length > 1) {    //파일갯수가 여러개면 하나만 올려주세요 창이 뜸
-            alert('하나만 올려 주세요');
-            return;
-        }
-        //파일이 인식되면 배경 이미지 바뀌게 만듬
-        if (files[0].type.match(/image.*/)) {
-            $('#first_modal').css({
-                display: 'none'
-            });
-            $('#second_modal').css({
-                display: 'flex'
-            });
-            $('.img_upload_space').css({
-                "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
-                "outline": "none",
-                "background-size": "100% 100%"
-            });
-        } else {
-            alert('이미지가 아닙니다.');
-            return;
-        }
-
-    }
->>>>>>> origin/새게시물만들기
-=======
 // 게시글 더보기 버튼
 function desc_read_more(post_id) {
     let post = parseInt(post_id)
@@ -522,6 +363,7 @@ function show_like() {
         }
     });
 }
+
 
 // // (임시)게시물 생성
 // function create_content() {
@@ -624,7 +466,7 @@ function show_content() {
                                                     <button onclick="like_up('${user_id}', ${post_id})"><i class="fa fa-heart"></i></button>
                                                 </div>
                                                 <div>
-                                                    <button><i class="fa fa-chat-bubble"></i></button>
+                                                    <button><i class="fa fa-chat-bubble" data-toggle="modal" data-target="#modal_card${post_id}"></i></button>
                                                 </div>
                                                 <div>
                                                     <button><i class="fa fa-paper-plane"></i></button>
@@ -639,63 +481,10 @@ function show_content() {
                                             <button id="desc_read_more_button${post_id}" class="" onclick="desc_read_more(${post_id})" >더 보기</button>
                                             <span id="hidden_desc${post_id}" class="card_comment">${desc}</span>
                                             <div style="height:20px"></div>
-                                            <button id="comment_box${post_id}" class="comment_box" data-toggle="modal" data-target="#modal_card">댓글 00개 모두
+                                            <button id="comment_box${post_id}" class="comment_box" data-toggle="modal" data-target="#modal_card${post_id}">댓글 00개 모두
                                                 보기
                                             </button>
-                                            <!--댓글 상세 모달-->
-                                            <div class="modal" tabindex="-1" id="modal_card" style="padding-right: 16px; display: none;">
-                                                <div class="modal-dialog1">
-                                                    <div class="modal-content1">
-                                                        <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
-                                                            <div class="carousel-inner">
-                                                                <div class="carousel-item">
-                                                                    <img class="d-block w-100" src="../static/img/모달1.jpg" alt="First slide">
-                                                                </div>
-                                                                <div class="carousel-item">
-                                                                    <img class="d-block w-100" src="../static/img/모달2.png" alt="Second slide">
-                                                                </div>
-                                                                <div class="carousel-item active">
-                                                                    <img class="d-block w-100" src="../static/img/모달3.jpg" alt="Third slide">
-                                                                </div>
-                                                            </div>
-                                                            <a class="carousel-control-prev" href="#carouselExampleControls2" role="button"
-                                                               data-slide="prev">
-                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                                <span class="sr-only">Previous</span>
-                                                            </a>
-                                                            <a class="carousel-control-next" href="#carouselExampleControls2" role="button"
-                                                               data-slide="next">
-                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                                <span class="sr-only">Next</span>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-content2">
-                                                        <div class="modal-top-line">
-                                                            <div class="profile">
-                                                                <img class="profile_pic" src="../static/img/프로필5.png" alt="프로필 사진">
-                                                                <p style="padding-left:38px;  ">Tasha Han</p>
-
-                                                            </div>
-
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div id="comment-lists4">
-                                                                <p>벌써 5월 2일이라니 시간이 무섭다.</p>
-                                                                <p>날씨 좋다</p>
-
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-comment">
-
-                                                            <textarea class="form-control" placeholder="" id="uploading_comment4"
-                                                                      rows="1">댓글 달기</textarea>
-                                                            <button class="comment_upload_button" onclick="save_comment()">게시</button>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            
                                             <div id="comment_lists${post_id}" class="comment-list">
                                             </div>
                                             <p class="time_passed">${timestamp}시간 전</p>
@@ -706,7 +495,60 @@ function show_content() {
                                             <button class="comment_upload_button" onclick="save_comment(${post_id})">게시</button>
                                         </div>
                                     </div>
-                                </div>`
+                                </div>
+                                <!--댓글 상세 모달-->
+                                    <div class="modal" tabindex="-1" id="modal_card${post_id}" style="padding-right: 16px; display: none;">
+                                        <div class="modal-dialog1">
+                                            <div class="modal-content1">
+                                                <div id="carouselExampleControls2">
+                                                    <div class="carousel-inner" style="margin-top: auto; margin-bottom: auto;">
+                                                        <div class="carousel-item">
+                                                            <img class="d-block w-100" src="/static/img/${img}" alt="First slide">
+                                                        </div>
+                                                        <div class="carousel-item">
+                                                            <img class="d-block w-100" src="/static/img/${img}" alt="Second slide">
+                                                        </div>
+                                                        <div class="carousel-item active">
+                                                            <img class="d-block w-100" src="/static/img/${img}" alt="Third slide">
+                                                        </div>
+                                                    </div>
+                                                    <a class="carousel-control-prev" href="#carouselExampleControls2" role="button"
+                                                        data-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Previous</span>
+                                                    </a>
+                                                    <a class="carousel-control-next" href="#carouselExampleControls2" role="button"
+                                                        data-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="sr-only">Next</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="modal-content2">
+                                                <div class="modal-top-line">
+                                                    <div class="profile">
+                                                        <img class="profile_pic" src="../static/img/프로필5.png" alt="프로필 사진">
+                                                        <a href="/profile_page" style="padding-left:38px;  ">${user_id}</a>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div id="comment-desc" style="margin-bottom: 10px;">
+                                                        <a href="/profile_page" alt="계정" name="${post_id}">${user_id}</a>
+                                                        <span>${desc}</span>                                                   
+                                                    </div>
+                                                    <div id="modal_comment_lists${post_id}" class="comment-list">
+                                                    </div>
+                                                </div>
+                                                <div class="modal-comment">
+                                                    
+                                                    <input class="form-control" placeholder="댓글 달기..." id="modal_comment_input${post_id}"
+                                                                rows="">
+                                                    <button class="comment_upload_button" onclick="save_modal_comment(${post_id})">게시</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>`
 
                 $('#card_box').append(temp_html);
 
@@ -806,4 +648,3 @@ function uploading_files(){
         }
     });
 }
->>>>>>> eom

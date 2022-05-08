@@ -17,7 +17,7 @@ a {
     justify-content: space-between;
     position:fixed;
     width: 100%;
-    z-index: 1;
+    z-index: 3;
     height: 70px;
 }
 
@@ -66,43 +66,6 @@ a {
 .navbar_links li a i{
     color:antiquewhite;
     font-size: 1em;
-}
-.addition_modal_content{
-    width:500px;
-    height:500px;
-    background-color: #080615;
-    border: 1px solid antiquewhite;
-    border-radius:8px;
-    opacity: 0.8;
-    display:flex;
-    justify-content: space-between;
-    flex-direction:column;
-}
-.addition_modal_head{
-    width:100%;
-    height:35px;
-    border-bottom: 1px solid antiquewhite;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color:#C7B0FFFF;
-    opacity: 0.8;
-    font-size: 1em;
-
-}
-.addition_modal_body{
-    height:93%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction:column;
-    outline: 2px dashed #88F3FFFF ;
-    outline-offset:-10px;
-    margin-top:10px
-
-}
-.addition_modal_body p{
-    color:#88F3FFFF;
 }
 /*=================== main page ====================*/
 .main_page_all {
@@ -160,7 +123,7 @@ a {
 .modal-content1{
     width:500px;
     height:650px;
-    background-color: #c7b0ff;
+    background-color: black;
 }
 .modal-content2{
     width:500px;
@@ -172,11 +135,11 @@ a {
 }
 .modal-header{
     justify-content:center;
+    
 }
 .modal-title{
     width:100%;
     text-align:center;
-    color: #c7b0ff;
 }
 .modal-footer{
     justify-content:center;
@@ -350,6 +313,7 @@ a {
     margin-top: 5px;
     font-size: 0.8em;
 }
+
 .card_bottom {
     display: flex;
     text-align: center;
@@ -646,20 +610,6 @@ a {
 }
 
 
-<<<<<<< HEAD
-        .picture_box{
-            width: 280px;
-            height: 280px;
-            background-color: #c7b0ff;
-            overflow: hidden;
-            position: relative;
-            transition: .5s ease;
-        }
-        .picture_box img{
-            object-fit: cover;
-            width: 100%;
-            height: 100%;}
-=======
 
 /*================== 수정중====================*/
 .picture_box{
@@ -674,7 +624,6 @@ a {
     object-fit: cover;
     width: 100%;
     height: 100%;}
->>>>>>> eom
 
 .images2{
     top: 0;
@@ -861,85 +810,3 @@ a {
 }
 /*==================게시글 모달 관련 CSS 끝====================*/
 
-<<<<<<< HEAD
-        .picture_box:hover .text{
-            visibility: visible;
-            opacity: 1;
-        }
-        .picture_box:hover .images2{
-            visibility: visible;
-        }
-
-/*==================게시글 모달 관련 CSS 시작====================*/
-        .modal_overlay {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: none;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        background: rgba(0, 0, 0, 0.8);
-        backdrop-filter: blur(1.5px);
-        -webkit-backdrop-filter: blur(1.5px);
-        z-index:1050
-    }
-
-    .modal_window {
-        background-color: #080615;
-        opacity: 0.8;
-        backdrop-filter: blur(13.5px);
-        -webkit-backdrop-filter: blur(13.5px);
-        border-radius: 5px;
-        border: 1px solid antiquewhite;
-        width: 550px;
-        height: 600px;
-        position: relative;
-        padding: 10px;
-
-    }
-    .modal_window2{
-        background-color: #080615;
-        opacity: 0.8;
-        backdrop-filter: blur(13.5px);
-        -webkit-backdrop-filter: blur(13.5px);
-        border-radius: 5px;
-        border: 1px solid antiquewhite;
-
-
-    }
-    .modal_x_box{
-        background-color: transparent;
-        border: none;
-        margin-bottom: 10px;
-    }
-    .modal_x_box i{
-        color:#C7B0FFFF;
-    }
-    .img_upload_space{
-        background-color: #C7B0FFFF; width: 500px; height: 500px;
-    }
-    .img_description_space{
-        color:#C7B0FFFF;
-    }
-    .addition_modal_body2{
-        display:flex;
-        flex-direction: row;
-        justify-content: space-between;
-    }
-    .img_description_space{
-        display: flex;
-        flex-direction: column;
-
-    }
-    .img_description_box{
-        width: 350px;
-        height: 380px;
-        margin:15px;
-        border: 1px solid #C7B0FFFF;
-    }
-/*==================게시글 모달 관련 CSS 끝====================*/
-=======
->>>>>>> eom

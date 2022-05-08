@@ -196,17 +196,6 @@ def like_up():
 
     return jsonify({'msg':'좋아요 감사합니다.'})
 
-<<<<<<< HEAD
-###################인스타 피드 업로드 ########################################
-@app.route("/insta_feed", methods=["POST"])
-def feed_post():
-
-    fd = request.form['fd']
-    doc = {'fd':fd}
-    db.insta_feed.insert_one(doc)
-
-
-=======
 # 좋아요 개수 보이기
 @app.route("/like", methods=["GET"])
 def show_like():
@@ -214,7 +203,7 @@ def show_like():
     return jsonify({'likes':likes})
 
 
-# (임시) 게시물 생성
+# 게시물 생성
 @app.route("/create_content", methods=["POST"])
 def create_content():
 
@@ -251,7 +240,7 @@ def create_content():
     return jsonify({'msg':'게시물 생성'})
 
 
-# (임시) 게시물 보이기
+# 게시물 보이기
 @app.route("/create_content", methods=["GET"])
 def show_content():
     contents = list(db.citista_contents.find({}, {'_id': False}))
@@ -302,7 +291,6 @@ def show_content():
 #         return redirect(url_for("login_page", msg="로그인 시간이 만료되었습니다."))
 #     except jwt.exceptions.DecodeError:
 #         return redirect(url_for("login_page", msg="로그인 정보가 존재하지 않습니다."))
->>>>>>> eom
 
 
 
