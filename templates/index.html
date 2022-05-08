@@ -199,7 +199,7 @@
                                 <button onclick="like_up('{{content.user_id}}', '{{content.post_id}}')"><i class="fa fa-heart"></i></button>
                             </div>
                             <div>
-                                <button><i class="fa fa-chat-bubble" data-toggle="modal" data-target="#modal_card"></i></button>
+                                <button><i class="fa fa-chat-bubble" data-toggle="modal" data-target="#modal_card{{content.post_id}}"></i></button>
                             </div>
                             <div>
                                 <button><i class="fa fa-paper-plane"></i></button>
@@ -214,7 +214,7 @@
                         <button id="desc_read_more_button{{content.post_id}}" class="" onclick="desc_read_more('{{content.post_id}}')" >더 보기</button>
                         <span id="hidden_desc{{content.post_id}}" class="card_comment">{{content.desc}}</span>
                         <div style="height:20px"></div>
-                        <button id="comment_box{{content.post_id}}" class="comment_box" data-toggle="modal" data-target="#modal_card">댓글 00개 모두
+                        <button id="comment_box{{content.post_id}}" class="comment_box" data-toggle="modal" data-target="#modal_card{{content.post_id}}">댓글 00개 모두
                             보기
                         </button>
                         
