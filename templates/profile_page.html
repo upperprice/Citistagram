@@ -36,7 +36,7 @@
 </head>
 
 <body>
-
+    <!-- {% for user in user_info %} -->
     <nav class="navbar">
         <span></span>
         <a class="navbar-brand logo_h" href="/">
@@ -68,7 +68,7 @@
                 </div>
                 <div >
                     <div class="head_right_column">
-                        <div><p>Tasha Han</p></div>
+                        <div><p>{{user_info.username}}</p></div>
                         <div class="buttons">
                             <button>메시지 보내기</button>
                             <button>Follow</button>
@@ -258,34 +258,31 @@
             </div>
         </div>
     </div>
-
-
-
-
-<div class="footer">
-    <ul class="footer-contents">
-        <li><a href="">소개</a></li>
-        <li>/</li>
-        <li><a href="">블로그</a></li>
-        <li>/</li>
-        <li><a href="">채용정보</a></li>
-        <li>/</li>
-        <li><a href="">도움말</a></li>
-        <li>/</li>
-        <li><a href="">API</a></li>
-        <li>/</li>
-        <li><a href="">개인정보처리방침</a>
-        <li>/</li>
-        <li><a href="">약관</a></li>
-        <li>/</li>
-        <li><a href="">인기계정</a></li>
-        <li>/</li>
-        <li><a href="">해시태그</a></li>
-    </ul>
-    <div>
-        <div>한국어  ©2022 Citistagram by Tasha</div>
+    <div class="footer">
+        <ul class="footer-contents">
+            <li><a href="">소개</a></li>
+            <li>/</li>
+            <li><a href="">블로그</a></li>
+            <li>/</li>
+            <li><a href="">채용정보</a></li>
+            <li>/</li>
+            <li><a href="">도움말</a></li>
+            <li>/</li>
+            <li><a href="">API</a></li>
+            <li>/</li>
+            <li><a href="">개인정보처리방침</a>
+            <li>/</li>
+            <li><a href="">약관</a></li>
+            <li>/</li>
+            <li><a href="">인기계정</a></li>
+            <li>/</li>
+            <li><a href="">해시태그</a></li>
+        </ul>
+        <div>
+            <div>한국어  ©2022 Citistagram by Tasha</div>
+        </div>
     </div>
-</div>
-        <script type="text/javascript" src="../static/script.js"></script>
+    <script type="text/javascript" src="../static/script.js"></script>
+    <!-- {% endfor %} -->
 </body>
 </html>

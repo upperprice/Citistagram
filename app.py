@@ -46,7 +46,7 @@ def home():
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
         
-        return render_template('index.html', contents=contents)
+        return render_template('index.html', contents=contents )
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -58,9 +58,9 @@ def home():
 
 @app.route('/profile_page')
 def profile_page():
-    # user_id = request.args.get('user_id')
-    # user_info = db.citista_users.find_one({'username': user_id})
-    return render_template('profile_page.html')
+    user_id = request.args.get('user_id')
+    user_info = db.citista_users.find_one({'username': user_id})
+    return render_template('profile_page.html', user_info=user_info)
 
 @app.route('/sign_up_page')
 def sign_up_page():

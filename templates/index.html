@@ -133,7 +133,7 @@
                         <img class="profile_pic"
                                 src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FefeXMf%2FbtrALvQXSLl%2Fn6fd0dsFfXNbUmOX7EYGBK%2Fimg.png"
                                 alt="프로필 사진">
-                        <p style="padding-left:38px;"><a href="/">{{content.user_id}}</a></p>
+                        <p style="padding-left:38px;"><a href="{{url_for('profile_page', user_id=content.user_id)}}">{{content.user_id}}</a></p>
                     </div>
                     <div>
                         <button class="modal_button" data-toggle="modal" data-target="#modal_box1"><i
@@ -209,7 +209,7 @@
                     </div>
                     <div class="card-text">
                         <p id="counter-text1">좋아요 <span id="counter-click1" class="counter-click" name="{{content.post_id}}">0</span>개</p>
-                        <a href="/" alt="계정" name="{{content.post_id}}">{{content.user_id}}</a>
+                        <a href="{{url_for('profile_page', user_id=content.user_id)}}" alt="계정" name="{{content.post_id}}">{{content.user_id}}</a>
                         <span id="shown_desc{{content.post_id}}" class="card_comment" >{{content.desc}}</span>
                         <button id="desc_read_more_button{{content.post_id}}" class="" onclick="desc_read_more('{{content.post_id}}')" >더 보기</button>
                         <span id="hidden_desc{{content.post_id}}" class="card_comment">{{content.desc}}</span>
