@@ -281,6 +281,7 @@ function show_comment() {
                 modal_comment_lists.append(temp_html);
 
                 hide_show_comment(post_id)
+                hide_show_desc(post_id)
 
             }
         }
@@ -378,186 +379,187 @@ function show_like() {
 // }
 
 // 게시물 보이기
-function show_content() {
-    $.ajax({
-        type: "GET",
-        url: "/create_content",
-        data: {},
-        success: function (response) {
-            let rows = response['contents']
-            console.log(rows)
-            for (let i = 0; i < rows.length; i++) {
-                let user_id = rows[i]['user_id'] 
-                let post_id = rows[i]['post_id']
-                let img = rows[i]['img']
-                let desc = rows[i]['desc']
-                let timestamp = rows[i]['timestamp']
+// function show_content() {
+//     $.ajax({
+//         type: "GET",
+//         url: "/create_content",
+//         data: {},
+//         success: function (response) {
+//             let rows = response['contents']
+//             console.log(rows)
+//             for (let i = 0; i < rows.length; i++) {
+//                 let user_id = rows[i]['user_id'] 
+//                 let post_id = rows[i]['post_id']
+//                 let img = rows[i]['img']
+//                 let desc = rows[i]['desc']
+//                 let timestamp = rows[i]['timestamp']
+                
 
-                let temp_html = `<div class="card">
-                                    <!--카드 탑-->
-                                    <div class="card_top">
-                                        <div class="profile">
-                                            <img class="profile_pic"
-                                                 src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FefeXMf%2FbtrALvQXSLl%2Fn6fd0dsFfXNbUmOX7EYGBK%2Fimg.png"
-                                                 alt="프로필 사진">
-                                            <p style="padding-left:38px;"><a href="/profile_page">${user_id}</a></p>
-                                        </div>
-                                        <div>
-                                            <button class="modal_button" data-toggle="modal" data-target="#modal_box1"><i
-                                                    class="fa fa-dots-three-horizontal" style="color: antiquewhite"></i></button>
-                                        </div>
-                                    </div>
-                                    <!--모달-->
-                                    <div class="modal" tabindex="-1" id="modal_box1">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <p class="modal-title" style="color:#C7B0FFFF"><a href="">신고</a></p>
-                                                </div>
-                                                <div class="modal-header">
-                                                    <p class="modal-title" style="color:#C7B0FFFF"><a href="">팔로우 취소</a></p>
-                                                </div>
-                                                <div class="modal-header">
-                                                    <p class="modal-title"><a href="">게시물로 이동</a></p>
-                                                </div>
-                                                <div class="modal-header">
-                                                    <p class="modal-title"><a href="">공유 대상...</a></p>
-                                                </div>
-                                                <div class="modal-header">
-                                                    <p class="modal-title"><a href="">링크 복사</a></p>
-                                                </div>
-                                                <div class="modal-header">
-                                                    <p class="modal-title"><a href="">퍼가기</a></p>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="modal_dismiss_button" data-dismiss="modal">취소</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!--캐러셀-->
-                                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <img class="d-block w-100" src="/static/img/${img}"
-                                                     alt="First slide">
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img class="d-block w-100" src="/static/img/${img}" alt="Second slide">
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img class="d-block w-100" src="/static/img/${img}" alt="Third slide">
-                                            </div>
-                                        </div>
-                                        <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Previous</span>
-                                        </a>
-                                        <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="sr-only">Next</span>
-                                        </a>
-                                    </div>
-                                    <!--카드 바디-->
-                                    <div class="card_body">
-                                        <div class="icon_bar">
-                                            <div class="icon_bar_left">
-                                                <div id="like-heart1">
-                                                    <button onclick="like_up('${user_id}', ${post_id})"><i class="fa fa-heart"></i></button>
-                                                </div>
-                                                <div>
-                                                    <button><i class="fa fa-chat-bubble" data-toggle="modal" data-target="#modal_card${post_id}"></i></button>
-                                                </div>
-                                                <div>
-                                                    <button><i class="fa fa-paper-plane"></i></button>
-                                                </div>
-                                            </div>
-                                            <button id="bookmark1" class="bookmark"><i class="fa fa-bookmark"></i></button>
-                                        </div>
-                                        <div class="card-text">
-                                            <p id="counter-text1">좋아요 <span id="counter-click1" class="counter-click" name="${post_id}">0</span>개</p>
-                                            <a href="/" alt="계정" name="${post_id}">${user_id}</a>
-                                            <span id="shown_desc${post_id}" class="card_comment" >${desc}</span>
-                                            <button id="desc_read_more_button${post_id}" class="" onclick="desc_read_more(${post_id})" >더 보기</button>
-                                            <span id="hidden_desc${post_id}" class="card_comment">${desc}</span>
-                                            <div style="height:20px"></div>
-                                            <button id="comment_box${post_id}" class="comment_box" data-toggle="modal" data-target="#modal_card${post_id}">댓글 00개 모두
-                                                보기
-                                            </button>
+//                 let temp_html = `<div class="card">
+//                                     <!--카드 탑-->
+//                                     <div class="card_top">
+//                                         <div class="profile">
+//                                             <img class="profile_pic"
+//                                                  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FefeXMf%2FbtrALvQXSLl%2Fn6fd0dsFfXNbUmOX7EYGBK%2Fimg.png"
+//                                                  alt="프로필 사진">
+//                                             <p style="padding-left:38px;"><a href="/">${user_id}</a></p>
+//                                         </div>
+//                                         <div>
+//                                             <button class="modal_button" data-toggle="modal" data-target="#modal_box1"><i
+//                                                     class="fa fa-dots-three-horizontal" style="color: antiquewhite"></i></button>
+//                                         </div>
+//                                     </div>
+//                                     <!--모달-->
+//                                     <div class="modal" tabindex="-1" id="modal_box1">
+//                                         <div class="modal-dialog">
+//                                             <div class="modal-content">
+//                                                 <div class="modal-header">
+//                                                     <p class="modal-title" style="color:#C7B0FFFF"><a href="">신고</a></p>
+//                                                 </div>
+//                                                 <div class="modal-header">
+//                                                     <p class="modal-title" style="color:#C7B0FFFF"><a href="">팔로우 취소</a></p>
+//                                                 </div>
+//                                                 <div class="modal-header">
+//                                                     <p class="modal-title"><a href="">게시물로 이동</a></p>
+//                                                 </div>
+//                                                 <div class="modal-header">
+//                                                     <p class="modal-title"><a href="">공유 대상...</a></p>
+//                                                 </div>
+//                                                 <div class="modal-header">
+//                                                     <p class="modal-title"><a href="">링크 복사</a></p>
+//                                                 </div>
+//                                                 <div class="modal-header">
+//                                                     <p class="modal-title"><a href="">퍼가기</a></p>
+//                                                 </div>
+//                                                 <div class="modal-footer">
+//                                                     <button type="button" class="modal_dismiss_button" data-dismiss="modal">취소</button>
+//                                                 </div>
+//                                             </div>
+//                                         </div>
+//                                     </div>
+//                                     <!--캐러셀-->
+//                                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+//                                         <div class="carousel-inner">
+//                                             <div class="carousel-item active">
+//                                                 <img class="d-block w-100" src="/static/img/${img}"
+//                                                      alt="First slide">
+//                                             </div>
+//                                             <div class="carousel-item">
+//                                                 <img class="d-block w-100" src="/static/img/${img}" alt="Second slide">
+//                                             </div>
+//                                             <div class="carousel-item">
+//                                                 <img class="d-block w-100" src="/static/img/${img}" alt="Third slide">
+//                                             </div>
+//                                         </div>
+//                                         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+//                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+//                                             <span class="sr-only">Previous</span>
+//                                         </a>
+//                                         <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+//                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+//                                             <span class="sr-only">Next</span>
+//                                         </a>
+//                                     </div>
+//                                     <!--카드 바디-->
+//                                     <div class="card_body">
+//                                         <div class="icon_bar">
+//                                             <div class="icon_bar_left">
+//                                                 <div id="like-heart1">
+//                                                     <button onclick="like_up('${user_id}', ${post_id})"><i class="fa fa-heart"></i></button>
+//                                                 </div>
+//                                                 <div>
+//                                                     <button><i class="fa fa-chat-bubble" data-toggle="modal" data-target="#modal_card${post_id}"></i></button>
+//                                                 </div>
+//                                                 <div>
+//                                                     <button><i class="fa fa-paper-plane"></i></button>
+//                                                 </div>
+//                                             </div>
+//                                             <button id="bookmark1" class="bookmark"><i class="fa fa-bookmark"></i></button>
+//                                         </div>
+//                                         <div class="card-text">
+//                                             <p id="counter-text1">좋아요 <span id="counter-click1" class="counter-click" name="${post_id}">0</span>개</p>
+//                                             <a href="/" alt="계정" name="${post_id}">${user_id}</a>
+//                                             <span id="shown_desc${post_id}" class="card_comment" >${desc}</span>
+//                                             <button id="desc_read_more_button${post_id}" class="" onclick="desc_read_more(${post_id})" >더 보기</button>
+//                                             <span id="hidden_desc${post_id}" class="card_comment">${desc}</span>
+//                                             <div style="height:20px"></div>
+//                                             <button id="comment_box${post_id}" class="comment_box" data-toggle="modal" data-target="#modal_card${post_id}">댓글 00개 모두
+//                                                 보기
+//                                             </button>
                                             
-                                            <div id="comment_lists${post_id}" class="comment-list">
-                                            </div>
-                                            <p class="time_passed">${timestamp}시간 전</p>
-                                        </div>
-                                        <div class="card_bottom">
-                                            <input class="form-control" placeholder="댓글 달기..." style="background-color: black; border: 3px solid black"
-                                                      id="comment_input${post_id}">
-                                            <button class="comment_upload_button" onclick="save_comment(${post_id})">게시</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--댓글 상세 모달-->
-                                    <div class="modal" tabindex="-1" id="modal_card${post_id}" style="padding-right: 16px; display: none;">
-                                        <div class="modal-dialog1">
-                                            <div class="modal-content1">
-                                                <div id="carouselExampleControls2">
-                                                    <div class="carousel-inner" style="margin-top: auto; margin-bottom: auto;">
-                                                        <div class="carousel-item">
-                                                            <img class="d-block w-100" src="/static/img/${img}" alt="First slide">
-                                                        </div>
-                                                        <div class="carousel-item">
-                                                            <img class="d-block w-100" src="/static/img/${img}" alt="Second slide">
-                                                        </div>
-                                                        <div class="carousel-item active">
-                                                            <img class="d-block w-100" src="/static/img/${img}" alt="Third slide">
-                                                        </div>
-                                                    </div>
-                                                    <a class="carousel-control-prev" href="#carouselExampleControls2" role="button"
-                                                        data-slide="prev">
-                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                        <span class="sr-only">Previous</span>
-                                                    </a>
-                                                    <a class="carousel-control-next" href="#carouselExampleControls2" role="button"
-                                                        data-slide="next">
-                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                        <span class="sr-only">Next</span>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="modal-content2">
-                                                <div class="modal-top-line">
-                                                    <div class="profile">
-                                                        <img class="profile_pic" src="../static/img/프로필5.png" alt="프로필 사진">
-                                                        <a href="/profile_page" style="padding-left:38px;  ">${user_id}</a>
-                                                    </div>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div id="comment-desc" style="margin-bottom: 10px;">
-                                                        <a href="/profile_page" alt="계정" name="${post_id}">${user_id}</a>
-                                                        <span>${desc}</span>                                                   
-                                                    </div>
-                                                    <div id="modal_comment_lists${post_id}" class="comment-list">
-                                                    </div>
-                                                </div>
-                                                <div class="modal-comment">
+//                                             <div id="comment_lists${post_id}" class="comment-list">
+//                                             </div>
+//                                             <p class="time_passed">${timestamp}시간 전</p>
+//                                         </div>
+//                                         <div class="card_bottom">
+//                                             <input class="form-control" placeholder="댓글 달기..." style="background-color: black; border: 3px solid black"
+//                                                       id="comment_input${post_id}">
+//                                             <button class="comment_upload_button" onclick="save_comment(${post_id})">게시</button>
+//                                         </div>
+//                                     </div>
+//                                 </div>
+//                                 <!--댓글 상세 모달-->
+//                                     <div class="modal" tabindex="-1" id="modal_card${post_id}" style="padding-right: 16px; display: none;">
+//                                         <div class="modal-dialog1">
+//                                             <div class="modal-content1">
+//                                                 <div id="carouselExampleControls2">
+//                                                     <div class="carousel-inner" style="margin-top: auto; margin-bottom: auto;">
+//                                                         <div class="carousel-item">
+//                                                             <img class="d-block w-100" src="/static/img/${img}" alt="First slide">
+//                                                         </div>
+//                                                         <div class="carousel-item">
+//                                                             <img class="d-block w-100" src="/static/img/${img}" alt="Second slide">
+//                                                         </div>
+//                                                         <div class="carousel-item active">
+//                                                             <img class="d-block w-100" src="/static/img/${img}" alt="Third slide">
+//                                                         </div>
+//                                                     </div>
+//                                                     <a class="carousel-control-prev" href="#carouselExampleControls2" role="button"
+//                                                         data-slide="prev">
+//                                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+//                                                         <span class="sr-only">Previous</span>
+//                                                     </a>
+//                                                     <a class="carousel-control-next" href="#carouselExampleControls2" role="button"
+//                                                         data-slide="next">
+//                                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
+//                                                         <span class="sr-only">Next</span>
+//                                                     </a>
+//                                                 </div>
+//                                             </div>
+//                                             <div class="modal-content2">
+//                                                 <div class="modal-top-line">
+//                                                     <div class="profile">
+//                                                         <img class="profile_pic" src="../static/img/프로필5.png" alt="프로필 사진">
+//                                                         <a href="/profile_page" style="padding-left:38px;  ">${user_id}</a>
+//                                                     </div>
+//                                                 </div>
+//                                                 <div class="modal-body">
+//                                                     <div id="comment-desc" style="margin-bottom: 10px;">
+//                                                         <a href="/profile_page" alt="계정" name="${post_id}">${user_id}</a>
+//                                                         <span>${desc}</span>                                                   
+//                                                     </div>
+//                                                     <div id="modal_comment_lists${post_id}" class="comment-list">
+//                                                     </div>
+//                                                 </div>
+//                                                 <div class="modal-comment">
                                                     
-                                                    <input class="form-control" placeholder="댓글 달기..." id="modal_comment_input${post_id}"
-                                                                rows="">
-                                                    <button class="comment_upload_button" onclick="save_modal_comment(${post_id})">게시</button>
-                                                </div>
+//                                                     <input class="form-control" placeholder="댓글 달기..." id="modal_comment_input${post_id}"
+//                                                                 rows="">
+//                                                     <button class="comment_upload_button" onclick="save_modal_comment(${post_id})">게시</button>
+//                                                 </div>
 
-                                            </div>
-                                        </div>
-                                    </div>`
+//                                             </div>
+//                                         </div>
+//                                     </div>`
 
-                $('#card_box').append(temp_html);
+//                 $('#card_box').append(temp_html);
 
-                show_like(post_id);
-                hide_show_desc(post_id);
-            }
-        }
-    });
-}
+//                 show_like(post_id);
+//                 hide_show_desc(post_id);
+//             }
+//         }
+//     });
+// }
 
 
 //<!--================5.새 게시물 만들기====================-->
