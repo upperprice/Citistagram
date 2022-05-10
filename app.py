@@ -40,19 +40,32 @@ SECRET_KEY = 'SPARTA'
 @app.route('/')
 def home():
     token_receive = request.cookies.get('mytoken')
+    contents = db.citista_contents.find()
+
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
-
-        return render_template('index.html')
+        
+        return render_template('index.html', contents=contents )
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
+# @app.route('/profile_page')
+# def profile():
+#    return render_template('profile_page.html')
+
 @app.route('/profile_page')
-def profile():
-   return render_template('profile_page.html')
+def profile_page():
+    user_id = request.args.get('user_id')
+    user_info = db.citista_users.find_one({'username': user_id})
+    token_receive = request.cookies.get('mytoken')
+    user = db.citista_users.find_one({'token': token_receive})
+    user_receive = user['username']
+    my_info = user_receive
+    contents = db.citista_contents.find_one({'user_id': user_id})
+    return render_template('profile_page.html', user_info=user_info, my_info=my_info, contents=contents)
 
 @app.route('/sign_up_page')
 def sign_up_page():
@@ -103,7 +116,7 @@ def sign_up():
         "username": username_receive,  # 아이디
         "password": password_hash,  # 비밀번호
         "nickname": nickname_receive,  # 프로필 이름 기본값은 아이디
-        "profile_pic": "",  # 프로필 사진 파일 이름
+        "profile_pic": "p_image.png",  # 프로필 사진 파일 이름
         "profile_pic_real": "profile_pics/profile_placeholder.png",  # 프로필 사진 기본 이미지
         "profile_info": "",  # 프로필 한 마디
         "token": 0
@@ -142,9 +155,6 @@ def log_out():
     
     # 로그아웃
     token_receive = request.cookies.get('mytoken')
-    # try:
-    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
     user = db.citista_users.find_one({'token': token_receive})
 
     user_id = user['username']
@@ -166,15 +176,13 @@ def comment_post():
     comment_receive = request.form['comment_give']
 
     token_receive = request.cookies.get('mytoken')
-    # try:
-    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
     user = db.citista_users.find_one({'token': token_receive})
 
-    user_id = user['username']
+    user_receive = user['username']
 
     doc = {
-        'user_id': user_id,
+        'user_id': user_receive,
         'post_id': post_receive,
         'comment': comment_receive
      }
@@ -192,13 +200,23 @@ def comment_get():
 @app.route("/like", methods=["POST"])
 def like_up():
     post_receive = int(request.form['post_give'])
-    likes = db.citista_likes.find_one({'post_id': post_receive})
 
-    current_like = likes['like']
-    new_like = current_like + 1
-    db.citista_likes.update_one({'post_id': post_receive}, {'$set': {'like': new_like}})
+    token_receive = request.cookies.get('mytoken')
+    user = db.citista_users.find_one({'token': token_receive})
+    user_receive = user['username']
 
-    return jsonify({'msg':'좋아요 감사합니다.'})
+    liked = db.citista_likes.find_one({'post_id': post_receive}, {'user_id': user_receive})  
+
+    if liked != None:
+        return jsonify({'msg':'이미 좋아요를 하셨어요.'})
+    else:
+        doc = {
+            'user_id': user_receive,
+            'post_id': post_receive,
+        }
+        db.citista_likes.insert_one(doc)
+        return jsonify({'msg': '좋아요 감사합니다.'})
+
 
 # 좋아요 개수 보이기
 @app.route("/like", methods=["GET"])
@@ -210,53 +228,36 @@ def show_like():
 # 게시물 생성
 @app.route("/create_content", methods=["POST"])
 def create_content():
-
-
+    current_time = datetime.now()
     image_receive = request.form['image_give']
     desc_receive = request.form['desc_give']
-
+    file = request.files['file_give']
+    ext = image_receive.split('.')[-1] #확장자 추출
+    filename = f"{current_time.strftime('%Y%m%d%H%M%S')}.{ext}"
+    save_to = f'static/img/post_contents/{filename}'  # 경로지정
+    file.save(save_to)
     token_receive = request.cookies.get('mytoken')
-    # try:
-    #     payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
 
     user = db.citista_users.find_one({'token': token_receive})
-
     user_id = user['username']
-
+    profile_pic = user['profile_pic']
     content_num = db.citista_contents.find({}, {'_id': False}).collection.estimated_document_count()
-
-    current_time = datetime.now()
-
-    doc_cotents = {
+    doc_contents = {
         'user_id': user_id,
         'post_id': content_num + 1,
         'img': image_receive,
+        'f_name': filename,
         'desc': desc_receive,
-        'timestamp': current_time
+        'timestamp': current_time,
+        'profile_pic': profile_pic
     }
-    db.citista_contents.insert_one(doc_cotents)
-
+    db.citista_contents.insert_one(doc_contents)
     doc_likes = {
         'post_id': content_num + 1,
         'like': 0
     }
     db.citista_likes.insert_one(doc_likes)
-
     return jsonify({'msg':'게시물 생성'})
-
-@app.route("/create_content1", methods=["POST"])
-def create_content1():
-    file = request.files['file']
-    extension = file.filename.split('.')[-1] # 여기서 부터 파일 서버 컴퓨터에 저장
-    today = datetime.now()
-    print(today)
-    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
-    filename = f'{mytime}.{extension}'
-    save_to = f'/static/images/post-contents/{filename}'
-    print(filename)
-    file.save(save_to)
-    return jsonify({'msg': '게시물 저장'})
-
 
 
 # 게시물 보이기
@@ -265,9 +266,46 @@ def show_content():
     contents = list(db.citista_contents.find({}, {'_id': False}))
     return jsonify({'contents': contents})
 
+#프로필 이미지 서버 저장
+@app.route("/uploader", methods=["POST"])
+def uploader_file():
+    token_receive = request.cookies.get('mytoken')
+    user = db.citista_users.find_one({'token': token_receive})
+    user_id = user['username']
+
+    if request.method =='POST':
+        f = request.files['file']
+        ext =f.filename.split('.')[-1]
+        save_to = f'static/img/profiles/{user_id}.{ext}'
+        f.save(save_to)
+        doc = {'profile_pic': f'{user_id}.{ext}', 'profile_pic_real': save_to}
+        db.citista_users.update_one({'token': token_receive}, {'$set': doc})
+        return save_to
 
 
+#새 닉네임, 내용 저장
+@app.route("/citista_users", methods=["POST"])
+def citista_users():
 
+    token_receive = request.cookies.get('mytoken')
+    user = db.citista_users.find_one({'token': token_receive})
+
+
+    nickname = request.form['nickname_give']
+    profile_info = request.form['desc_give']
+
+    if nickname == "": #닉네임칸에 쓰여있지 않으면 기존 닉네임 유지
+        nickname = user['nickname']
+    if profile_info == "":  #내용칸에 쓰여있지 않으면 기존 내용 유지
+        profile_info = user['profile_info']
+
+    doc = {
+        'nickname': nickname,
+        'profile_info': profile_info,
+    }
+
+    db.citista_users.update_one({'token': token_receive}, {'$set': doc})
+    return jsonify({'result': 'success'})
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)

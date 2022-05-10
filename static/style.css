@@ -97,6 +97,8 @@ body{
     display: none;
     position: fixed;
 }
+
+
 /*=================== main page ====================*/
 .main_page_all {
     padding-top: 85px;
@@ -110,10 +112,20 @@ body{
 
 }
 
-.main_column{
+.main_column1{
 
     height:100%;
-    background-color: #080615;
+    width:530px;
+    background-color: tomato;
+    margin-right:100px;
+    padding-top:37px;
+
+}
+.main_column2{
+
+    height:100%;
+    width:530px;
+    background-color: turquoise;
     margin-right:100px;
     padding-top:37px;
 
@@ -315,6 +327,10 @@ body{
 
 /*===================여기 수정====================*/
 
+.card_box {
+    margin-bottom: 100px;
+}
+
 .card-text {
     padding-left: 46px;
 }
@@ -464,21 +480,8 @@ body{
     background-image: -ms-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     width:100%;
     z-index: 4;
-    height: 50px;
+    height: 70px;
     padding-top:5px;
-    position : fixed;
-    bottom:0
-
-}
-.footer2{
-    position:absolute;
-    bottom:0;
-    left:43%
-}
-.footer2 img{
-    position:absolute;
-    bottom: 5px;
-    left:220px;
 }
 
 .footer-contents{
@@ -518,6 +521,7 @@ body{
 
     background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     color: transparent;
+    -webkit-background-clip: text;
 }
 
 .head_right_column :hover {
@@ -747,7 +751,7 @@ body{
 /*==================게시글 모달 관련 CSS 시작====================*/
 .modal_overlay {
     width: 100%;
-    height: 100%;
+    height: 700px;
     position: absolute;
     left: 0;
     top: 0;
@@ -846,3 +850,88 @@ body{
 }
 /*==================게시글 모달 관련 CSS 끝====================*/
 
+/*==================dm페이지 시작====================*/
+
+.dm_main_body{
+    width: 100vw;
+    height: 110vh;
+    background-color: #080615;
+}
+.left_column{
+    width: 300px;
+    height: 800px;
+    background-color: #080615;
+    float: left;
+
+}
+.right_column{
+    width: 550px;
+    height: 700px;
+    background-color: #080615;
+    float: left;
+}
+.dm_main_body{
+    justify-content: center;
+    display: flex;
+}
+.dm_name_card{
+    width: 100%;
+    height: 650px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background-color: #080615;
+    border: 1px solid antiquewhite;
+    border-radius: 7px;
+}
+.dm_page{
+   width: 100%;
+    height: 650px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    background-color: #080615;
+    border: 1px solid antiquewhite;
+    border-radius: 7px;
+}
+.dm_name_card_top{
+    height: 50px;
+    border-bottom: 1px solid antiquewhite;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+
+
+}
+
+.dm_name_card_body{
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+}
+.dm_name_slot{
+    width: 100%;
+    height: 70px;
+    background-color: #080615;
+    margin: 25px 25px 0 10px;
+    float: left;
+    display: flex;
+
+}
+.dm_profile_image{
+    width: 75px;
+    height: 75px;
+    border-radius: 70%;
+}
+.dm_profile_text{
+    margin: 10px 0 0 15px;
+}
+.dm_message{
+    background-color: #080615;
+    text-align: center;
+    padding-top: 150px;
+}
+/*==================dm페이지 끝====================*/

@@ -9,14 +9,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/html.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/img/프로필5.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/static/script.js" beforeDir="false" afterPath="$PROJECT_DIR$/static/script.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/dm.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dm.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/profile_page.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/profile_page.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/sign_up.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/sign_up.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,9 +62,8 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/tulip/OneDrive/바탕 화면/make_Citistagram",
+    "last_opened_file_path": "C:/Users/tulip/OneDrive/바탕 화면/이게 새버전~",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -74,7 +72,13 @@
   }
 }]]></component>
   <component name="RunManager" selected="Flask 서버.Flask (app.py)">
+    <configuration name="index.html (1)" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/상한가팀/templates/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
     <configuration name="index.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/make_Citistagram/templates/index.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <configuration name="profile_page.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/상한가팀/templates/profile_page.html" useBuiltInWebServerPort="true">
       <method v="2" />
     </configuration>
     <configuration name="make_Citistagram" type="PythonConfigurationType" factoryName="Python">
@@ -117,7 +121,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Flask 서버.Flask (app.py)" />
-        <item itemvalue="JavaScript 디버그.index.html" />
+        <item itemvalue="JavaScript 디버그.index.html (1)" />
+        <item itemvalue="JavaScript 디버그.profile_page.html" />
       </list>
     </recent_temporary>
   </component>
@@ -138,33 +143,25 @@
       <workItem from="1651647730533" duration="32334000" />
       <workItem from="1651729339350" duration="12763000" />
       <workItem from="1651744580705" duration="437000" />
-      <workItem from="1651811440095" duration="10537000" />
-      <workItem from="1651831375669" duration="39000" />
-      <workItem from="1651838877691" duration="764000" />
-      <workItem from="1651842092960" duration="2410000" />
-      <workItem from="1651876674130" duration="131000" />
-      <workItem from="1651876834717" duration="12000" />
-      <workItem from="1651877951420" duration="13441000" />
-      <workItem from="1651924941570" duration="11229000" />
+      <workItem from="1652059073312" duration="502000" />
+      <workItem from="1652061073212" duration="1643000" />
+      <workItem from="1652062730119" duration="12573000" />
+      <workItem from="1652077449947" duration="21139000" />
+      <workItem from="1652104031416" duration="2051000" />
+      <workItem from="1652141564303" duration="4407000" />
+      <workItem from="1652146890568" duration="376000" />
+      <workItem from="1652147290494" duration="237000" />
+      <workItem from="1652148272273" duration="1796000" />
+      <workItem from="1652150288894" duration="10000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/make_Citistagram$Flask__app_py_.coverage" NAME="Flask (app.py) 커버리지 결과" MODIFIED="1651931167968" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/make_Citistagram$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1651744588318" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/$Flask__app_py_.coverage" NAME="Flask (app.py) 커버리지 결과" MODIFIED="1652148990310" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/make_Citistagram$make_Citistagram.coverage" NAME="make_Citistagram Coverage Results" MODIFIED="1651623825427" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

@@ -4,11 +4,9 @@
     <!-- Required meta tags -->
     <meta charset="UTF-8">
     <title>Citistagram</title>
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
     <!-- Optional JavaScript -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -22,56 +20,162 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://use.fortawesome.com/99966411.js"></script>
     <script src="script.js"></script>
-
     <!-- main css -->
     <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="../static/responsive.css">
     <style>
-
-
-
+        .change_profile{
+            width: 400px;
+            height: 500px;
+            background:none;
+            position: absolute;
+            left: 45%;
+            margin-top: 100px;
+            display: none;
+        }
     </style>
-
-
 </head>
-
 <body>
-
+<!--================1.Navbar파트====================-->
+<div>
     <nav class="navbar">
         <span></span>
         <a class="navbar-brand logo_h" href="/">
             <img class="img_logo"
-                 src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbE4ej%2FbtrAKikSqo1%2FnNGCSsG8KBn96rbIEaftZ1%2Fimg.png"
-                 alt="로고 이미지">
+                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbE4ej%2FbtrAKikSqo1%2FnNGCSsG8KBn96rbIEaftZ1%2Fimg.png"
+                alt="로고 이미지">
         </a>
-
-
         <div class="navbar_search">
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search"
-                       style="background-color: black; border: 3px solid black" aria-label="Search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             </form>
         </div>
         <ul class="navbar_links">
             <li><a href="/"><i class="fa fa-home-fi"></i></a></li>
-            <li><a href=""><i class="fa fa-plus"></i></a></li>
+            <li><a href="/dm_page"><i class="fa fa-paper-plane" style="width:28px"></i></a></li>
+            <li><button id="nav_bar_add_box" class="modal_button" data-toggle="modal" data-target="#addition_modal_box"><i class="fa fa-plus"></i></button></li>
             <li><a href=""><i class="fa fa-compass"></i></a></li>
-            <li><a href=""><i class="fa fa-heart"></i></a></li>
+            <li><button id="navbar_heart" class="modal_button"><i class="fa fa-heart"></i></button></li>
+            <li style="display: flex; align-items: center;"><button style="width: 70px; height: 30px; font-size: 15px; cursor: pointer; border: 0;" onclick="logout()">logout</button></li>
         </ul>
-        <span></span>
     </nav>
+    <!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
+    <div id="first_modal" class="modal_overlay">
+        <div class="modal_window">
+            <div class="addition_modal_head">
+                <div style="width:40px"></div>
+                <p class="modal-title" >새 게시물 만들기</p>
+                <button id="modal_x_box" class="modal_x_box"><i class="fa fa-x"></i></button>
+            </div>
+            <div id="image_upload" class="addition_modal_body">
+                사진을 여기에 끌어다 놓으세요
+
+            </div>
+        </div>
+    </div>
+    <!--더하기 버튼 모달(새게시물 만들기)//두번째-->
+    <div id="second_modal" class="modal_overlay">
+        <div class="modal_window2">
+
+            <div class="addition_modal_head">
+                새 게시물 만들기
+                <button id="modal_x_box2" class="modal_x_box"><i class="fa fa-x"></i></button>
+            </div>
+            <div class="addition_modal_body2">
+                <div class="img_upload_space" ></div>
+                <div class="img_description_space">
+                    <div class="img_description_box">
+                        <textarea id="input_feed_content" style="width:100%;height: 100%">내용을 써주세요^^</textarea>
+
+                    </div>
+                    <div style="justify-content: center;display: flex">
+                        <button id="feed_create_button" onclick="uploading_files()" style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--하트:tooltip-->
+    <div id="heart_tooltip" class="heart_tooltip">
+    </div>
+</div>
+<!--================1.Navbar END====================-->
+    <!--===================프로필 변경 모달========================-->
+    <div id="change_profile" class="change_profile">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-title" style="color:#C7B0FFFF">{{user_info.username}}</p>
+                    <button id="modal_x_box3" class="modal_x_box"><i class="fa fa-x"></i></button>
+                </div>
+                <div class="modal-header">
+                    <p>사용자 이름</p>
+                    &nbsp&nbsp
+                    <input id="new_nickname">
+
+                </div>
+                <div class="modal-header">
+                    <p>내용 입력</p>
+                    &nbsp&nbsp
+                    <textarea id="new_desc"></textarea>
+                </div>
+
+                <div class="modal-header">
+                    <form action="http://localhost:5000/uploader"
+                        method="POST"
+                        enctype="multipart/form-data">
+                        <input type="file" name="file" />
+                        <input type="submit" />
+                    </form>
+                </div>
+
+                <div class="modal-header">
+                    <button onclick="change_user_info()"> 적용 </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--===================프로필 변경 모달 END========================-->
     <div class="profile_page_main_body">
         <div class="head_part">
             <div class="head_content">
                 <div class="profile_pic_large">
-                    <img width="150px" src="../static/img/프로필1_main1.png" alt="매인 사진">
+                    <img width="150px" height="150px" style="border-radius: 70%" src="../static/img/profiles/{{user_info.profile_pic}}" alt="메인 사진">
                 </div>
                 <div >
                     <div class="head_right_column">
-                        <div><p>Tasha Han</p></div>
+                        <div><p>{{user_info.username}}</p></div>
+                        {% if user_info.username == my_info %}
                         <div class="buttons">
-                            <button class="colorful_buttons">메시지 보내기</button>
-                            <button class="colorful_buttons">Follow</button>
+                            <button id="profile_change_modal">프로필 편집</button>
+                            <button >▽</button>
+                            <button class="modal_button" data-toggle="modal" data-target="#modal_box4"><i class="fa fa-dots-three-horizontal" style="color: antiquewhite"></i></button>
+                        </div>
+                        <!--모달-->
+                        <div class="modal" tabindex="-1" id="modal_box4">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">차단</a></p>
+                                    </div>
+                                    <div class="modal-header">
+                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">제한</a></p>
+                                    </div>
+                                    <div class="modal-header">
+                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">신고</a></p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="modal_dismiss_button" data-bs-dismiss="modal">취소
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--모달 끝-->
+                        {% else %}
+                        <div class="buttons">
+                            <button>메시지 보내기</button>
+                            <button>Follow</button>
                             <button>▽</button>
                             <button class="modal_button" data-toggle="modal" data-target="#modal_box4"><i class="fa fa-dots-three-horizontal" style="color: antiquewhite"></i></button>
                         </div>
@@ -96,6 +200,7 @@
                             </div>
                         </div>
                         <!--모달 끝-->
+                        {% endif %}
                     </div>
                     <div class="followers_and_follows">
                         <div>게시물 <b>382</b></div>
@@ -104,9 +209,8 @@
                         <span></span>
                     </div>
                     <div class="main_text">
-                        Life's not all gloom and despondency✨
+                        <p>{{user_info.profile_info}}</p>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -134,11 +238,8 @@
             <div class="body_content">
                 <div class="first-row">
                     <button><i class="fa fa-th"></i> 게시물</button>
-
                     <button><i class="fa fa-film"></i> 릴스</button>
-
                     <button><i class="fa fa-caret-right"></i> 동영상</button>
-
                     <button><i class="fa fa-user-female"></i> 태그됨</button>
                 </div>
                 <div class="for_padding"></div>
@@ -150,7 +251,6 @@
                             <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
                         </div>
                     </button>
-
                     <div class="picture_box">
                         <img src="../static/img/1cd27a83425055.5d3bb82ce9840.jpg" alt="">
                         <img class="images2" src="../static/img/배경4.png" alt="">
@@ -196,11 +296,8 @@
                         <img src="../static/img/playlist1.gif" alt="">
                         <img class="images2" src="../static/img/배경4.png" alt="">
                         <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
-
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
@@ -237,55 +334,74 @@
                              src="../static/img/프로필5.png"
                              alt="프로필 사진">
                         <p style="padding-left:38px;  ">Tasha Han</p>
-
                     </div>
-
                 </div>
                 <div class="modal-body">
                     <div id="comment-lists4">
                         <p>벌써 5월 2일이라니 시간이 무섭다.</p>
                         <p>날씨 좋다</p>
-
                     </div>
                 </div>
                 <div class="modal-comment">
-
                     <textarea class="form-control" placeholder="댓글 달기" id="uploading_comment4" style="background-color: black; border: 3px solid black"
                               rows="1"></textarea>
                     <button class="comment_upload_button" onclick="save_comment4()">게시</button>
                 </div>
-
             </div>
         </div>
     </div>
 
 
 
-
-<div class="footer">
-    <ul class="footer-contents">
-        <li><a href="">소개</a></li>
-        <li>/</li>
-        <li><a href="">블로그</a></li>
-        <li>/</li>
-        <li><a href="">채용정보</a></li>
-        <li>/</li>
-        <li><a href="">도움말</a></li>
-        <li>/</li>
-        <li><a href="">API</a></li>
-        <li>/</li>
-        <li><a href="">개인정보처리방침</a>
-        <li>/</li>
-        <li><a href="">약관</a></li>
-        <li>/</li>
-        <li><a href="">인기계정</a></li>
-        <li>/</li>
-        <li><a href="">해시태그</a></li>
-    </ul>
-    <div>
-        <div>한국어  ©2022 Citistagram by Tasha</div>
+    <div class="footer">
+        <ul class="footer-contents">
+            <li><a href="">소개</a></li>
+            <li>/</li>
+            <li><a href="">블로그</a></li>
+            <li>/</li>
+            <li><a href="">채용정보</a></li>
+            <li>/</li>
+            <li><a href="">도움말</a></li>
+            <li>/</li>
+            <li><a href="">API</a></li>
+            <li>/</li>
+            <li><a href="">개인정보처리방침</a>
+            <li>/</li>
+            <li><a href="">약관</a></li>
+            <li>/</li>
+            <li><a href="">인기계정</a></li>
+            <li>/</li>
+            <li><a href="">해시태그</a></li>
+        </ul>
+        <div>
+            <div>한국어  ©2022 Citistagram by Tasha</div>
+        </div>
     </div>
-</div>
-        <script type="text/javascript" src="../static/script.js"></script>
+    <script>
+        $('#profile_change_modal').click(function(){$('#change_profile').toggle();});
+        $('#modal_x_box3').click(function () {   //x버튼 클릭시 모달창 사라짐
+            $('.change_profile').css({
+                display: 'none'
+            });
+        })
+
+        function change_user_info() {
+            let nickname = $('#new_nickname').val();
+            let desc = $('#new_desc').val();
+            $.ajax({
+                type: 'POST',
+                url: '/citista_users',
+                data: {nickname_give:nickname,desc_give:desc},
+                success: function (response) {
+                    window.location.reload()
+                }
+            })
+        }
+
+
+
+
+    </script>
+    <script type="text/javascript" src="../static/script.js"></script>
 </body>
 </html>
