@@ -69,7 +69,14 @@ def profile_page():
 
     contents = list(db.citista_contents.find({'user_id': user_id}, {'_id': False}))
 
-    return render_template('profile_page.html', user_info=user_info, my_info=my_info, contents=contents)
+    follower_count = len(list(db.citista_follows.find({'follower_id': user_id}, {'_id': False})))
+    following_count = len(list(db.citista_follows.find({'following_id': user_id}, {'_id': False})))
+    contents_count = len(list(db.citista_contents.find({'user_id': user_id}, {'_id': False})))
+
+    doc={"follower_count":follower_count,"following_count":following_count, "contents_count":contents_count}
+    return render_template('profile_page.html', user_info=user_info, my_info=my_info, contents=contents, doc=doc)
+
+    # return render_template('profile_page.html', user_info=user_info, my_info=my_info, contents=contents)
 
 @app.route('/sign_up_page')
 def sign_up_page():
@@ -171,13 +178,6 @@ def log_out():
     return jsonify({'result': 'success', 'msg': '로그아웃 완료'})
 
 
-# DB 자료 응답
-@app.route("/get_data", methods=["GET"])
-def get_data():
-    comments = list(db.citista_comments.find({}, {'_id': False}))
-    return jsonify({'comments':comments})
-
-
 # 댓글 작성
 @app.route("/comment", methods=["POST"])
 def comment_post():
@@ -199,25 +199,14 @@ def comment_post():
         'comment': comment_receive
      }
     db.citista_comments.insert_one(doc)
-    return jsonify({'msg':'게시물 생성 완료'})
+    return jsonify({'msg':'댓글 작성 완료'})
+
 
 # 댓글 보기
 @app.route("/comment", methods=["GET"])
 def comment_get():
     comments = list(db.citista_comments.find({}, {'_id': False}))
     return jsonify({'comments':comments})
-
-
-# # 좋아요 올리기
-# @app.route("/like", methods=["POST"])
-# def like_up():
-#     post_receive = int(request.form['post_give'])
-#     likes = db.citista_likes.find_one({'post_id': post_receive})
-
-#     current_like = likes['like']
-#     new_like = current_like + 1
-#     db.citista_likes.update_one({'post_id': post_receive}, {'$set': {'like': new_like}})
-#     return jsonify({'msg':'좋아요 감사합니다.'})
 
 
 # 좋아요 올리기
@@ -230,11 +219,7 @@ def like_up():
     user_receive = user['username']
 
     liked = list(db.citista_likes.find({'user_id': user_receive}, {'post_id': post_receive}))
-    print(liked)
 
-    # if liked != None:
-    #     return jsonify({'msg':'이미 좋아요를 하셨어요.'})
-    # else:
     doc = {
         'user_id': user_receive,
         'post_id': post_receive,
@@ -288,7 +273,7 @@ def create_content():
     return jsonify({'msg':'게시물 생성'})
 
 
-# 팔로우 하기
+# 팔로우하기
 @app.route("/follow", methods=["POST"])
 def follow():
     follower_receive = request.form['user_give']
@@ -348,6 +333,11 @@ def citista_users():
     return jsonify({'result': 'success'})
 
 
+# DB 자료 응답
+@app.route("/get_data", methods=["GET"])
+def get_data():
+    contents = list(db.citista_contents.find({}, {'_id': False}))
+    return jsonify({'contents':contents})
 
 if __name__ == '__main__':
    app.run('0.0.0.0',port=5000,debug=True)

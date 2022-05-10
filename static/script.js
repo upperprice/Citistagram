@@ -220,28 +220,6 @@ function logout() {
 }
 
 
-// DB 자료 요청
-function get_data() {
-    $.ajax({
-        type: 'GET',
-        url: '/get_data',
-        data: {},
-        success: function (response) {
-            let rows = response.comments;
-            for (let i = 0; i < rows.length; i++) {
-                let user_id = rows[i]['user_id']
-                let post_id = rows[i]['post_id']
-                let comment = rows[i]['comment']
-
-                hide_show_comment(post_id);
-                hide_show_desc(post_id);
-                show_like(post_id);
-
-            }
-        }
-    });
-}
-
 
 // 댓글 작성
 function save_comment(post_id) {
@@ -290,10 +268,6 @@ function show_comment() {
                 let modal_comment_lists = $('#modal_comment_lists' + post_id)
                 let modal2_comment_lists = $('#modal2_comment_lists' + post_id)
 
-                hide_show_comment(post_id);
-                hide_show_desc(post_id);
-                show_like(post_id);
-
                 let temp_html = `<div>
                                     <a href="/" alt="계정" name="${post_id}">${user_id}</a>
                                     <span>${comment}</span>
@@ -301,6 +275,8 @@ function show_comment() {
                 comment_lists.append(temp_html);
                 modal_comment_lists.append(temp_html);
                 modal2_comment_lists.append(temp_html);
+
+                hide_show_comment(post_id);
             }
         }
     });
@@ -400,7 +376,28 @@ function show_like(post_id) {
     });
 }
 
+// DB 자료 요청
+function get_data() {
+    $.ajax({
+        type: 'GET',
+        url: '/get_data',
+        data: {},
+        success: function (response) {
 
+            let rows = response.contents;
+            for (let i = 0; i < rows.length; i++) {
+                let post_id = rows[i]['post_id']
+
+                hide_show_desc(post_id);
+                show_like(post_id);
+                
+            }
+            show_comment()
+        }
+    });
+}
+
+// 팔로우하기
 function follow(user_id) {
     $.ajax({
         type: 'POST',

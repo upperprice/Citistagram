@@ -315,16 +315,21 @@ button {
 }
 
 .profile_pic_box {
-    width: 35px;
-    height: 35px;
+    width: 45px;
+    height: 45px;
     float: left;
     overflow: hidden;
     border-radius: 50%;
-    border: 2px solid #54508e;
 }
 
 .profile_pic {
+    
     width: 45px;
+    border-radius: 70%;
+    border: 3px solid transparent;
+    background-image: linear-gradient(#444444, #444444), linear-gradient(to right, #766EFD, #87F1FD);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
 }
 
 .profile_id {
@@ -347,6 +352,26 @@ button {
 
 }
 
+
+.icon_bar_mo{
+    position:relative;
+    /* height: 360px; */
+    margin-top: auto;
+    background-color: wheat;
+}
+.icon_bar2 {
+
+    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    font-size: 30px;
+    position:absolute;
+    bottom: 0;
+    list-style: none;
+    justify-content: space-between;
+    border: 1px solid rgb(16, 15, 36);
+
+}
 
 .icon_bar_left {
     float: left;
@@ -431,11 +456,22 @@ button {
     margin-bottom: 5px;
 }
 
+.more_button {
+    font-size: 13px;
+    margin: 0px;
+    padding: 0px;
+    color: #7a7061;
+
+    background: transparent;
+}
+
 .comment_box {
     display: none;
     background-color: transparent;
     border: none;
     font-size: 0.9em;
+    margin-top: 10px;
+    color: #7a7061;
 }
 
 .comment_box:hover {
@@ -510,8 +546,7 @@ button {
 }
 
 .profile_name {
-    padding-bottom: 0;
-    margin-bottom: 0;
+    margin: 0 0 0 15px;
 }
 
 .my_profile :nth-child(1) {
@@ -546,10 +581,9 @@ button {
 
 .description {
     position: absolute;
-    margin-left: 30px;
+    margin: 0 0 0 15px;
     font-size: 0.8em;
-    width: 180px;
-
+    width: 220px;
 }
 
 .name_list {
