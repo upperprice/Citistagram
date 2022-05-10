@@ -47,7 +47,7 @@ function check_dup() {
         },
         success: function (response) {
 
-            if (response["exists_id"]) {
+            if (response["exists"]) {
                 $("#help-id").text("이미 존재하는 아이디입니다.").removeClass("is-safe").addClass("is-danger")
                 $("#input-username").focus()
             } else {
@@ -84,7 +84,7 @@ function check_nickname_dup() {
         },
         success: function (response) {
 
-            if (response["exists_nickname"]) {
+            if (response["exists"]) {
                 $("#help-id").text("이미 존재하는 닉네임입니다.").removeClass("is-safe").addClass("is-danger")
                 $("#input-nickname").focus()
             } else {
@@ -152,11 +152,6 @@ function sign_up() {
     });
 
 }
-// function logout() {
-//     $.removeCookie('mytoken');
-//     alert('로그아웃!')
-//     window.location.href = '/login'
-// }
 
 function sign_up_page() {
     alert('회원가입페이지 이동!')
@@ -198,7 +193,7 @@ function sign_in() {
         },
         success: function (response) {
             if (response['result'] == 'success') {
-                $.cookie('mytoken', response['token'], {path: '/'});
+                $.cookie('mytoken', response['token'], { path: '/' });
                 window.location.replace("/")
             } else {
                 alert(response['msg'])
@@ -209,22 +204,43 @@ function sign_in() {
 
 // <!--================로그아웃==================-->
 
-function logout(){
-    // $.removeCookie('mytoken', { path: '/' });
+function logout() {
     $.ajax({
         type: "POST",
         url: "/logout",
         data: {},
         success: function (response) {
             if (response['result'] == 'success') {
+                alert('로그아웃!')
                 window.location.href = '/login';
             }
         }
     });
+    $.removeCookie('mytoken', { path: '/' });
 }
 
 
+// DB 자료 요청
+function get_data() {
+    $.ajax({
+        type: 'GET',
+        url: '/get_data',
+        data: {},
+        success: function (response) {
+            let rows = response.comments;
+            for (let i = 0; i < rows.length; i++) {
+                let user_id = rows[i]['user_id']
+                let post_id = rows[i]['post_id']
+                let comment = rows[i]['comment']
 
+                hide_show_comment(post_id);
+                hide_show_desc(post_id);
+                show_like(post_id);
+
+            }
+        }
+    });
+}
 
 
 // 댓글 작성
@@ -235,11 +251,11 @@ function save_comment(post_id) {
     $.ajax({
         type: 'POST',
         url: '/comment',
-        data: {post_give: post, comment_give: input_val},
+        data: { post_give: post, comment_give: input_val },
         success: function (response) {
             window.location.reload()
         }
-    })
+    });
 }
 
 // 모달 댓글 작성
@@ -250,7 +266,7 @@ function save_modal_comment(post_id) {
     $.ajax({
         type: 'POST',
         url: '/comment',
-        data: {post_give: post, comment_give: input_val},
+        data: { post_give: post, comment_give: input_val },
         success: function (response) {
             window.location.reload()
         }
@@ -270,8 +286,13 @@ function show_comment() {
                 let post_id = rows[i]['post_id']
                 let comment = rows[i]['comment']
 
-                let comment_lists = $('#comment_lists'+ post_id)
-                let modal_comment_lists = $('#modal_comment_lists'+ post_id)
+                let comment_lists = $('#comment_lists' + post_id)
+                let modal_comment_lists = $('#modal_comment_lists' + post_id)
+                let modal2_comment_lists = $('#modal2_comment_lists' + post_id)
+
+                hide_show_comment(post_id);
+                hide_show_desc(post_id);
+                show_like(post_id);
 
                 let temp_html = `<div>
                                     <a href="/" alt="계정" name="${post_id}">${user_id}</a>
@@ -279,11 +300,7 @@ function show_comment() {
                                 </div>`
                 comment_lists.append(temp_html);
                 modal_comment_lists.append(temp_html);
-
-                hide_show_comment(post_id)
-                hide_show_desc(post_id)
-                show_like(post_id);
-
+                modal2_comment_lists.append(temp_html);
             }
         }
     });
@@ -291,8 +308,8 @@ function show_comment() {
 
 // 댓글 자동 숨김
 function hide_show_comment(post_id) {
-    let comment_lists = $('#comment_lists'+ post_id);
-    let comment_box = $('#comment_box'+ post_id);
+    let comment_lists = $('#comment_lists' + post_id);
+    let comment_box = $('#comment_box' + post_id);
 
     let comment_count = comment_lists.children('div').length;
     comment_box.text('댓글 ' + comment_count + '개 모두 보기');
@@ -337,36 +354,17 @@ function desc_read_more(post_id) {
 }
 
 // 좋아요 수 올리기
-function like_up(user_id, post_id) {
+function like_up(post_id) {
     $.ajax({
         type: 'POST',
         url: '/like',
-        data: {user_give: user_id, post_give: post_id},
+        data: { post_give: post_id },
         success: function (response) {
-            alert(response.msg)
             window.location.reload()
         }
     })
 }
-    
 
-// // 좋아요 개수 보기
-// function show_like() {
-//     $.ajax({
-//         type: "GET",
-//         url: "/like",
-//         data: {},
-//         success: function (response) {
-//             let rows = response['likes']
-//             for (let i = 0; i < rows.length; i++) {
-//                 let post_id = rows[i]['post_id']
-//                 let like = rows[i]['like']
-                
-//                 $('span[name='+ post_id +']').text(like)
-//             }
-//         }
-//     });
-// }
 
 // 좋아요 개수 보기
 function show_like(post_id) {
@@ -376,297 +374,71 @@ function show_like(post_id) {
         data: {},
         success: function (response) {
             let rows = response['likes']
-            let like = rows.filter(function(element) {
-                return element.post_id == post_id;
-            }).length;
+            let user_login = response['user_login']
 
-            $('span[name='+ post_id +']').text(like)
+            let like = rows.filter(function (element) {
+                return element.post_id == post_id;
+            });
+
+            $('span[name=' + post_id + ']').text(like.length)
+
+            for (let i = 0; i < like.length; i++) {
+                let liked = like[i]['user_id'];
+
+                if (liked == user_login) {
+
+                    $('#liked-heart' + post_id).show();
+                    $('#like-heart' + post_id).hide();
+                    $('#modal-liked-heart' + post_id).show();
+                    $('#modal-like-heart' + post_id).hide();
+                    $('#modal2-liked-heart' + post_id).show();
+                    $('#modal2-like-heart' + post_id).hide();
+                }
+            }
+
         }
     });
 }
 
 
-// // (임시)게시물 생성
-// function create_content() {
-//     $.ajax({
-//         type: 'POST',
-//         url: '/create_content',
-//         data: {},
-//         success: function (response) {
-//             window.location.reload()
-//         }
-//     })
-// }
-
-// 게시물 보이기
-// function show_content() {
-//     $.ajax({
-//         type: "GET",
-//         url: "/create_content",
-//         data: {},
-//         success: function (response) {
-//             let rows = response['contents']
-//             console.log(rows)
-//             for (let i = 0; i < rows.length; i++) {
-//                 let user_id = rows[i]['user_id'] 
-//                 let post_id = rows[i]['post_id']
-//                 let img = rows[i]['img']
-//                 let desc = rows[i]['desc']
-//                 let timestamp = rows[i]['timestamp']
-                
-
-//                 let temp_html = `<div class="card">
-//                                     <!--카드 탑-->
-//                                     <div class="card_top">
-//                                         <div class="profile">
-//                                             <img class="profile_pic"
-//                                                  src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FefeXMf%2FbtrALvQXSLl%2Fn6fd0dsFfXNbUmOX7EYGBK%2Fimg.png"
-//                                                  alt="프로필 사진">
-//                                             <p style="padding-left:38px;"><a href="/">${user_id}</a></p>
-//                                         </div>
-//                                         <div>
-//                                             <button class="modal_button" data-toggle="modal" data-target="#modal_box1"><i
-//                                                     class="fa fa-dots-three-horizontal" style="color: antiquewhite"></i></button>
-//                                         </div>
-//                                     </div>
-//                                     <!--모달-->
-//                                     <div class="modal" tabindex="-1" id="modal_box1">
-//                                         <div class="modal-dialog">
-//                                             <div class="modal-content">
-//                                                 <div class="modal-header">
-//                                                     <p class="modal-title" style="color:#C7B0FFFF"><a href="">신고</a></p>
-//                                                 </div>
-//                                                 <div class="modal-header">
-//                                                     <p class="modal-title" style="color:#C7B0FFFF"><a href="">팔로우 취소</a></p>
-//                                                 </div>
-//                                                 <div class="modal-header">
-//                                                     <p class="modal-title"><a href="">게시물로 이동</a></p>
-//                                                 </div>
-//                                                 <div class="modal-header">
-//                                                     <p class="modal-title"><a href="">공유 대상...</a></p>
-//                                                 </div>
-//                                                 <div class="modal-header">
-//                                                     <p class="modal-title"><a href="">링크 복사</a></p>
-//                                                 </div>
-//                                                 <div class="modal-header">
-//                                                     <p class="modal-title"><a href="">퍼가기</a></p>
-//                                                 </div>
-//                                                 <div class="modal-footer">
-//                                                     <button type="button" class="modal_dismiss_button" data-dismiss="modal">취소</button>
-//                                                 </div>
-//                                             </div>
-//                                         </div>
-//                                     </div>
-//                                     <!--캐러셀-->
-//                                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-//                                         <div class="carousel-inner">
-//                                             <div class="carousel-item active">
-//                                                 <img class="d-block w-100" src="/static/img/${img}"
-//                                                      alt="First slide">
-//                                             </div>
-//                                             <div class="carousel-item">
-//                                                 <img class="d-block w-100" src="/static/img/${img}" alt="Second slide">
-//                                             </div>
-//                                             <div class="carousel-item">
-//                                                 <img class="d-block w-100" src="/static/img/${img}" alt="Third slide">
-//                                             </div>
-//                                         </div>
-//                                         <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-//                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-//                                             <span class="sr-only">Previous</span>
-//                                         </a>
-//                                         <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-//                                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-//                                             <span class="sr-only">Next</span>
-//                                         </a>
-//                                     </div>
-//                                     <!--카드 바디-->
-//                                     <div class="card_body">
-//                                         <div class="icon_bar">
-//                                             <div class="icon_bar_left">
-//                                                 <div id="like-heart1">
-//                                                     <button onclick="like_up('${user_id}', ${post_id})"><i class="fa fa-heart"></i></button>
-//                                                 </div>
-//                                                 <div>
-//                                                     <button><i class="fa fa-chat-bubble" data-toggle="modal" data-target="#modal_card${post_id}"></i></button>
-//                                                 </div>
-//                                                 <div>
-//                                                     <button><i class="fa fa-paper-plane"></i></button>
-//                                                 </div>
-//                                             </div>
-//                                             <button id="bookmark1" class="bookmark"><i class="fa fa-bookmark"></i></button>
-//                                         </div>
-//                                         <div class="card-text">
-//                                             <p id="counter-text1">좋아요 <span id="counter-click1" class="counter-click" name="${post_id}">0</span>개</p>
-//                                             <a href="/" alt="계정" name="${post_id}">${user_id}</a>
-//                                             <span id="shown_desc${post_id}" class="card_comment" >${desc}</span>
-//                                             <button id="desc_read_more_button${post_id}" class="" onclick="desc_read_more(${post_id})" >더 보기</button>
-//                                             <span id="hidden_desc${post_id}" class="card_comment">${desc}</span>
-//                                             <div style="height:20px"></div>
-//                                             <button id="comment_box${post_id}" class="comment_box" data-toggle="modal" data-target="#modal_card${post_id}">댓글 00개 모두
-//                                                 보기
-//                                             </button>
-                                            
-//                                             <div id="comment_lists${post_id}" class="comment-list">
-//                                             </div>
-//                                             <p class="time_passed">${timestamp}시간 전</p>
-//                                         </div>
-//                                         <div class="card_bottom">
-//                                             <input class="form-control" placeholder="댓글 달기..." style="background-color: black; border: 3px solid black"
-//                                                       id="comment_input${post_id}">
-//                                             <button class="comment_upload_button" onclick="save_comment(${post_id})">게시</button>
-//                                         </div>
-//                                     </div>
-//                                 </div>
-//                                 <!--댓글 상세 모달-->
-//                                     <div class="modal" tabindex="-1" id="modal_card${post_id}" style="padding-right: 16px; display: none;">
-//                                         <div class="modal-dialog1">
-//                                             <div class="modal-content1">
-//                                                 <div id="carouselExampleControls2">
-//                                                     <div class="carousel-inner" style="margin-top: auto; margin-bottom: auto;">
-//                                                         <div class="carousel-item">
-//                                                             <img class="d-block w-100" src="/static/img/${img}" alt="First slide">
-//                                                         </div>
-//                                                         <div class="carousel-item">
-//                                                             <img class="d-block w-100" src="/static/img/${img}" alt="Second slide">
-//                                                         </div>
-//                                                         <div class="carousel-item active">
-//                                                             <img class="d-block w-100" src="/static/img/${img}" alt="Third slide">
-//                                                         </div>
-//                                                     </div>
-//                                                     <a class="carousel-control-prev" href="#carouselExampleControls2" role="button"
-//                                                         data-slide="prev">
-//                                                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-//                                                         <span class="sr-only">Previous</span>
-//                                                     </a>
-//                                                     <a class="carousel-control-next" href="#carouselExampleControls2" role="button"
-//                                                         data-slide="next">
-//                                                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
-//                                                         <span class="sr-only">Next</span>
-//                                                     </a>
-//                                                 </div>
-//                                             </div>
-//                                             <div class="modal-content2">
-//                                                 <div class="modal-top-line">
-//                                                     <div class="profile">
-//                                                         <img class="profile_pic" src="../static/img/프로필5.png" alt="프로필 사진">
-//                                                         <a href="/profile_page" style="padding-left:38px;  ">${user_id}</a>
-//                                                     </div>
-//                                                 </div>
-//                                                 <div class="modal-body">
-//                                                     <div id="comment-desc" style="margin-bottom: 10px;">
-//                                                         <a href="/profile_page" alt="계정" name="${post_id}">${user_id}</a>
-//                                                         <span>${desc}</span>                                                   
-//                                                     </div>
-//                                                     <div id="modal_comment_lists${post_id}" class="comment-list">
-//                                                     </div>
-//                                                 </div>
-//                                                 <div class="modal-comment">
-                                                    
-//                                                     <input class="form-control" placeholder="댓글 달기..." id="modal_comment_input${post_id}"
-//                                                                 rows="">
-//                                                     <button class="comment_upload_button" onclick="save_modal_comment(${post_id})">게시</button>
-//                                                 </div>
-
-//                                             </div>
-//                                         </div>
-//                                     </div>`
-
-//                 $('#card_box').append(temp_html);
-
-//                 show_like(post_id);
-//                 hide_show_desc(post_id);
-//             }
-//         }
-//     });
-// }
-
-
-//<!--================5.새 게시물 만들기====================-->
-
-// let files = '' //파일 계속 사용할거니까 전역변수 선언
-$('#nav_bar_add_box').click(function () { //+버튼 클릭시 1번모달창 나타나기
-    $('#first_modal').css({
-        display: 'flex'
-    });
-    $(document.body).css({   //+버튼 클릭시 전체화면 스크롤바 사라짐
-        overflow: 'hidden'
-    })
-});
-$('#modal_x_box').click(function () {   //x버튼 클릭시 1번모달창 사라짐
-    $('.modal_overlay').css({
-        display: 'none'
-    });
-    $(document.body).css({
-        overflow: 'visible'
-    })
-});
-$('#modal_x_box2').click(function () {   //x버튼 클릭시 2번모달창 사라짐
-    $('.modal_overlay').css({
-        display: 'none'
-    });
-    $(document.body).css({
-        overflow: 'visible'
-    })
-});
-$('.addition_modal_body')    //모달창에 드래그앤 드롭 기능 구현하겠다
-    .on("dragover", dragOver)
-    .on("dragleave", dragOver)
-    .on("drop", uploadFiles);
-function dragOver(e) {     //드래그오버 함수
-    e.stopPropagation();   //드래그오버시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
-    e.preventDefault();
-    if (e.type=="dragover") {  //드래그오버하면 outline이 가운데로 몰림
-        $(e.target).css({
-            "outline-offset": "-20px",
-            "border-radius": "8px"
-        });
-    } else {
-        $(e.target).css({
-            "background-color": "black",
-            "outline-offset": "-10px"
-        });
-    }
-}
-function uploadFiles(e) {  //업로드파일 함수
-    e.stopPropagation();  //업로드파일시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
-    e.preventDefault();
-    e.dataTransfer = e.originalEvent.dataTransfer;
-    files = e.dataTransfer.files;
-    if (files.length > 1) {    //파일갯수가 여러개면 하나만 올려주세요 창이 뜸
-        alert('하나만 올려 주세요');
-        return;
-    }
-    //파일이 이미지로 인식되면 배경 이미지 바뀌게 만듬
-    if (files[0].type.match(/image.*/)) {
-        $('#first_modal').css({
-            display: 'none'
-        });
-        $('#second_modal').css({
-            display: 'flex'
-        });
-        $('.img_upload_space').css({
-            "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
-            "outline": "none",
-            "background-size": "100% 100%"
-        });
-    } else {
-        alert('이미지가 아닙니다.');
-    }
-}
-//파일 업로드 여기서부터 시작
-function uploading_files(){
-    let file = files; //실제 파일
-    let image = files[0].name; //파일명
-    let content = $('#input_feed_content').val(); //이미지 밑에 쓴 글
-    console.log(content)
+function follow(user_id) {
     $.ajax({
         type: 'POST',
-        url: '/create_content',
-        data: {image_give:image, desc_give:content},
-        success: function (response){
-            // alert(response['msg'])
+        url: '/follow',
+        data: { user_give: user_id },
+        success: function (response) {
+            alert('팔로우!')
             window.location.reload()
         }
     });
 }
+
+
+$('#profile_change_modal').click(function () { $('#change_profile').toggle(); });
+$('#modal_x_box3').click(function () {   //x버튼 클릭시 모달창 사라짐
+    $('.change_profile').css({
+        display: 'none'
+    });
+})
+
+function change_user_info() {
+    let nickname = $('#new_nickname').val();
+    let desc = $('#new_desc').val();
+    $.ajax({
+        type: 'POST',
+        url: '/citista_users',
+        data: { nickname_give: nickname, desc_give: desc },
+        success: function (response) {
+            window.location.reload()
+        }
+    })
+}
+
+
+
+
+
+
+
+// $('#navbar_heart').click(function(){
+//    $('#heart_tooltip').toggle();});
