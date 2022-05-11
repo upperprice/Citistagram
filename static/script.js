@@ -27,7 +27,7 @@ function is_password(asValue) {
 
 function check_dup() {
     let username = $("#input-username").val()
-    console.log(username)
+
     if (username == "") {
         $("#help-id").text("아이디를 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         $("#input-username").focus()
@@ -64,7 +64,7 @@ function check_dup() {
 
 function check_nickname_dup() {
     let nickname = $("#input-nickname").val()
-    console.log(nickname)
+
     if (nickname == "") {
         $("#help-id").text("닉네임을 입력해주세요.").removeClass("is-safe").addClass("is-danger")
         $("#input-nickname").focus()
@@ -104,8 +104,6 @@ function sign_up() {
     let password = $("#input-password").val()
     let nickname = $("#input-nickname").val()
     let password2 = $("#input-password2").val()
-    console.log(username, nickname, password, password2)
-
 
     if ($("#help-id").hasClass("is-danger")) {
         alert("아이디를 다시 확인해주세요.")
@@ -147,7 +145,7 @@ function sign_up() {
         },
         success: function (response) {
             alert("회원가입을 축하드립니다!")
-            window.location.replace("/login")
+            window.location.replace("/login_page")
         }
     });
 
@@ -160,7 +158,7 @@ function sign_up_page() {
 
 function login_page() {
     alert('로그인페이지 이동!')
-    window.location.href = '/login'
+    window.location.href = '/login_page'
 }
 
 // <!--================로그인==================-->
@@ -212,7 +210,7 @@ function logout() {
         success: function (response) {
             if (response['result'] == 'success') {
                 alert('로그아웃!')
-                window.location.href = '/login';
+                window.location.href = '/login_page';
             }
         }
     });
@@ -282,6 +280,7 @@ function show_comment() {
     });
 }
 
+
 // 댓글 자동 숨김
 function hide_show_comment(post_id) {
     let comment_lists = $('#comment_lists' + post_id);
@@ -329,11 +328,23 @@ function desc_read_more(post_id) {
     read_more.hide();
 }
 
-// 좋아요 수 올리기
+// 좋아요 하기
 function like_up(post_id) {
     $.ajax({
         type: 'POST',
         url: '/like',
+        data: { post_give: post_id },
+        success: function (response) {
+            window.location.reload()
+        }
+    })
+}
+
+// 좋아요 취소
+function like_cancel(post_id) {
+    $.ajax({
+        type: 'POST',
+        url: '/like_cancel',
         data: { post_give: post_id },
         success: function (response) {
             window.location.reload()
@@ -362,7 +373,6 @@ function show_like(post_id) {
                 let liked = like[i]['user_id'];
 
                 if (liked == user_login) {
-
                     $('#liked-heart' + post_id).show();
                     $('#like-heart' + post_id).hide();
                     $('#modal-liked-heart' + post_id).show();
@@ -371,41 +381,60 @@ function show_like(post_id) {
                     $('#modal2-like-heart' + post_id).hide();
                 }
             }
-
         }
     });
 }
 
-// DB 자료 요청
-function get_data() {
-    $.ajax({
-        type: 'GET',
-        url: '/get_data',
-        data: {},
-        success: function (response) {
 
-            let rows = response.contents;
-            for (let i = 0; i < rows.length; i++) {
-                let post_id = rows[i]['post_id']
-
-                hide_show_desc(post_id);
-                show_like(post_id);
-                
-            }
-            show_comment()
-        }
-    });
-}
-
-// 팔로우하기
+// 팔로우 하기
 function follow(user_id) {
     $.ajax({
         type: 'POST',
         url: '/follow',
         data: { user_give: user_id },
         success: function (response) {
-            alert('팔로우!')
             window.location.reload()
+        }
+    });
+}
+
+
+// 팔로우 취소
+function follow_cancel(user_id) {
+    $.ajax({
+        type: 'POST',
+        url: '/follow_cancel',
+        data: { user_give: user_id },
+        success: function (response) {
+            window.location.reload()
+        }
+    });
+}
+
+
+// 팔로우 표시
+function show_follow(follower_id) {
+    $.ajax({
+        type: "GET",
+        url: "/follow",
+        data: {},
+        success: function (response) {
+            let rows = response['follows']
+            let user_login = response['user_login']
+
+            let follow = rows.filter(function (element) {
+                return element.follower_id == follower_id;
+            });
+
+            for (let i = 0; i < follow.length; i++) {
+                let followed = follow[i]['following_id'];
+
+                if (followed == user_login) {
+                    $('#followed' + follower_id).show();
+                    $('#follow' + follower_id).hide();
+                }
+            }
+
         }
     });
 }
@@ -432,8 +461,49 @@ function change_user_info() {
 }
 
 
+// 게시물 타임스탬프
+function show_timestamp() {
+    $.ajax({
+        type: "GET",
+        url: "/timestamp",
+        data: {},
+        success: function (response) {
+            let rows = response['timestamps']
+            for (let i = 0; i < rows.length; i++) {
+                let post_id = rows[i]['post_id']
+                let timestamp = rows[i]['time']
+
+                console.log(post_id,timestamp)
+
+                $('#timestamp' + post_id).text(timestamp)
+            }
+        }
+    });
+}
 
 
+// DB 자료 요청
+function get_data() {
+    $.ajax({
+        type: 'GET',
+        url: '/get_data',
+        data: {},
+        success: function (response) {
+
+            let rows = response.contents;
+            for (let i = 0; i < rows.length; i++) {
+                let user_id = rows[i]['user_id']
+                let post_id = rows[i]['post_id']
+
+                hide_show_desc(post_id);
+                show_like(post_id);
+                show_follow(user_id);
+            }
+            show_comment()
+            show_timestamp()
+        }
+    });
+}
 
 
 

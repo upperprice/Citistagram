@@ -221,7 +221,7 @@
                                             class="fa fa-heart"></i></button>
                                 </div>
                                 <div id="liked-heart{{content.post_id}}" style="display: none;">
-                                    <button onclick="like_up('{{content.post_id}}')"><i class="fa fa-heart"
+                                    <button onclick="like_cancel('{{content.post_id}}')"><i class="fa fa-heart"
                                             style="color:red;"></i></button>
                                 </div>
                                 <div>
@@ -254,7 +254,7 @@
 
                             <div id="comment_lists{{content.post_id}}" class="comment-list">
                             </div>
-                            <p class="time_passed">{{content.timestamp}}시간 전</p>
+                            <p id="timestamp{{content.post_id}}" class="time_passed">00시간 전</p>
                         </div>
                         <div class="card_bottom">
                             <input class="form-control" placeholder="댓글 달기..."
@@ -321,7 +321,7 @@
                                                         class="fa fa-heart"></i></button>
                                             </div>
                                             <div id="modal-liked-heart{{content.post_id}}" style="display: none;">
-                                                <button onclick="like_up('{{content.post_id}}')"><i class="fa fa-heart"
+                                                <button onclick="like_cancel('{{content.post_id}}')"><i class="fa fa-heart"
                                                         style="color:red;"></i></button>
                                             </div>
                                             <div>
@@ -375,7 +375,7 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">
                             <div class="profile" >
-                                <a href="http://upperprice.shop/Eom"><img class="profile_pic" src="../static/img/profiles/angar2.png" alt="프로필 사진"></a>
+                                <a href="http://upperprice.shop/Eom"><img class="profile_pic" src="../static/img/profiles/eom.png" alt="프로필 사진"></a>
                                 <div class="d-flex flex-column bd-highlight mb-3">
                                     <div class="p-2" style="padding: 0px"><p class="profile_name" ><a href="http://upperprice.shop/Eom">angar2</a></p></div>
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">나는 팀장</p></div>
@@ -385,7 +385,7 @@
                         </li>
                         <li class="list-group-item">
                             <div class="profile" >
-                                <a href="http://upperprice.shop/Han"><img class="profile_pic" src="../static/img/프로필1.png" alt="프로필 사진"></a>
+                                <a href="http://upperprice.shop/Han"><img class="profile_pic" src="../static/img/profiles/han.png" alt="프로필 사진"></a>
                                 <div class="d-flex flex-column bd-highlight mb-3">
                                     <div class="p-2" style="padding: 0px"><p class="profile_name" ><a href="http://upperprice.shop/Han">Tasha Han</a></p></div>
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">blinding lights</p></div>
@@ -398,14 +398,14 @@
                                 <a href="http://upperprice.shop/Choi"><img class="profile_pic" src="../static/img/profiles/joon.png" alt="프로필 사진"></a>
                                 <div class="d-flex flex-column bd-highlight mb-3">
                                     <div class="p-2" style="padding: 0px"><p class="profile_name" ><a href="http://upperprice.shop/Choi">JOON CHOI</a></p></div>
-                                    <div class="p-2"><p class="description" style="color: #FFFFFF">ONGOING GAME DATA ANALYST</p></div>
+                                    <div class="p-2"><p class="description" style="color: #FFFFFF">같이 롤하실분</p></div>
                                 </div>
                             </div>
                             <button type="button" class="btn btn-primary" onclick="alert('팔로우 하였습니다')" style="width: auto; margin: auto">팔로우</button>
                         </li>
                         <li class="list-group-item">
                             <div class="profile" >
-                                <a href="http://upperprice.shop/Lee"><img class="profile_pic" src="../static/img/profiles/profile_less.png" alt="프로필 사진"></a>
+                                <a href="http://upperprice.shop/Lee"><img class="profile_pic" src="../static/img/profiles/Lee.png" alt="프로필 사진"></a>
                                 <div class="d-flex flex-column bd-highlight mb-3">
                                     <div class="p-2" style="padding: 0px"><p class="profile_name" ><a href="http://upperprice.shop/Lee">holymoly</a></p></div>
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">S클래스 뺨치는 승차감입니다</p></div>
@@ -535,7 +535,7 @@
             formData.append('desc_give', desc)
             $.ajax({
                 type: 'POST',
-                url: '/create_content',
+                url: '/content',
                 processData: false,
                 contentType: false,
                 data: formData,

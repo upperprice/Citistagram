@@ -793,14 +793,17 @@ button {
 }
 
 .picture_boxes_row {
-    justify-content: space-between;
-    display: flex;
+    /* justify-content: space-between;
+    display: flex; */
+    
 
 }
 
 .picture_button {
     background-color: transparent;
     border: none;
+    margin: 10px;
+    padding: 0px;
 }
 
 
