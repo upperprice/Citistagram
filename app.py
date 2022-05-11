@@ -1,25 +1,3 @@
-<<<<<<< HEAD
-=======
-# from flask import Flask, render_template, request, jsonify
-# app = Flask(__name__)
-
-from pymongo import MongoClient
-client = MongoClient('mongodb+srv://test:sparta@cluster0.3puso.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.dbsparta
-# client = MongoClient('localhost', 27017)
-# db = client.campProject
-
-
-
-# @app.route('/')
-# def home():
-#    return render_template('index.html')
-
-# @app.route('/profile_page')
-# def profile():
-#    return render_template('profile_page.html')
-
->>>>>>> 4ac2638d6c03af55b3348cd3ad7ce9b8ad85f426
 import certifi  # mongodb 인증 라이브러리
 import jwt
 import datetime
@@ -90,10 +68,6 @@ def sign_up_page():
 def login_page():
     msg = request.args.get("msg")
     return render_template('login.html')
-
-@app.route('/dm_page')
-def dm_page():
-   return render_template('dm.html')
 
 
 # 로그인 페이지(로그인 세션 만료용)
@@ -321,23 +295,8 @@ def like_cancel():
 
 # 좋아요 개수/표시 구현
 @app.route("/like", methods=["GET"])
-<<<<<<< HEAD
 def like_get():
     likes = list(db.citista_likes.find({}, {'_id': False})) # 전체 좋아요 정보(개수 확인용)
-=======
-def show_like():
-    likes = list(db.citista_likes.find({}, {'_id': False}))
-    return jsonify({'likes':likes})
-
-
-# 게시물 생성
-@app.route("/create_content", methods=["POST"])
-def create_content():
-
-
-    image_receive = request.form['image_give']
-    desc_receive = request.form['desc_give']
->>>>>>> 4ac2638d6c03af55b3348cd3ad7ce9b8ad85f426
 
     token_receive = request.cookies.get('mytoken')
     user = db.citista_users.find_one({'token': token_receive})
@@ -429,60 +388,12 @@ def citista_users():
     if profile_info == "":  # 내용칸에 쓰여있지 않으면 기존 내용 유지
         profile_info = user['profile_info']
 
-<<<<<<< HEAD
     doc = {
         'nickname': nickname,
         'profile_info': profile_info,
-=======
-    current_time = datetime.now()
-
-    doc_cotents = {
-        'user_id': user_id,
-        'post_id': content_num + 1,
-        'img': image_receive,
-        'desc': desc_receive,
-        'timestamp': current_time
->>>>>>> 4ac2638d6c03af55b3348cd3ad7ce9b8ad85f426
     }
 
-<<<<<<< HEAD
     db.citista_users.update_one({'token': token_receive}, {'$set': doc})
-=======
-    doc_likes = {
-        'post_id': content_num + 1,
-        'like': 0
-    }
-    db.citista_likes.insert_one(doc_likes)
-
-    return jsonify({'msg':'게시물 생성'})
-
-@app.route("/create_content1", methods=["POST"])
-def create_content1():
-    file = request.files['file']
-    extension = file.filename.split('.')[-1] # 여기서 부터 파일 서버 컴퓨터에 저장
-    today = datetime.now()
-    print(today)
-    mytime = today.strftime('%Y-%m-%d-%H-%M-%S')
-    filename = f'{mytime}.{extension}'
-    save_to = f'/static/images/post-contents/{filename}'
-    print(filename)
-    file.save(save_to)
-    return jsonify({'msg': '게시물 저장'})
-
-<<<<<<< HEAD
-=======
-
-
->>>>>>> origin/게시글업로드
-# 게시물 보이기
-@app.route("/create_content", methods=["GET"])
-def show_content():
-    contents = list(db.citista_contents.find({}, {'_id': False}))
-    return jsonify({'contents': contents})
-    
-
-
->>>>>>> 4ac2638d6c03af55b3348cd3ad7ce9b8ad85f426
 
     return jsonify({'result': 'success'})
 

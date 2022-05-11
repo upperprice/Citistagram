@@ -37,30 +37,11 @@
         $(document).ready(function () {
             get_data()
         });
-
-
     </script>
-    <style>
-        .heart_tooltip{
-            right: 0;
-            width: 400px;
-            height: 300px;
-            margin-top:60px;
-            float:right;
-            margin-right: 60px;
-            z-index: 4;
-            border:1px solid antiquewhite;
-            border-radius: 5px;
-            background-color: #080615;
-            display: none;
-            position: fixed;
-        }
-    </style>
 
 </head>
 
 <body>
-<<<<<<< HEAD
     <!--================1.Navbar파트====================-->
     <header class="header">
         <nav class="navbar">
@@ -75,98 +56,6 @@
                 <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                 </form>
-=======
-<!--================1.Navbar파트====================-->
-<div>
-    <nav class="navbar">
-    <span></span>
-    <a class="navbar-brand logo_h" href="{{url_for('profile_page')}}">
-        <img class="img_logo"
-             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbE4ej%2FbtrAKikSqo1%2FnNGCSsG8KBn96rbIEaftZ1%2Fimg.png"
-             alt="로고 이미지">
-    </a>
-    <div class="navbar_search">
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        </form>
-    </div>
-    <ul class="navbar_links">
-        <li><a href="/"><i class="fa fa-home-fi"></i></a></li>
-        <li><a href="/dm_page"><i class="fa fa-paper-plane" style="width:28px"></i></a></li>
-        <li><button id="nav_bar_add_box" class="modal_button" data-toggle="modal" data-target="#addition_modal_box"><i class="fa fa-plus"></i></button></li>
-        <li><a href=""><i class="fa fa-compass"></i></a></li>
-        <li><button id="navbar_heart" class="modal_button"><i class="fa fa-heart"></i></button></li>
-        <li style="display: flex; align-items: center;"><button style="width: 70px; height: 30px; font-size: 15px; cursor: pointer; border: 0;" onclick="logout()">logout</button></li>
-    </ul>
-
-</nav>
-    <!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
-    <div id="first_modal" class="modal_overlay">
-        <div class="modal_window">
-            <div class="addition_modal_head">
-                <div style="width:40px"></div>
-                <p class="modal-title" >새 게시물 만들기</p>
-                <button id="modal_x_box" class="modal_x_box"><i class="fa fa-x"></i></button>
-            </div>
-            <div id="image_upload" class="addition_modal_body">
-                사진을 여기에 끌어다 놓으세요
-
-            </div>
-        </div>
-    </div>
-    <!--더하기 버튼 모달(새게시물 만들기)//두번째-->
-    <div id="second_modal" class="modal_overlay">
-        <div class="modal_window2">
-
-            <div class="addition_modal_head">
-                새 게시물 만들기
-                <button id="modal_x_box2" class="modal_x_box"><i class="fa fa-x"></i></button>
-            </div>
-            <div class="addition_modal_body2">
-                <div class="img_upload_space" ></div>
-                <div class="img_description_space">
-                    <div class="img_description_box">
-                        <textarea id="input_feed_content" style="width:100%;height: 100%">내용을 써주세요^^</textarea>
-
-                    </div>
-                    <div style="justify-content: center;display: flex">
-                        <button id="feed_create_button" onclick="uploading_files()" style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--하트:tooltip-->
-    <div id="heart_tooltip" class="heart_tooltip">
-    </div>
-</div>
-
-<!--================1.Navbar END====================-->
-
-<!--================2.메인 카드 섹션==================-->
-<div class="main_page_all">
-    <div class="main_column">
-        <div class="first_bar">
-            <div class="other_menus">
-                <span></span>
-                <div>
-                    <img width="70px" src="../static/img/리스트1.png" alt="">
-                    <p>Music</p>
-                </div>
-                <div>
-                    <img width="70px" src="../static/img/리스트2.png" alt="">
-                    <p>City</p>
-                </div>
-                <div>
-                    <img width="70px" src="../static/img/리스트3.png" alt="">
-                    <p>Skyline</p>
-                </div>
-                <div>
-                    <img width="70px" src="../static/img/리스트4.png" alt="">
-                    <p>Drive</p>
-                </div>
-                <span></span>
->>>>>>> 4ac2638d6c03af55b3348cd3ad7ce9b8ad85f426
             </div>
             <div class="navbar_links_box">
                 <ul class="navbar_links">
@@ -530,96 +419,11 @@
         </div>
     </main>
     </div>
-<<<<<<< HEAD
     <!--================3. 사이드 바 END==================-->
     
     <!--================4. FOOTER START==================-->
     <!-- <div class="footer">
     <ul class="footer-contents">
-=======
-
-    <!--================2.메인 카드 섹션 END===============-->
-
-    <!--================3. 사이드 바 START=================-->
-
-    <div class="side_column">
-        <div class="my_name">
-            <img style="width:80px" src="../static/img/프로필1_main1.png">
-            <div class="my_profile">
-                <p><a href="/profile_page">Tasha Han</a></p>
-                <p>my page</p>
-            </div>
-        </div>
-        <div class="name_list">
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <div>
-                        <div class="profile">
-                            <img class="profile_pic"
-                                 src="../static/img/프로필1.png"
-                                 alt="프로필 사진">
-                            <p class="profile_name" style="padding-left:30px;"><a href="/profile_page">Tasha Han</a></p>
-                        </div>
-                        <p class="description">예스리</p>
-                    </div>
-                    <div>
-                        <p class="namebox_change">팔로우</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <div class="profile">
-                            <img class="profile_pic"
-                                 src="../static/img/프로필2.png"
-                                 alt="프로필 사진">
-                            <p class="profile_name" style="padding-left:30px;">Yek</p>
-                        </div>
-                        <p class="description">좀 많이 소중한 날</p>
-                    </div>
-                    <div>
-                        <p class="namebox_change">팔로우</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <div class="profile">
-                            <img class="profile_pic"
-                                 src="../static/img/프로필3.png"
-                                 alt="프로필 사진">
-                            <p class="profile_name" style="padding-left:30px;">KYK</p>
-                        </div>
-                        <p class="description">대충 또 오늘이 와버렸다.... 그렇게 됐다.....</p>
-                    </div>
-                    <div>
-                        <p class="namebox_change">팔로우</p>
-                    </div>
-                </li>
-                <li class="list-group-item">
-                    <div>
-                        <div class="profile">
-                            <img class="profile_pic"
-                                 src="../static/img/프로필4.png"
-                                 alt="프로필 사진">
-                            <p class="profile_name" style="padding-left:30px; ">Thebrave</p>
-                        </div>
-                        <p class="description">점으로 태어나 선으로 살아간다</p>
-                    </div>
-                    <div>
-                        <p class="namebox_change">팔로우</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-
-<!--================3. 사이드 바 END==================-->
-
-<!--================4. FOOTER START==================-->
-<div class="footer">
-    <div>
-        <ul class="footer-contents">
->>>>>>> 4ac2638d6c03af55b3348cd3ad7ce9b8ad85f426
         <li><a href="">소개</a></li>
         <li>/</li>
         <li><a href="">블로그</a></li>
@@ -638,129 +442,14 @@
         <li>/</li>
         <li><a href="">해시태그</a></li>
     </ul>
+    <div>
+        <div>한국어 ©2022 Citistagram by Tasha</div>
     </div>
-
-    <div class="footer2">
-        <div>한국어 ©2022 Citistagram by </div>
-        <img style="height:11px;" src="../static/img/logo.png">
-    </div>
-<<<<<<< HEAD
 </div> -->
     <!--================4. FOOTER END====================-->
 
     <script>
         let files;
-=======
-</div>
-<!--================4. FOOTER END====================-->
-<script>
- //navbar 하트버튼
-$('#navbar_heart').click(function(){$('#heart_tooltip').toggle();});
-let files;
-$('#nav_bar_add_box').click(function(){
-    $('#first_modal').css({
-        display: 'flex'
-    });
-    $(document.body).css({   //+버튼 클릭시 전체화면 스크롤바 사라짐
-        overflow: 'hidden'
-    })
-});
-    $('#modal_x_box').click(function () {
-    $('.modal_overlay').css({
-        display: 'none'
-    });
-    $(document.body).css({
-        overflow: 'visible'
-    })
-});
-$('#modal_x_box2').click(function () {
-    $('.modal_overlay').css({
-        display: 'none'
-    });
-    $(document.body).css({
-        overflow: 'visible'
-    })
-});
-$('.addition_modal_body')
-    .on("dragover", dragOver)
-    .on("dragleave", dragOver)
-    .on("drop", uploadFiles);
-function dragOver(e) {
-    e.stopPropagation();
-    e.preventDefault();
-    if (e.type=="dragover") {
-        $(e.target).css({
-            "outline-offset": "-20px",
-            "border-radius": "8px"
-        });
-    } else {
-        $(e.target).css({
-            "background-color": "black",
-            "outline-offset": "-10px"
-        });
-    }
-}
-function uploadFiles(e) {  //업로드파일 함수
-    e.stopPropagation();  //업로드파일시 모달창만 반응하고 뒤의 페이즈는 반응하지 않음
-    e.preventDefault();
-    e.dataTransfer = e.originalEvent.dataTransfer;
-    files = e.dataTransfer.files;
-    if (files.length > 1) {    //파일갯수가 여러개면 하나만 올려주세요 창이 뜸
-        alert('하나만 올려 주세요');
-        return;
-    }
-    //파일이 이미지로 인식되면 배경 이미지 바뀌게 만듬
-    if (files[0].type.match(/image.*/)) {
-        $('#first_modal').css({display: 'none'});
-        $('#second_modal').css({
-            display: 'flex'
-        });
-        $('.img_upload_space').css({
-            "background-image": "url(" + window.URL.createObjectURL(files[0]) + ")",
-            "outline": "none",
-            "background-size": "100% 100%"
-        });
-    } else {
-        alert('이미지가 아닙니다.');
-    }
-}
-
-//파일 업로드 여기서부터 시작
-
-function uploading_files(){
-    let file = files; //실제 파일
-    let image = files[0].name; //파일명
-    console.log(image)
-    let content = $('#input_feed_content').val(); //이미지 밑에 쓴 글
-    let formData = new FormData();
-    formData.append('file',file)
-
-    $.ajax({
-        type: 'POST',
-        url: '/create_content',
-        data:{image_give:image, desc_give:content,},
-
-        success: function (response){
-            alert(response['msg'])
-            window.location.reload()
-        }
-    });
-
-    $.ajax({
-        type: 'POST',
-        url: '/create_content1',
-        processData: false,
-        contentType: false,
-        data: formData,
-        success: function (response){
-            alert(response['msg'])
-            window.location.reload()
-        }
-    });
-}
-
-</script>
->>>>>>> 4ac2638d6c03af55b3348cd3ad7ce9b8ad85f426
 
         $('#nav_bar_add_box').click(function () { //+버튼 클릭시 1번모달창 나타나기
             $('#first_modal').css({
