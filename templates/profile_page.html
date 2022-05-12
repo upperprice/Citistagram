@@ -1,105 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Required meta tags -->
     <meta charset="UTF-8">
-    <title>Citistagram</title>
+    <title>Citistagram | Page</title>
+    <link rel="icon" href="../static/img/symbol.png" type="image/ico">
+
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=East+Sea+Dokdo&family=Gugi&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR:wght@300;500;600;900&family=Stylish&family=Yeon+Sung&display=swap"
+        rel="stylesheet">
+
+
     <!-- Optional JavaScript -->
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-            crossorigin="anonymous"></script>
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
-            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-            crossorigin="anonymous"></script>
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
-            integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-            crossorigin="anonymous"></script>
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://use.fortawesome.com/99966411.js"></script>
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
     <!-- main css -->
     <link rel="stylesheet" href="../static/style.css">
     <link rel="stylesheet" href="../static/responsive.css">
-    <style>
-        .change_profile{
-            width: 400px;
-            height: 500px;
-            background:none;
-            position: absolute;
-            left: 45%;
-            margin-top: 100px;
-            display: none;
-        }
-    </style>
+
+    <script>
+        $(document).ready(function () {
+            get_data();
+        });
+    </script>
+
+
 </head>
+
 <body>
-<!--================1.Navbar파트====================-->
-<div>
-    <nav class="navbar">
-        <span></span>
-        <a class="navbar-brand logo_h" href="/">
-            <img class="img_logo"
-                src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbbE4ej%2FbtrAKikSqo1%2FnNGCSsG8KBn96rbIEaftZ1%2Fimg.png"
-                alt="로고 이미지">
-        </a>
-        <div class="navbar_search">
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            </form>
-        </div>
-        <ul class="navbar_links">
-            <li><a href="/"><i class="fa fa-home-fi"></i></a></li>
-            <li><a href="/dm_page"><i class="fa fa-paper-plane" style="width:28px"></i></a></li>
-            <li><button id="nav_bar_add_box" class="modal_button" data-toggle="modal" data-target="#addition_modal_box"><i class="fa fa-plus"></i></button></li>
-            <li><a href=""><i class="fa fa-compass"></i></a></li>
-            <li><button id="navbar_heart" class="modal_button"><i class="fa fa-heart"></i></button></li>
-            <li style="display: flex; align-items: center;"><button style="width: 70px; height: 30px; font-size: 15px; cursor: pointer; border: 0;" onclick="logout()">logout</button></li>
-        </ul>
-    </nav>
-    <!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
-    <div id="first_modal" class="modal_overlay">
-        <div class="modal_window">
-            <div class="addition_modal_head">
-                <div style="width:40px"></div>
-                <p class="modal-title" >새 게시물 만들기</p>
-                <button id="modal_x_box" class="modal_x_box"><i class="fa fa-x"></i></button>
+    <header class="header">
+        <nav class="navbar">
+            <div class="navbar_logo_box">
+                <a class="navbar-brand logo_h" href="/">
+                    <img width="100px" class="img_logo"
+                        src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FdfHEoS%2FbtrBLGSukaH%2FRRvZyVhJqHQm4ojqMunP40%2Fimg.png"
+                        alt="로고 이미지">
+                </a>
             </div>
-            <div id="image_upload" class="addition_modal_body">
-                사진을 여기에 끌어다 놓으세요
-
+            <div class="navbar_search_box">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                </form>
             </div>
-        </div>
-    </div>
-    <!--더하기 버튼 모달(새게시물 만들기)//두번째-->
-    <div id="second_modal" class="modal_overlay">
-        <div class="modal_window2">
-
-            <div class="addition_modal_head">
-                새 게시물 만들기
-                <button id="modal_x_box2" class="modal_x_box"><i class="fa fa-x"></i></button>
+            <div class="navbar_links_box">
+                <ul class="navbar_links">
+                    <li><a href="/"><i class="fa fa-home-fi"></i></a></li>
+                    <li><a href="/dm_page"><i class="fa fa-paper-plane" style="width:28px"></i></a></li>
+                    <li><button id="nav_bar_add_box" class="modal_button" data-toggle="modal"
+                            data-target="#addition_modal_box"><i class="fa fa-plus"></i></button></li>
+                    <li><a href=""><i class="fa fa-compass"></i></a></li>
+                    <li><button id="navbar_heart" class="modal_button"><i class="fa fa-heart"></i></button></li>
+                    <li style="display: flex; align-items: center;"><button
+                            style="width: 70px; height: 30px; font-size: 15px; cursor: pointer; border: 0;"
+                            onclick="logout()">logout</button></li>
+                </ul>
             </div>
-            <div class="addition_modal_body2">
-                <div class="img_upload_space" ></div>
-                <div class="img_description_space">
-                    <div class="img_description_box">
-                        <textarea id="input_feed_content" style="width:100%;height: 100%">내용을 써주세요^^</textarea>
-
+            <!--더하기 버튼 모달(새게시물 만들기)//첫번째-->
+            <div id="first_modal" class="modal_overlay">
+                <div class="modal_window">
+                    <div class="addition_modal_head">
+                        <div style="width:40px"></div>
+                        <p class="modal-title">새 게시물 만들기</p>
+                        <button id="modal_x_box" class="modal_x_box"><i class="fa fa-x"></i></button>
                     </div>
-                    <div style="justify-content: center;display: flex">
-                        <button id="feed_create_button" onclick="uploading_files()" style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
+                    <div id="image_upload" class="addition_modal_body">
+                        사진을 여기에 끌어다 놓으세요
+
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <!--하트:tooltip-->
-    <div id="heart_tooltip" class="heart_tooltip">
-    </div>
-</div>
-<!--================1.Navbar END====================-->
+            <!--더하기 버튼 모달(새게시물 만들기)//두번째-->
+            <div id="second_modal" class="modal_overlay">
+                <div class="modal_window2">
+
+                    <div class="addition_modal_head">
+                        새 게시물 만들기
+                        <button id="modal_x_box2" class="modal_x_box"><i class="fa fa-x"></i></button>
+                    </div>
+                    <div class="addition_modal_body2">
+                        <div class="img_upload_space"></div>
+                        <div class="img_description_space">
+                            <div class="img_description_box">
+                                <textarea id="input_feed_content" style="width:100%;height: 100%">내용을 써주세요^^</textarea>
+
+                            </div>
+                            <div style="justify-content: center;display: flex">
+                                <button id="feed_create_button" onclick="uploading_files()"
+                                    style="background-color: transparent; border-color: #C7B0FFFF; color: #C7B0FFFF;width:100px;border-radius: 5px ">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--하트:tooltip-->
+            <div id="heart_tooltip" class="heart_tooltip">
+            </div>
+        </nav>
+    </header>
+
+
     <!--===================프로필 변경 모달========================-->
     <div id="change_profile" class="change_profile">
         <div class="modal-dialog">
@@ -121,9 +136,7 @@
                 </div>
 
                 <div class="modal-header">
-                    <form action="http://localhost:5000/uploader"
-                        method="POST"
-                        enctype="multipart/form-data">
+                    <form action="http://localhost:5000/uploader" method="POST" enctype="multipart/form-data">
                         <input type="file" name="file" />
                         <input type="submit" />
                     </form>
@@ -140,29 +153,36 @@
         <div class="head_part">
             <div class="head_content">
                 <div class="profile_pic_large">
-                    <img width="150px" height="150px" style="border-radius: 70%" src="../static/img/profiles/{{user_info.profile_pic}}" alt="메인 사진">
+                    <img width="150px" height="150px" style="border-radius: 70%"
+                        src="../static/img/profiles/{{user_info.profile_pic}}" alt="메인 사진">
                 </div>
-                <div >
+                <div>
                     <div class="head_right_column">
-                        <div><p>{{user_info.username}}</p></div>
-                        {% if user_info.username == my_info %}
+                        <div>
+                            <p>{{user_info.username}}</p>
+                        </div>
+                        {% if user_info.username == my_id %}
                         <div class="buttons">
                             <button id="profile_change_modal">프로필 편집</button>
-                            <button >▽</button>
-                            <button class="modal_button" data-toggle="modal" data-target="#modal_box4"><i class="fa fa-dots-three-horizontal" style="color: antiquewhite"></i></button>
+                            <button>▽</button>
+                            <button class="modal_button" data-toggle="modal" data-target="#profile_modal_box"><i
+                                    class="fa fa-dots-three-horizontal" style="color: antiquewhite"></i></button>
                         </div>
                         <!--모달-->
-                        <div class="modal" tabindex="-1" id="modal_box4">
+                        <div class="modal" tabindex="-1" id="profile_modal_box">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">차단</a></p>
+                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">차단</a>
+                                        </p>
                                     </div>
                                     <div class="modal-header">
-                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">제한</a></p>
+                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">제한</a>
+                                        </p>
                                     </div>
                                     <div class="modal-header">
-                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">신고</a></p>
+                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">신고</a>
+                                        </p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="modal_dismiss_button" data-bs-dismiss="modal">취소
@@ -175,22 +195,28 @@
                         {% else %}
                         <div class="buttons">
                             <button>메시지 보내기</button>
-                            <button>Follow</button>
+                            <button id="follow{{user_info.username}}" onclick="follow('{{user_info.username}}')">Follow</button>
+                            <button id="followed{{user_info.username}}" onclick="follow_cancel('{{user_info.username}}')"
+                                    style="display: none; background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%); color:black">Follow</button>
                             <button>▽</button>
-                            <button class="modal_button" data-toggle="modal" data-target="#modal_box4"><i class="fa fa-dots-three-horizontal" style="color: antiquewhite"></i></button>
+                            <button class="modal_button" data-toggle="modal" data-target="#profile_modal_box"><i
+                                    class="fa fa-dots-three-horizontal" style="color: antiquewhite"></i></button>
                         </div>
                         <!--모달-->
-                        <div class="modal" tabindex="-1" id="modal_box4">
+                        <div class="modal" tabindex="-1" id="profile_modal_box">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">차단</a></p>
+                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">차단</a>
+                                        </p>
                                     </div>
                                     <div class="modal-header">
-                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">제한</a></p>
+                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">제한</a>
+                                        </p>
                                     </div>
                                     <div class="modal-header">
-                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">신고</a></p>
+                                        <p class="modal-title" style="color:#C7B0FFFF;font-size: 1em;"><a href="">신고</a>
+                                        </p>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="modal_dismiss_button" data-bs-dismiss="modal">취소
@@ -203,14 +229,15 @@
                         {% endif %}
                     </div>
                     <div class="followers_and_follows">
-                        <div>게시물 <b>382</b></div>
-                        <div>팔로워 <b>415</b></div>
-                        <div>팔로우 <b>381</b></div>
+                        <div>게시물 <b>{{ doc.contents_count }}</b></div>
+                        <div>팔로워 <b>{{ doc.follower_count }}</b></div>
+                        <div>팔로우 <b>{{ doc.following_count }}</b></div>
                         <span></span>
                     </div>
                     <div class="main_text">
                         <p>{{user_info.profile_info}}</p>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -238,119 +265,119 @@
             <div class="body_content">
                 <div class="first-row">
                     <button><i class="fa fa-th"></i> 게시물</button>
+
                     <button><i class="fa fa-film"></i> 릴스</button>
+
                     <button><i class="fa fa-caret-right"></i> 동영상</button>
+
                     <button><i class="fa fa-user-female"></i> 태그됨</button>
                 </div>
+
                 <div class="for_padding"></div>
                 <div class="picture_boxes_row">
-                    <button class="picture_button" data-toggle="modal" data-target="#modal_box1">
+                    {% for content in contents %}
+                    <button class="picture_button" data-toggle="modal" data-target="#modal_box{{ content.post_id }}">
                         <div class="picture_box">
-                            <img  class="images" src="../static/img/playlist2.gif" alt="">
+                            <img class="images" src="/static/img/post_contents/{{content.f_name}}" alt="">
                             <img class="images2" src="../static/img/배경4.png" alt="">
-                            <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
+                            <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>
+                            </div>
                         </div>
                     </button>
-                    <div class="picture_box">
-                        <img src="../static/img/1cd27a83425055.5d3bb82ce9840.jpg" alt="">
-                        <img class="images2" src="../static/img/배경4.png" alt="">
-                        <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
-                    </div>
-                    <div class="picture_box">
-                        <img src="../static/img/5054d40c267c556d01214b8f97203bd0.jpg" alt="">
-                        <img class="images2" src="../static/img/배경4.png" alt="">
-                        <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
-                    </div>
-                </div>
-                <div class="for_padding1"></div>
-                <div class="picture_boxes_row">
-                    <div class="picture_box">
-                        <img src="../static/img/CityPop.jpg" alt="">
-                        <img class="images2" src="../static/img/배경4.png" alt="">
-                        <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
-                    </div>
-                    <div class="picture_box">
-                        <img src="../static/img/wp5167423-city-pop-wallpapers.jpg" alt="">
-                        <img class="images2" src="../static/img/배경4.png" alt="">
-                        <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
-                    </div>
-                    <div class="picture_box">
-                        <img src="../static/img/a5fcb0a7efce1630b0d0453e999a253f_577e67ee6876bd566688d2a3c2ba7a72.jpg" alt="">
-                        <img class="images2" src="../static/img/배경4.png" alt="">
-                        <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
-                    </div>
-                </div>
-                <div class="for_padding1"></div>
-                <div class="picture_boxes_row">
-                    <div class="picture_box">
-                        <img src="../static/img/playlist3.gif" alt="">
-                        <img class="images2" src="../static/img/배경4.png" alt="">
-                        <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
-                    </div>
-                    <div class="picture_box">
-                        <img src="../static/img/91854e107734101.Y3JvcCwyOTUyLDIzMDksNDgyLDA.jpg" alt="">
-                        <img class="images2" src="../static/img/배경4.png" alt="">
-                        <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
-                    </div>
-                    <div class="picture_box">
-                        <img src="../static/img/playlist1.gif" alt="">
-                        <img class="images2" src="../static/img/배경4.png" alt="">
-                        <div class="text"><i class="fa fa-chat-bubble"></i>316 <i class="fa fa-heart"></i>21 </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--===================메인모달========================-->
-    <div class="modal" tabindex="-1" id="modal_box1">
-        <div class="modal-dialog1">
-            <div class="modal-content1">
-                <div id="carouselExampleControls2" class="carousel slide" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="d-block w-100" src="../static/img/모달1.jpg" alt="First slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="../static/img/모달2.png" alt="Second slide">
-                    </div>
-                    <div class="carousel-item">
-                        <img class="d-block w-100" src="../static/img/모달3.jpg" alt="Third slide">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleControls2" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleControls2" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
-            </div>
-            <div class="modal-content2">
-                <div class="modal-top-line">
-                    <div class="profile">
-                        <img class="profile_pic"
-                             src="../static/img/프로필5.png"
-                             alt="프로필 사진">
-                        <p style="padding-left:38px;  ">Tasha Han</p>
-                    </div>
-                </div>
-                <div class="modal-body">
-                    <div id="comment-lists4">
-                        <p>벌써 5월 2일이라니 시간이 무섭다.</p>
-                        <p>날씨 좋다</p>
-                    </div>
-                </div>
-                <div class="modal-comment">
-                    <textarea class="form-control" placeholder="댓글 달기" id="uploading_comment4" style="background-color: black; border: 3px solid black"
-                              rows="1"></textarea>
-                    <button class="comment_upload_button" onclick="save_comment4()">게시</button>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <div class="modal" tabindex="-1" id="modal_box{{content.post_id}}"
+                        style="padding-right: 16px; display: none;">
+                        <div class="modal-dialog1">
+                            <div class="modal-content1">
+                                <div id="carouselExampleControls2">
+                                    <div class="carousel-inner" style="margin-top: auto; margin-bottom: auto;">
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="/static/img/post_contents/{{content.f_name}}" alt="First slide">
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img class="d-block w-100"
+                                                src="/static/img/post_contents/{{content.f_name}}" alt="Second slide">
+                                        </div>
+                                        <div class="carousel-item active">
+                                            <img class="d-block w-100"
+                                                src="/static/img/post_contents/{{content.f_name}}" alt="Third slide">
+                                        </div>
+                                    </div>
+                                    <a class="carousel-control-prev" href="#carouselExampleControls2" role="button"
+                                        data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleControls2" role="button"
+                                        data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="modal-content2">
+                                <div class="modal-top-line">
+                                    <div class="profile">
+                                        <a class="profile_pic_box" style="margin-left:15px;"
+                                            href="{{url_for('profile_page', user_id=content.user_id)}}"><img
+                                                class="profile_pic" src="../static/img/profiles/{{content.user_id}}.jpg"
+                                                alt="프로필 사진"></a>
+                                        <a href="/profile_page" style="margin-left:15px;">{{content.user_id}}</a>
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="comment-desc" style="margin-bottom: 10px;">
+                                        <a href="/profile_page" alt="계정"
+                                            name="{{content.post_id}}">{{content.user_id}}</a>
+                                        <span>{{content.desc}}</span>
+                                    </div>
+                                    <div id="modal2_comment_lists{{content.post_id}}" class="comment-list">
+                                    </div>
+                                    <div class="icon_bar" style="margin-top: auto;">
+                                        <div class="icon_bar_left">
+                                            <div id="modal2-like-heart{{content.post_id}}" style="display: block;">
+                                                <button onclick="like_up('{{content.post_id}}')"><i
+                                                        class="fa fa-heart"></i></button>
+                                            </div>
+                                            <div id="modal2-liked-heart{{content.post_id}}" style="display: none;">
+                                                <button onclick="like_cancel('{{content.post_id}}')"><i class="fa fa-heart"
+                                                        style="color:red;"></i></button>
+                                            </div>
+                                            <div>
+                                                <button><i class="fa fa-chat-bubble" data-toggle="modal"
+                                                        data-target="#modal_card{{content.post_id}}"></i></button>
+                                            </div>
+                                            <div>
+                                                <button><i class="fa fa-paper-plane"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="icon_bar_right">
+                                            <button id="bookmark{{content.post_id}}" class="bookmark"><i
+                                                    class="fa fa-bookmark" aria-hidden="true"></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="card-text">
+                                        <p id="counter-text1"><span id="counter-click1" class="counter-click"
+                                                name="{{content.post_id}}">0</span>명이 좋아합니다.</p>
+                                    </div>
+                                </div>
+                                <div class="modal-comment">
 
+                                    <input class="form-control" style="width: 82%; margin-left: 15px;"
+                                        placeholder="댓글 달기..." id="modal_comment_input{{content.post_id}}" rows="">
+                                    <button class="comment_upload_button"
+                                        onclick="save_modal_comment('{{content.post_id}}')">게시</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!--===================마이페이지별 게시물 및 게시물 클릭 모달 끝========================-->
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="footer">
@@ -374,34 +401,10 @@
             <li><a href="">해시태그</a></li>
         </ul>
         <div>
-            <div>한국어  ©2022 Citistagram by Tasha</div>
+            <div>한국어 ©2022 Citistagram by Tasha</div>
         </div>
     </div>
-    <script>
-        $('#profile_change_modal').click(function(){$('#change_profile').toggle();});
-        $('#modal_x_box3').click(function () {   //x버튼 클릭시 모달창 사라짐
-            $('.change_profile').css({
-                display: 'none'
-            });
-        })
-
-        function change_user_info() {
-            let nickname = $('#new_nickname').val();
-            let desc = $('#new_desc').val();
-            $.ajax({
-                type: 'POST',
-                url: '/citista_users',
-                data: {nickname_give:nickname,desc_give:desc},
-                success: function (response) {
-                    window.location.reload()
-                }
-            })
-        }
-
-
-
-
-    </script>
     <script type="text/javascript" src="../static/script.js"></script>
 </body>
+
 </html>

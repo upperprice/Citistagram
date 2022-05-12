@@ -2,49 +2,78 @@
 * {
     font-family: 'Gugi', cursive;
     color: #b4ab9f;
-
-
 }
+
 a {
-        color:#c7b0ff;
-      }
-body{
+    color: #c7b0ff;
+}
+
+body {
     background-color: #080615;
 }
+button {
+    cursor: pointer;
+}
+
 /*=================== navbar ====================*/
-.navbar{
+
+.header {
     background-color: #c7b0ff;
     background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
-    display: flex;
-    justify-content: space-between;
-    position:fixed;
-    width: 100%;
+    position: sticky;
     z-index: 3;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+.navbar {
+
+    max-width: 975px;
     height: 70px;
+    margin: auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.navbar_logo_box {
+    margin-right: auto;
+    padding-right: 5px;
+    height: 36px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
 }
 
-.navbar-brand logo_h{
+.navbar-brand logo_h {
     padding: 0;
-    margin:0;
+    margin: 0;
 
 }
 
 
-.img_logo{
+.img_logo {
     padding: 0px;
     margin: 0px;
 
 }
 
-.navbar_search{
-    padding:0;
-    border-radius:0;
-    border-color:#c7b0ff;
+.navbar_search_box {
+    padding: 0;
+    border-radius: 0;
+    border-color: #c7b0ff;
 
 }
 
+.navbar_links_box {
+    margin-left: auto;
+}
 
-.navbar_links{
+.navbar_links {
+    padding: 0px;
     font-size: 30px;
     display: flex;
     list-style: none;
@@ -52,46 +81,60 @@ body{
 }
 
 .navbar_links li {
-    padding-right: 13px;
-    padding-left: 15px;
+    padding-right: 7px;
+    padding-left: 7px;
 
 }
 
-.navbar_links li:hover a{
+.navbar_links li:hover a {
     color: #c00000;
-     text-shadow: 0 0 10px blue;
+    text-shadow: 0 0 10px blue;
 }
-.navbar_links li a i{
-    color:antiquewhite;
+
+.navbar_links li:hover button {
+    color: #c00000;
+    text-shadow: 0 0 10px blue;
+}
+
+.navbar_links li a i {
+    color: antiquewhite;
     font-size: 1em;
 }
 
-.modal_button{
-    background-color:transparent;
-    border:none;
+.meatball_modal {
+    margin: auto 5px auto 5px;
+}
+
+.modal_button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
 
 }
-.modal_button i{
-    color:antiquewhite;
+
+.modal_button i {
+    color: antiquewhite;
 }
+
 .modal_button i :hover {
     color: #c00000;
-     text-shadow: 0 0 10px blue;
-}
-.navbar_links :nth-child(2) a i {
-    font-size:0.8em;
-    padding-left:5px;
+    text-shadow: 0 0 10px blue;
 }
 
-.heart_tooltip{
+.navbar_links :nth-child(2) a i {
+    font-size: 0.8em;
+    padding-left: 5px;
+}
+
+.heart_tooltip {
     right: 0;
     width: 400px;
     height: 300px;
-    margin-top:60px;
-    float:right;
+    margin-top: 60px;
+    float: right;
     margin-right: 60px;
     z-index: 4;
-    border:1px solid antiquewhite;
+    border: 1px solid antiquewhite;
     border-radius: 5px;
     background-color: #080615;
     display: none;
@@ -101,423 +144,516 @@ body{
 
 /*=================== main page ====================*/
 .main_page_all {
-    padding-top: 85px;
-    display:flex;
-    flex-direction:row;
-    justify-content: center;
-    z-index: 1;
     background-color: #080615;
-    width:100vw;
-    height:100vh;
+    /* width: 100vw;
+    height: 100vh; */
+    margin: auto;
+    max-width: 935px;
+    padding-top: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
 
 }
 
-.main_column1{
+.main_column1 {
 
-    height:100%;
-    width:530px;
+    height: 100%;
+    width: 530px;
     background-color: tomato;
-    margin-right:100px;
-    padding-top:37px;
+    margin-right: 100px;
+    padding-top: 37px;
 
 }
-.main_column2{
 
-    height:100%;
-    width:530px;
+.main_column2 {
+
+    height: 100%;
+    width: 530px;
     background-color: turquoise;
-    margin-right:100px;
-    padding-top:37px;
+    margin-right: 100px;
+    padding-top: 37px;
 
 }
-.first_bar{
+
+.first_bar {
     background-color: #080615;
-    height:100px;
-    margin-bottom:30px;
+    height: 100px;
+    margin-bottom: 30px;
 }
 
-.side_column{
+.side_column {
     width: 380px;
     height: 1000px;
     background-color: transparent;
-    position:fixed;
-    left:60%;
+    position: fixed;
+    left: 60%;
     z-index: 2;
     margin-bottom: 100px;
     padding-bottom: 100px;
-    margin-left:130px;
+    margin-left: 30px;
 
 }
+
 /*===================modal====================*/
-.modal-content{
+.modal-content {
     background-color: #080615;
     border: 1px solid antiquewhite;
     width: 350px;
 
 }
-.modal-dialog1{
-    display:flex;
-    flex-direction:row;
+
+.modal-dialog1 {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     vertical-align: center;
     margin-top: 40px;
     border-radius: 5px;
 }
 
-.modal-content1{
-    width:500px;
-    height:650px;
-    background-color: #c7b0ff;
+.modal-content1 {
+    width: 650px;
+    height: 650px;
+    background-color: #020106;
+    border: 1px solid #332583;
 }
-.modal-content2{
-    width:500px;
-    height:650px;
-    background-color:#080615;
+
+.modal-content2 {
+    width: 400px;
+    height: 650px;
+    background-color: #080615;
     opacity: 0.8;
-    position:relative;
-    border: 1px solid antiquewhite;
-}
-.modal-header{
-    justify-content:center;
-}
-.modal-title{
-    width:100%;
-    text-align:center;
-}
-.modal-footer{
-    justify-content:center;
-    z-index:500;
-}
-.modal_dismiss_button{
-    background-color:#080615;
-    color:#c7b0ff;
-    border:none;
+    position: relative;
+    border: 1px solid #332583;
 }
 
-.modal-top-line{
-
-    height:40px;
-    padding-left:5px;
-    padding-top: 5px;
-    justify-content: space-between;
-    border-bottom: 1px solid antiquewhite;
+.modal-header {
+    justify-content: center;
 }
 
-
-.modal-comment{
-    display: flex;
-    text-align: center;
-    position:absolute;
-    left:0;
-    bottom:0;
+.modal-title {
     width: 100%;
-    padding-top:5px;
-    border-top: 1px solid white;
+    text-align: center;
+}
+
+.modal-footer {
+    justify-content: center;
+    z-index: 500;
+}
+
+.modal_dismiss_button {
+    background-color: #080615;
+    color: #c7b0ff;
+    border: none;
+}
+
+.modal-top-line {
+
+    height: 70px;
+    padding-left: 5px;
+    padding-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #332583;
+}
+
+
+.modal-comment {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 60px;
+    width: 100%;
+    padding-top: 5px;
+    border-top: 1px solid #332583;
 
 }
 
-.modal-comment button{
+.modal-comment button {
     float: left;
 }
+
 /*===================comment====================*/
 
 
 /*===================card====================*/
-.card{
-    margin-bottom:120px;
+.card {
+    margin-bottom: 120px;
     border: 2px solid #b4ab9f;
     background-color: #080615;
     border-radius: 7px;
     /*width: 570px;*/
 
 }
-.card_top{
-    height: 50px;
-    display:flex;
+
+.card_top {
+    height: 70px;
+    display: flex;
     justify-content: space-between;
-    padding-left:25px;
-    padding-right:25px;
-    padding-top:15px;
+    padding-left: 15px;
+    padding-right: 5px;
+    border: 1px solid rgb(16, 15, 36);
 }
 
-.profile{
-    flex-direction:row;
-    width: 150px;
-
-
+.profile {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
 }
-.profile p{
-    color:#C7B0FFFF
+
+.profile p {
+    color: #C7B0FFFF
 }
+
 .profile :hover {
-    color:#88F3FFFF
+    color: #88F3FFFF
 }
 
-.profile_pic{
-    width:25px;
-    height:25px;
-    float:left;
+.profile_pic_box {
+    width: 45px;
+    height: 45px;
+    float: left;
+    overflow: hidden;
+    border-radius: 50%;
 }
 
-.modal{
-    border:none;
+.profile_pic {
+
+    width: 45px;
+    border-radius: 70%;
+    border: 3px solid transparent;
+    background-image: linear-gradient(#444444, #444444), linear-gradient(to right, #766EFD, #87F1FD);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
 }
 
-.icon_bar{
-    margin:10px;
-    padding-top:15px;
-    padding-bottom:20px;
-    padding-left:5px;
+.profile_id {
+    margin-left: 15px;
+}
+
+.modal {
+    border: none;
+}
+
+.icon_bar {
+    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-left: 5px;
     font-size: 30px;
     display: flex;
     list-style: none;
     justify-content: space-between;
+    border: 1px solid rgb(16, 15, 36);
 
 }
 
 
+.icon_bar_mo{
+    position:relative;
+    /* height: 360px; */
+    margin-top: auto;
+    background-color: wheat;
+}
+.icon_bar2 {
 
+    padding-top: 15px;
+    padding-bottom: 10px;
+    padding-left: 5px;
+    font-size: 30px;
+    position:absolute;
+    bottom: 0;
+    list-style: none;
+    justify-content: space-between;
+    border: 1px solid rgb(16, 15, 36);
 
+}
 
-/*===================여기 수정====================*/
-.icon_bar_left{
-    margin:0;
-    display:flex;
-    padding-left:0;
+.icon_bar_left {
+    float: left;
+    margin: 0;
+    display: flex;
+    padding-left: 0;
     width: 150px;
 }
-.icon_bar_left div button{
+
+.icon_bar_left div button {
     background-color: transparent;
-    border:none;
-    padding:0;
-    margin:0;
-    width:45px;
-    height:45px;
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 45px;
+    height: 45px;
     vertical-align: center;
 }
 
-.icon_bar_left div button i{
-    color:#766DFFFF;
+.icon_bar_left div button i {
+    color: #766DFFFF;
     font-size: 0.9em;
     vertical-align: center;
     padding-bottom: 5px;
 }
-.airplane button i{
+
+.airplane button i {
     font-size: 0.7em;
 }
 
-.icon_bar_left div:hover button{
+.icon_bar_left div:hover button {
     background-image: -moz-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     background-image: -ms-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     border-radius: 2px;
 
 }
-.icon_bar_left div:hover button i{
-        color:#080615
+
+.icon_bar_left div:hover button i {
+    color: #080615
 }
-.bookmark{
+
+.icon_bar_right {
+    margin-left: auto;
+    float: right;
+}
+
+.bookmark {
     background-color: transparent;
-    border:none;
+    border: none;
 }
-.bookmark :hover{
-    color:#88f3ff;
+
+.bookmark :hover {
+    color: #88f3ff;
 }
 
 
 /*===================여기 수정====================*/
 
 .card_box {
-    margin-bottom: 100px;
+    margin-bottom: 70px;
+    border: 1px solid rgb(16, 15, 36);
+    background-color: #0a071a;
 }
 
 .card-text {
-    padding-left: 46px;
-}
-.counter-click{
-    color:#88f3ff;
-}
-.card-text h6{
-    color:#C7B0FFFF;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
-.comment_box{
+.counter-click {
+    color: #88f3ff;
+}
+
+.card-text h6 {
+    color: #C7B0FFFF;
+}
+
+.card_comment {
+    margin-bottom: 5px;
+}
+
+.more_button {
+    font-size: 13px;
+    margin: 0px;
+    padding: 0px;
+    color: #7a7061;
+
+    background: transparent;
+}
+
+.comment_box {
     display: none;
     background-color: transparent;
-    border:none;
+    border: none;
     font-size: 0.9em;
+    margin-top: 10px;
+    color: #7a7061;
 }
+
 .comment_box:hover {
-    color:#88F3FFFF;
+    color: #88F3FFFF;
 }
-.comment-list{
-    display:block;
+
+.comment-list {
+    display: block;
 }
-.time_passed{
-    margin-top: 5px;
+
+.time_passed {
+    margin-top: 30px;
     font-size: 0.8em;
 }
 
 .card_bottom {
     display: flex;
     text-align: center;
-    margin-left:20px;
-    padding-top: 30px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 15px;
 }
+
 .card_bottom textarea {
 
     background-color: #080615;
-
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
+
 .form-control {
-
-    margin-bottom:20px;
-    width:90%;
+    width: 90%;
 }
+
 .card_bottom a {
 
-    height:40px;
-    padding-left:14px;
+    height: 40px;
+    padding-left: 14px;
     margin-top: 10px;
     padding-top: 20px;
-    display:flex;
-    line-height:40px;
+    display: flex;
+    line-height: 40px;
 }
-.comment_upload_button{
+
+.comment_upload_button {
+    margin-left: 6px;
     background-color: transparent;
-    border:none;
-    color:#88F3FFFF;
+    border: none;
+    color: #88F3FFFF;
+    cursor: pointer;
 }
 
 /*===================right column====================*/
-.side_column{
-    color:#88F3FFFF;
+.side_column {
+    color: #88F3FFFF;
 }
-.my_name{
+
+.my_name {
     color: #c7b0ff;
     height: 100px;
     margin-bottom: 30px;
     border: 2px solid #B4AB9FFF;
     border-radius: 5px;
-    margin-right:10px;
-    padding-top:11px;
-    width:100%
-
-}
-.my_name img{
-    margin-top:5px;
-    margin-left:5px;
     margin-right: 10px;
-    float:left;
+    width: 100%;
 }
-.my_profile{
-    float:left;
-    padding-top:20px;
-    padding-left:8px;
-    position:relative;
+
+.my_profile {
+    float: left;
+    padding-top: 20px;
+    padding-left: 8px;
+    position: relative;
 }
-.profile_name{
-    padding-bottom: 0;
-    margin-bottom: 0;
+
+.profile_name {
+    margin: 0 0 0 15px;
 }
-.my_profile :nth-child(1){
+
+.my_profile :nth-child(1) {
     font-size: 1.2em;
     color: #c7b0ff;
 
-    margin-top:0;
-    position:absolute;
-    width:130px;
-}
-.my_profile :nth-child(2){
-
-    margin-bottom:0;
-    position:absolute;
-    margin-top:30px;
-    width:130px;
+    margin-top: 0;
+    position: absolute;
+    width: 130px;
 }
 
-.list-group-item{
+.my_profile :nth-child(2) {
 
-    height:100px;
-    display:flex;
+    margin-bottom: 0;
+    position: absolute;
+    margin-top: 30px;
+    width: 130px;
+}
+
+.list-group-item {
+
+    height: 100px;
+    display: flex;
     justify-content: space-between;
     background-color: transparent;
-    border-color:antiquewhite;
+    border-color: antiquewhite;
 }
-.list-group-item div{
-    position:relative
-}
-.description{
-    position:absolute;
-    margin-left:30px;
-    font-size:0.8em;
-    width: 180px;
 
+.list-group-item div {
+    position: relative
 }
-.name_list{
+
+.description {
+    position: absolute;
+    margin: 0 0 0 15px;
+    font-size: 0.8em;
+    width: 220px;
+}
+
+.name_list {
 
     float: left;
     background-color: transparent;
     border: 2px solid #B4AB9FFF;
     border-radius: 7px;
-    width:370px;
+    width: 370px;
 }
 
-.namebox_change{
+.namebox_change {
     float: left;
     margin-top: 100%;
-    color:#88F3FFFF;
-}
-.namebox_change:hover{
-    color:#766dff;
+    color: #88F3FFFF;
 }
 
-.footer{
+.namebox_change:hover {
+    color: #766dff;
+}
+
+.footer {
     background-color: white;
     background-image: -moz-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     background-image: -ms-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
-    width:100%;
+    width: 100%;
     z-index: 4;
     height: 70px;
-    padding-top:5px;
+    padding-top: 5px;
 }
 
-.footer-contents{
+.footer-contents {
     list-style: none;
     display: flex;
     justify-content: center;
 
 }
-.footer-contents li a{
+
+.footer-contents li a {
     color: antiquewhite;
 }
 
-.footer div{
+.footer div {
     display: flex;
     justify-content: center;
-    color:grey;
+    color: grey;
 }
 
 
 /*===================상단====================*/
-.profile_page_main_body{
+.profile_page_main_body {
     justify-content: center;
     background-color: #080615;
 }
-.head_part{
+
+.head_part {
     display: flex;
     justify-content: center;
 }
-.head_content{
+
+.head_content {
     background-color: #080615;
     width: 800px;
     height: 350px;
-    display:flex;
-    flex-direction:row;
+    display: flex;
+    flex-direction: row;
 }
-.head_right_column div p{
+
+.head_right_column div p {
 
     background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     color: transparent;
@@ -528,20 +664,23 @@ body{
     color: #C7B0FFFF;
 }
 
-.head_content img{
+.head_content img {
     margin-top: 100px;
     margin-left: 10px;
 
 }
-.buttons{
+
+.buttons {
     margin-left: 50px;
     margin-top: 8px;
 
 }
-.buttons button{
+
+.buttons button {
     border: none;
 }
-.colorful_buttons{
+
+.colorful_buttons {
 
     background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     border: none;
@@ -549,110 +688,128 @@ body{
 }
 
 
-.buttons button:nth-child(3){
-    border: none;
-}
-.buttons button:nth-child(4){
+.buttons button:nth-child(3) {
     border: none;
 }
 
-.head_right_column{
+.buttons button:nth-child(4) {
+    border: none;
+}
+
+.head_right_column {
     padding-left: 80px;
     padding-top: 100px;
     justify-content: center;
-    flex-direction:row;
+    flex-direction: row;
     display: flex;
 }
-.head_right_column p{
-    font-size:1.8em;
-    color:#C7B0FFFF;
+
+.head_right_column p {
+    font-size: 1.8em;
+    color: #C7B0FFFF;
 }
-.head_right_column button{
+
+.head_right_column button {
     background-color: transparent;
     border-radius: 4px;
     border: 1px solid white;
 }
-.followers_and_follows{
+
+.followers_and_follows {
     padding-left: 80px;
     padding-top: 20px;
-    padding-bottom:50px;
-    flex-direction:row;
+    padding-bottom: 50px;
+    flex-direction: row;
     display: flex;
     justify-content: space-between;
 }
-.main_text{
+
+.main_text {
     padding-left: 80px;
 }
+
 /*===================중앙====================*/
-.other_menus{
+.other_menus {
     background-color: #080615;
 
-    display:flex;
+    display: flex;
     justify-content: space-between;
-    flex-direction:row;
+    flex-direction: row;
 }
-.other_menus div{
+
+.other_menus div {
     flex-direction: column;
     padding-bottom: 30px;
 }
-.other_menus div p{
+
+.other_menus div p {
     text-align: center;
 }
+
 /*===================하단====================*/
-.body_part{
+.body_part {
     padding-top: 30px;
     display: flex;
     justify-content: center;
     border-top: 1px solid #c7b0ff;
 }
-.body_content{
+
+.body_content {
     background-color: #080615;
     width: 930px;
     height: 1200px;
 
 }
-.first-row{
+
+.first-row {
     display: flex;
     justify-content: center;
 
 }
 
-.first-row button{
+.first-row button {
     background-color: transparent;
-    border:none;
-    margin-left:20px;
-    margin-right:20px
-
+    border: none;
+    margin-left: 20px;
+    margin-right: 20px
 }
-.first-row :hover{
+
+.first-row :hover {
     background-image: -moz-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     background-image: -ms-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
     color: #080615;
     border-radius: 2px;
 }
-.for_padding{
+
+.for_padding {
     height: 90px;
     width: 100%;
     background-color: #080615;
 }
-.for_padding1{
+
+.for_padding1 {
     height: 45px;
 }
-.picture_boxes_row{
-    justify-content: space-between;
-    display: flex;
+
+.picture_boxes_row {
+    /* justify-content: space-between;
+    display: flex; */
+
 
 }
-.picture_button{
+
+.picture_button {
     background-color: transparent;
-    border:none;
+    border: none;
+    margin: 10px;
+    padding: 0px;
 }
 
 
 
 /*================== 수정중====================*/
-.picture_box{
+.picture_box {
     width: 280px;
     height: 280px;
     background-color: #c7b0ff;
@@ -660,12 +817,14 @@ body{
     position: relative;
     transition: .5s ease;
 }
-.picture_box img{
+
+.picture_box img {
     object-fit: cover;
     width: 100%;
-    height: 100%;}
+    height: 100%;
+}
 
-.images2{
+.images2 {
     top: 0;
     bottom: 0;
     left: 0;
@@ -675,7 +834,7 @@ body{
     visibility: hidden;
 }
 
-.text{
+.text {
     top: 0;
     bottom: 0;
     left: 0;
@@ -689,22 +848,24 @@ body{
     align-items: center;
     justify-content: center;
 }
-.text i{
-    color:#C7B0FFFF;
+
+.text i {
+    color: #C7B0FFFF;
 }
 
-.picture_box:hover .text{
+.picture_box:hover .text {
     visibility: visible;
     opacity: 1;
 }
-.picture_box:hover .images2{
+
+.picture_box:hover .images2 {
     visibility: visible;
 }
 
 
 
 /*로그인_페이지CSS*/
-.login_{
+.login_ {
     display: table;
     margin: 60px auto auto auto;
     width: 100%;
@@ -715,7 +876,7 @@ body{
 
 
 /*회원가입_페이지CSS*/
-.sign_up_BOX{
+.sign_up_BOX {
     display: table;
     margin: 35px auto auto auto;
     width: 100%;
@@ -723,26 +884,30 @@ body{
     height: 450px;
     border: 1px solid gray;
 }
+
 .btn-secondary {
     font-size: 12px;
     height: 36px;
     font-family: sys;
 }
-.btn-primary{
+
+.btn-primary {
     margin-top: 15px;
     font-family: sys;
     height: 30px;
     font-size: 12px;
     width: 90%;
 }
-.return_to_loginpage{
+
+.return_to_loginpage {
     display: table;
     margin: 10px auto auto auto;
     width: 100%;
     height: 60px;
     border: 1px solid gray;
 }
-.ALIGN_CENTER{
+
+.ALIGN_CENTER {
     display: table;
     margin: 20px auto auto auto;
 }
@@ -762,8 +927,9 @@ body{
     background: rgba(0, 0, 0, 0.8);
     backdrop-filter: blur(1.5px);
     -webkit-backdrop-filter: blur(1.5px);
-    z-index:1050
+    z-index: 1050
 }
+
 .modal_window {
     background-color: #080615;
     opacity: 0.8;
@@ -776,7 +942,8 @@ body{
     position: relative;
     padding: 10px;
 }
-.modal_window2{
+
+.modal_window2 {
     background-color: #080615;
     opacity: 0.8;
     backdrop-filter: blur(13.5px);
@@ -784,97 +951,125 @@ body{
     border-radius: 5px;
     border: 1px solid antiquewhite;
 }
-.modal_x_box{
+
+.modal_x_box {
     background-color: transparent;
     border: none;
     margin-bottom: 10px;
 }
-.modal_x_box i{
-    color:#C7B0FFFF;
+
+.modal_x_box i {
+    color: #C7B0FFFF;
 }
-.img_upload_space{
-    background-color: #C7B0FFFF; width: 500px; height: 500px;
+
+.img_upload_space {
+    background-color: #C7B0FFFF;
+    width: 500px;
+    height: 500px;
 }
-.img_description_space{
-    color:#C7B0FFFF;
+
+.img_description_space {
+    color: #C7B0FFFF;
 }
-.addition_modal_body2{
-    display:flex;
+
+.addition_modal_body2 {
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.img_description_space{
+
+.img_description_space {
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
 }
-.img_description_box{
+
+.img_description_box {
     width: 350px;
     height: 380px;
-    margin:15px;
+    margin: 15px;
     border: 1px solid #C7B0FFFF;
 }
+
 .addition_modal_content {
-    width:500px;
-    height:500px;
+    width: 500px;
+    height: 500px;
     background-color: #080615;
     border: 1px solid antiquewhite;
-    border-radius:8px;
+    border-radius: 8px;
     opacity: 0.8;
-    display:flex;
+    display: flex;
     justify-content: space-between;
-    flex-direction:column;
+    flex-direction: column;
 }
-.addition_modal_head{
-    width:100%;
-    height:35px;
+
+.addition_modal_head {
+    width: 100%;
+    height: 35px;
     border-bottom: 1px solid antiquewhite;
     display: flex;
     align-items: center;
     justify-content: center;
-    color:#C7B0FFFF;
+    color: #C7B0FFFF;
     opacity: 0.8;
     font-size: 1em;
 }
-.addition_modal_body{
-    height:93%;
+
+.addition_modal_body {
+    height: 93%;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction:column;
-    outline: 2px dashed #88F3FFFF ;
-    outline-offset:-10px;
-    margin-top:10px
+    flex-direction: column;
+    outline: 2px dashed #88F3FFFF;
+    outline-offset: -10px;
+    margin-top: 10px
 }
-.addition_modal_body p{
-    color:#88F3FFFF;
+
+.addition_modal_body p {
+    color: #88F3FFFF;
 }
+
+.change_profile{
+    width: 400px;
+    height: 500px;
+    background:none;
+    position: absolute;
+    left: 45%;
+    margin-top: 100px;
+    display: none;
+}
+
 /*==================게시글 모달 관련 CSS 끝====================*/
 
 /*==================dm페이지 시작====================*/
 
-.dm_main_body{
+.dm_main_body {
     width: 100vw;
     height: 110vh;
     background-color: #080615;
 }
-.left_column{
+
+.left_column {
     width: 300px;
     height: 800px;
     background-color: #080615;
     float: left;
 
 }
-.right_column{
+
+.right_column {
     width: 550px;
     height: 700px;
     background-color: #080615;
     float: left;
 }
-.dm_main_body{
+
+.dm_main_body {
     justify-content: center;
     display: flex;
 }
-.dm_name_card{
+
+.dm_name_card {
     width: 100%;
     height: 650px;
     margin-top: 100px;
@@ -883,8 +1078,9 @@ body{
     border: 1px solid antiquewhite;
     border-radius: 7px;
 }
-.dm_page{
-   width: 100%;
+
+.dm_page {
+    width: 100%;
     height: 650px;
     margin-top: 100px;
     margin-bottom: 100px;
@@ -892,10 +1088,11 @@ body{
     border: 1px solid antiquewhite;
     border-radius: 7px;
 }
-.dm_name_card_top{
+
+.dm_name_card_top {
     height: 50px;
     border-bottom: 1px solid antiquewhite;
-    display:flex;
+    display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding-left: 30px;
@@ -905,14 +1102,15 @@ body{
 
 }
 
-.dm_name_card_body{
+.dm_name_card_body {
     width: 100%;
     height: 100%;
     overflow-y: auto;
     overflow-x: hidden;
 
 }
-.dm_name_slot{
+
+.dm_name_slot {
     width: 100%;
     height: 70px;
     background-color: #080615;
@@ -921,17 +1119,21 @@ body{
     display: flex;
 
 }
-.dm_profile_image{
+
+.dm_profile_image {
     width: 75px;
     height: 75px;
     border-radius: 70%;
 }
-.dm_profile_text{
+
+.dm_profile_text {
     margin: 10px 0 0 15px;
 }
-.dm_message{
+
+.dm_message {
     background-color: #080615;
     text-align: center;
     padding-top: 150px;
 }
+
 /*==================dm페이지 끝====================*/

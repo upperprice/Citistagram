@@ -9,16 +9,6 @@
 /*-------    여기 까지 min-width  -------*/
 
 @media screen and (max-width:1230px){
-
-    .side_column{
-        width:280px;
-    }
-    .name_list{
-        width:280px;
-    }
-    .my_name{
-        width:280px;
-    }
     .description{
         width:130px;
     }
@@ -27,17 +17,8 @@
     }
 
 }
-@media screen and (max-width:1030px){
-    .side_column{
-        width:130px;
-    }
-    .my_name{
-        width:230px;
-    }
-    .name_list{
-        width:230px;
-    }
-    .my_profile{
+@media screen and (max-width:1060px){
+    .side_column {
         display: none;
     }
     .description{
@@ -62,24 +43,15 @@
     }
 }
 
-@media screen and (max-width:650px) {
+@media screen and (max-width:700px) {
 
-    .navbar_search{
+    .navbar_search_box{
         display:none;
-    }
-    .main_column{
-        width:100%;
-        margin-left:0;
-
-    }
-    .navbar_links li {
-        padding-left: 0;
     }
     .picture_box{
         width:150px;
         height:150px;
     }
 }
-
 
 
