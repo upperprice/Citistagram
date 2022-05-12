@@ -83,6 +83,14 @@ def dm_page():
     return render_template('dm.html')
 
 
+# DB 자료 응답 (화면 구현용)
+@app.route("/get_data", methods=["GET"])
+def get_data():
+    contents = list(db.citista_contents.find({}, {'_id': False}))
+    return jsonify({'contents':contents})
+
+
+
 ######################################## 회원가입 ########################################
 
 
@@ -202,12 +210,6 @@ def content_post():
     return jsonify({'msg':'게시물 생성 완료'})
 
 
-# DB 자료 응답 (화면 구현용)
-@app.route("/get_data", methods=["GET"])
-def get_data():
-    contents = list(db.citista_contents.find({}, {'_id': False}))
-    return jsonify({'contents':contents})
-
 
 # 게시물 타임스탬프
 @app.route("/timestamp", methods=["GET"])
@@ -229,7 +231,6 @@ def timestamp_get():
 
 
 ######################################## 댓글 생성/구현 ########################################
-
 
 # 댓글 생성
 @app.route("/comment", methods=["POST"])
