@@ -63,7 +63,6 @@ def home():
 @app.route('/profile_page')
 def profile_page():
     user_id = request.args.get('user_id')
-    user_info = db.citista_users.find_one({'username': user_id}) # 지정 유저의 정보
 
     token_receive = request.cookies.get('mytoken') # 현재 토큰 정보(로그인한 유저의 토큰)
     user = db.citista_users.find_one({'token': token_receive})
