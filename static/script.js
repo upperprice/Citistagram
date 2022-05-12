@@ -1,5 +1,3 @@
-
-
 // <!--===============로그인 팝업 창===================-->
 
 function toggle_sign_up() {
@@ -508,4 +506,5 @@ function get_data() {
 }
 
 
-
+// $('#navbar_heart').click(function(){
+//    $('#heart_tooltip').toggle();});

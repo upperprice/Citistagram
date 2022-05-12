@@ -15,6 +15,7 @@ db = client.dbsparta
 # client = MongoClient('localhost', 27017)
 # db = client.campProject
 
+
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
@@ -22,11 +23,13 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 SECRET_KEY = 'SPARTA'
 
 
+
 ######################################## 페이지 이동 ########################################
 
 # 메인 페이지
 @app.route('/')
 def home():
+
     token_receive = request.cookies.get('mytoken')  # 현재 토큰 정보(로그인한 유저의 토큰)
     contents = db.citista_contents.find()  # 전체 컨텐츠 데이터
     users = db.citista_users.find()  # 전체 유저 데이터
@@ -39,12 +42,17 @@ def home():
     r_user4 = all3_choice[3]
     print(r_user1)
 
+
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
         my_info = db.citista_users.find_one({'token': token_receive})  # 로그인 유저 정보
 
+        my_info = db.citista_users.find_one({'token': token_receive}) # 로그인 유저 정보
+
 
         return render_template('index.html', contents=contents, users=users, my_info=my_info, r_user1=r_user1, r_user2=r_user2, r_user3=r_user3, r_user4=r_user4)
+
+
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
     except jwt.exceptions.DecodeError:
@@ -55,18 +63,18 @@ def home():
 @app.route('/profile_page')
 def profile_page():
     user_id = request.args.get('user_id')
-    user_info = db.citista_users.find_one({'username': user_id})  # 지정 유저의 정보
+    user_info = db.citista_users.find_one({'username': user_id}) # 지정 유저의 정보
 
-    token_receive = request.cookies.get('mytoken')  # 현재 토큰 정보(로그인한 유저의 토큰)
+    token_receive = request.cookies.get('mytoken') # 현재 토큰 정보(로그인한 유저의 토큰)
     user = db.citista_users.find_one({'token': token_receive})
-    my_id = user['username']  # 로그인 유저 아이디
+    my_id = user['username'] # 로그인 유저 아이디
 
-    contents = list(db.citista_contents.find({'user_id': user_id}, {'_id': False}))  # 지정 유저의 컨텐츠 정보
+    contents = list(db.citista_contents.find({'user_id': user_id}, {'_id': False})) # 지정 유저의 컨텐츠 정보
 
-    follower_count = len(list(db.citista_follows.find({'follower_id': user_id}, {'_id': False})))  # 유저의 팔로워 개수
-    following_count = len(list(db.citista_follows.find({'following_id': user_id}, {'_id': False})))  # 유저의 팔로잉 개수
-    contents_count = len(list(db.citista_contents.find({'user_id': user_id}, {'_id': False})))  # 유저의 게시물 개수
-    doc = {"follower_count": follower_count, "following_count": following_count, "contents_count": contents_count}
+    follower_count = len(list(db.citista_follows.find({'follower_id': user_id}, {'_id': False}))) #유저의 팔로워 개수
+    following_count = len(list(db.citista_follows.find({'following_id': user_id}, {'_id': False}))) # 유저의 팔로잉 개수 
+    contents_count = len(list(db.citista_contents.find({'user_id': user_id}, {'_id': False}))) # 유저의 게시물 개수
+    doc={"follower_count":follower_count,"following_count":following_count, "contents_count":contents_count}
 
     return render_template('profile_page.html', user_info=user_info, my_id=my_id, contents=contents, doc=doc)
 
@@ -95,6 +103,13 @@ def login():
 @app.route('/dm_page')
 def dm_page():
     return render_template('dm.html')
+
+
+# DB 자료 응답 (화면 구현용)
+@app.route("/get_data", methods=["GET"])
+def get_data():
+    contents = list(db.citista_contents.find({}, {'_id': False}))
+    return jsonify({'contents':contents})
 
 
 ######################################## 회원가입 ########################################
@@ -172,7 +187,8 @@ def log_out():
     user = db.citista_users.find_one({'token': token_receive})
     my_id = user['username']  # 현재 로그인 유저 아이디
 
-    db.citista_users.update_one({'username': my_id}, {'$set': {'token': 0}})  # 유저 정보 토큰 리셋(= 0)
+    db.citista_users.update_one({'username': my_id}, {'$set': {'token': 0}}) # 유저 정보 토큰 리셋(= 0)
+
 
     return jsonify({'result': 'success', 'msg': '로그아웃 완료'})
 
@@ -183,6 +199,7 @@ def log_out():
 # 게시물 생성
 @app.route("/content", methods=["POST"])
 def content_post():
+
     desc_receive = request.form['desc_give']  # 입력된 소개글
     file = request.files['file_give']  # 업로드한 이미지 파일
     image_receive = request.form['image_give']  # 업로드한 이미지명

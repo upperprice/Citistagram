@@ -14,9 +14,7 @@ body {
 button {
     cursor: pointer;
 }
-ul {
-    margin:0
-}
+
 
 /*=================== navbar ====================*/
 
@@ -31,7 +29,6 @@ ul {
 }
 
 .navbar {
-
     max-width: 975px;
     height: 70px;
     margin: auto;
@@ -306,7 +303,11 @@ ul {
     display: flex;
     align-items: center;
     flex-direction: row;
+
     width: 90%;
+=======
+    width: 100%;
+>>>>>>> origin/main
 }
 
 .profile p {
@@ -326,7 +327,6 @@ ul {
 }
 
 .profile_pic {
-
     width: 45px;
     border-radius: 70%;
     border: 3px solid transparent;
@@ -571,6 +571,8 @@ ul {
 
 .list-group-item {
     width:360px;
+    
+>>>>>>> origin/main
     height: 100px;
     display: flex;
     justify-content: space-between;
@@ -808,8 +810,6 @@ ul {
 .picture_boxes_row {
     /* justify-content: space-between;
     display: flex; */
-
-
 }
 
 .picture_button {
