@@ -252,8 +252,10 @@ def comment_post():
     token_receive = request.cookies.get('mytoken')
     user = db.citista_users.find_one({'token': token_receive})
     my_id = user['username']  # 현재 로그인 유저 아이디
+    comment_count = db.citista_comments.find({}, {'_id': False}).collection.estimated_document_count()  # 전체 코멘트 개수
 
     doc = {
+        'comment_id': comment_count + 1,
         'user_id': my_id,
         'post_id': post_receive,
         'comment': comment_receive
@@ -281,8 +283,10 @@ def like_up():
     token_receive = request.cookies.get('mytoken')
     user = db.citista_users.find_one({'token': token_receive})
     my_id = user['username']  # 현재 로그인 유저 아이디
+    like_count = db.citista_likes.find({}, {'_id': False}).collection.estimated_document_count()  # 전체 좋아요 개수
 
     doc = {
+        'like_id': like_count+1,
         'user_id': my_id,
         'post_id': post_receive,
     }
@@ -327,8 +331,11 @@ def follow():
     token_receive = request.cookies.get('mytoken')
     user = db.citista_users.find_one({'token': token_receive})
     my_id = user['username']  # 현재 로그인 유저 아이디
+    follow_count = db.citista_follows.find({}, {'_id': False}).collection.estimated_document_count()  # 전체 좋아요 개수
 
     doc = {
+        'follow_id': follow_count+1,
+
         'following_id': my_id,
         'follower_id': user_receive
     }
