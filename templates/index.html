@@ -381,7 +381,9 @@
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">{{ r_user1.profile_info }}</p></div>
                                 </div>
                             </div>
-                            <button type="button" class="follow_button"  onclick="alert('팔로우 하였습니다')" >팔로우</button>
+                            <button type="button" class="follow_button"  id="follow{{r_user1.username}}" onclick="follow('{{r_user1.username}}')" >팔로우</button>
+                            <button class="follow_button" id="followed{{r_user1.username}}" onclick="follow_cancel('{{r_user1.username}}')"
+                                    style="display: none; background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%); color:black">Followed</button>
                         </li>
                         <li class="list-group-item" style="margin:0;padding:0;">
                             <div class="profile" >
@@ -391,8 +393,9 @@
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">{{ r_user2.profile_info }}</p></div>
                                 </div>
                             </div>
-                            <button type="button" class="follow_button"  onclick="alert('팔로우 하였습니다')" >팔로우</button>
-
+                            <button type="button" class="follow_button"   id="follow{{r_user2.username}}" onclick="follow('{{r_user2.username}}')" >팔로우</button>
+                            <button class="follow_button" id="followed{{r_user2.username}}" onclick="follow_cancel('{{r_user2.username}}')"
+                                    style="display: none; background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%); color:black">Followed</button>
                         </li>
                         <li class="list-group-item" style="margin:0;padding:0;">
                             <div class="profile" >
@@ -402,7 +405,9 @@
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">{{ r_user3.profile_info }}</p></div>
                                 </div>
                             </div>
-                            <button type="button" class="follow_button"  onclick="alert('팔로우 하였습니다')" >팔로우</button>
+                            <button type="button" class="follow_button"  id="follow{{r_user3.username}}" onclick="follow('{{r_user3.username}}')">팔로우</button>
+                            <button class="follow_button" id="followed{{r_user3.username}}" onclick="follow_cancel('{{r_user3.username}}')"
+                                    style="display: none; background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%); color:black">Followed</button>
                         </li>
                         <li class="list-group-item" style="margin:0;padding:0;">
                             <div class="profile" >
@@ -412,7 +417,10 @@
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">{{ r_user4.profile_info }}</p></div>
                                 </div>
                             </div>
-                            <button type="button" class="follow_button"  onclick="alert('팔로우 하였습니다')" >팔로우</button>
+                            <button type="button" class="follow_button"  id="follow{{r_user4.username}}" onclick="follow('{{r_user4.username}}')">팔로우</button>
+                            <button class="follow_button" id="followed{{r_user4.username}}" onclick="follow_cancel('{{r_user4.username}}')"
+                                    style="display: none; background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%); color:black">Followed</button>
+
                         </li>
                     </ul>
                 </div>
