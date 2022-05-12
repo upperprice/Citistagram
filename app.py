@@ -8,12 +8,12 @@ from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 from pymongo import MongoClient
 
-#
-# client = MongoClient('mongodb+srv://test:sparta@cluster0.3puso.mongodb.net/Cluster0?retryWrites=true&w=majority')
-# db = client.dbsparta
 
-client = MongoClient('localhost', 27017)
-db = client.campProject
+client = MongoClient('mongodb+srv://test:sparta@cluster0.3puso.mongodb.net/Cluster0?retryWrites=true&w=majority')
+db = client.dbsparta
+
+# client = MongoClient('localhost', 27017)
+# db = client.campProject
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True

@@ -373,7 +373,7 @@
                 </div>
                 <div class="name_list" style="width: 100%">
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
+                        <li class="list-group-item" style="margin:0;padding:0;">
                             <div class="profile" >
                                 <a href="{{ url_for('profile_page', user_id=r_user1.username) }}"><img class="profile_pic" src="{{ r_user1.profile_pic }}" alt="프사"></a>
                                 <div class="d-flex flex-column bd-highlight mb-3">
@@ -381,9 +381,9 @@
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">{{ r_user1.profile_info }}</p></div>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="alert('팔로우 하였습니다')" style="width: auto; margin: auto">팔로우</button>
+                            <button type="button" class="follow_button"  onclick="alert('팔로우 하였습니다')" >팔로우</button>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item" style="margin:0;padding:0;">
                             <div class="profile" >
                                 <a href="{{ url_for('profile_page', user_id=r_user2.username) }}"><img class="profile_pic" src="{{ r_user2.profile_pic }}" alt="프사"></a>
                                 <div class="d-flex flex-column bd-highlight mb-3">
@@ -391,9 +391,10 @@
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">{{ r_user2.profile_info }}</p></div>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="alert('팔로우 하였습니다')" style="width: auto; margin: auto">팔로우</button>
+                            <button type="button" class="follow_button"  onclick="alert('팔로우 하였습니다')" >팔로우</button>
+
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item" style="margin:0;padding:0;">
                             <div class="profile" >
                                 <a href="{{ url_for('profile_page', user_id=r_user3.username) }}"><img class="profile_pic" src="{{ r_user3.profile_pic }}" alt="프사"></a>
                                 <div class="d-flex flex-column bd-highlight mb-3">
@@ -401,9 +402,9 @@
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">{{ r_user3.profile_info }}</p></div>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="alert('팔로우 하였습니다')" style="width: auto; margin: auto">팔로우</button>
+                            <button type="button" class="follow_button"  onclick="alert('팔로우 하였습니다')" >팔로우</button>
                         </li>
-                        <li class="list-group-item">
+                        <li class="list-group-item" style="margin:0;padding:0;">
                             <div class="profile" >
                                 <a href="{{ url_for('profile_page', user_id=r_user4.username) }}"><img class="profile_pic" src="{{ r_user4.profile_pic }}" alt="프사"></a>
                                 <div class="d-flex flex-column bd-highlight mb-3">
@@ -411,7 +412,7 @@
                                     <div class="p-2"><p class="description" style="color: #FFFFFF">{{ r_user4.profile_info }}</p></div>
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-primary" onclick="alert('팔로우 하였습니다')" style="width: auto; margin: auto">팔로우</button>
+                            <button type="button" class="follow_button"  onclick="alert('팔로우 하였습니다')" >팔로우</button>
                         </li>
                     </ul>
                 </div>

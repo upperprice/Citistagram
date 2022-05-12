@@ -14,6 +14,9 @@ body {
 button {
     cursor: pointer;
 }
+ul {
+    margin:0
+}
 
 /*=================== navbar ====================*/
 
@@ -303,7 +306,7 @@ button {
     display: flex;
     align-items: center;
     flex-direction: row;
-    width: 100%;
+    width: 90%;
 }
 
 .profile p {
@@ -567,7 +570,7 @@ button {
 }
 
 .list-group-item {
-
+    width:360px;
     height: 100px;
     display: flex;
     justify-content: space-between;
@@ -603,6 +606,16 @@ button {
 
 .namebox_change:hover {
     color: #766dff;
+}
+
+.follow_button{
+    width: 80px;
+    margin:auto;
+    font-size:0.8em;
+    background-image: -webkit-linear-gradient(0deg, #766dff 0%, #88f3ff 100%);
+    color:black;
+    height:30px;
+    border-radius:3px;
 }
 
 .footer {
