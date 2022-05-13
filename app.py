@@ -75,7 +75,7 @@ def profile_page():
     contents_count = len(list(db.citista_contents.find({'user_id': user_id}, {'_id': False}))) # 유저의 게시물 개수
     doc={"follower_count":follower_count,"following_count":following_count, "contents_count":contents_count}
 
-    return render_template('profile_page.html', user_id=user_id, my_id=my_id, contents=contents, doc=doc)
+    return render_template('profile_page.html', user_info=user_info, my_id=my_id, contents=contents, doc=doc)
 
 
 # 회원가입 페이지
@@ -195,7 +195,6 @@ def log_out():
 
 
 # 게시물 생성
-
 @app.route("/content", methods=["POST"])
 def content_post():
 
@@ -210,9 +209,7 @@ def content_post():
     file.save(save_to)  # 이미지 파일 저장
 
     token_receive = request.cookies.get('mytoken')
-
     user = db.citista_users.find_one({'token': token_receive})
-
     my_id = user['username']  # 현재 로그인 유저 아이디
     profile_pic = user['profile_pic']  # 현재 로그인 유저 프로필 이미지
 
@@ -221,14 +218,12 @@ def content_post():
     doc = {
         'user_id': my_id,
         'post_id': content_count + 1,
-
         'img': image_receive,
         'f_name': filename,
         'desc': desc_receive,
         'timestamp': current_time,
         'profile_pic': profile_pic
     }
-
     db.citista_contents.insert_one(doc)
 
     return jsonify({'msg': '게시물 생성 완료'})
@@ -237,7 +232,6 @@ def content_post():
 # DB 자료 응답 (화면 구현용)
 @app.route("/get_data", methods=["GET"])
 def get_data():
-
     contents = list(db.citista_contents.find({}, {'_id': False}))
     return jsonify({'contents': contents})
 

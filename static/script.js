@@ -294,10 +294,7 @@ function hide_show_comment(post_id) {
         comment_box.show();
     }
 }
-//네비바 하트 토클
 
-$('#navbar_heart').click(function(){
-   $('#heart_tooltip').toggle();});
 
 // 게시글 더보기 자동 숨김
 function hide_show_desc(post_id) {
@@ -509,3 +506,5 @@ function get_data() {
 }
 
 
+// $('#navbar_heart').click(function(){
+//    $('#heart_tooltip').toggle();});
