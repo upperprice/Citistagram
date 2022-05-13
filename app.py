@@ -129,7 +129,6 @@ def check_nickname_dup():
     exists_nickname = bool(db.citista_users.find_one({"nickname": nickname_receive}))
     return jsonify({'result': 'success', 'exists': exists_nickname})
 
-
 # 회원가입
 @app.route('/sign_up/save', methods=['POST'])
 def sign_up():
@@ -273,6 +272,7 @@ def comment_post():
 
     token_receive = request.cookies.get('mytoken')
     user = db.citista_users.find_one({'token': token_receive})
+    print(user)
     my_id = user['username']  # 현재 로그인 유저 아이디
     comment_count = db.citista_comments.find({}, {'_id': False}).collection.estimated_document_count()  # 전체 코멘트 개수
 

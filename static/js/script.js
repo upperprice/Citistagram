@@ -234,7 +234,7 @@ function save_comment(post_id) {
     });
 }
 
-// 모달 댓글 작성 :parseInt(문자열을 숫자로 바꾸는 함수)
+// 모달 댓글 작성
 function save_modal_comment(post_id) {
 
     let post = parseInt(post_id)
