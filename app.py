@@ -8,12 +8,8 @@ from werkzeug.utils import secure_filename
 from datetime import datetime, timedelta
 from pymongo import MongoClient
 
-
-client = MongoClient('mongodb+srv://test:sparta@cluster0.3puso.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.dbsparta
-
-# client = MongoClient('localhost', 27017)
-# db = client.campProject
+client = MongoClient('localhost', 27017)
+db = client.campProject
 
 
 app = Flask(__name__)
@@ -31,27 +27,29 @@ SECRET_KEY = 'SPARTA'
 def home():
 
     token_receive = request.cookies.get('mytoken')  # 현재 토큰 정보(로그인한 유저의 토큰)
-    contents = db.citista_contents.find()  # 전체 컨텐츠 데이터
-    users = db.citista_users.find()  # 전체 유저 데이터
 
-    all3_choice = random.sample(list(users), 4)
+    contents = list(db.citista_contents.find())  # 전체 컨텐츠 데이터
+    contents.reverse()
+
+    users = list(db.citista_users.find())# 전체 유저 데이터
+    print(db.citista_users.find_one({'username': 'tashahan'}))
+    user = db.citista_users.find_one({'token': token_receive})
+    if user in users:
+        random_s = users.remove(user)
+    else:
+        random_s = users
+
+    all3_choice = random.sample(random_s, 4)
 
     r_user1 = all3_choice[0]
     r_user2 = all3_choice[1]
     r_user3 = all3_choice[2]
     r_user4 = all3_choice[3]
-    print(r_user1)
-
 
     try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        my_info = db.citista_users.find_one({'token': token_receive})  # 로그인 유저 정보
 
         my_info = db.citista_users.find_one({'token': token_receive}) # 로그인 유저 정보
-
-
         return render_template('index.html', contents=contents, users=users, my_info=my_info, r_user1=r_user1, r_user2=r_user2, r_user3=r_user3, r_user4=r_user4)
-
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
@@ -73,9 +71,9 @@ def profile_page():
     follower_count = len(list(db.citista_follows.find({'follower_id': user_id}, {'_id': False}))) #유저의 팔로워 개수
     following_count = len(list(db.citista_follows.find({'following_id': user_id}, {'_id': False}))) # 유저의 팔로잉 개수 
     contents_count = len(list(db.citista_contents.find({'user_id': user_id}, {'_id': False}))) # 유저의 게시물 개수
-    doc={"follower_count":follower_count,"following_count":following_count, "contents_count":contents_count}
+    doc = {"follower_count":follower_count, "following_count":following_count, "contents_count":contents_count}
 
-    return render_template('profile_page.html', user_info=user_info, my_id=my_id, contents=contents, doc=doc)
+    return render_template('profile_page.html', user_id=user_id, my_id=my_id, contents=contents, doc=doc)
 
 
 # 회원가입 페이지
@@ -108,7 +106,7 @@ def dm_page():
 @app.route("/get_data", methods=["GET"])
 def get_data():
     contents = list(db.citista_contents.find({}, {'_id': False}))
-    return jsonify({'contents':contents})
+    return jsonify({'contents': contents})
 
 
 ######################################## 회원가입 ########################################
@@ -228,14 +226,6 @@ def content_post():
 
     return jsonify({'msg': '게시물 생성 완료'})
 
-
-# DB 자료 응답 (화면 구현용)
-@app.route("/get_data", methods=["GET"])
-def get_data():
-    contents = list(db.citista_contents.find({}, {'_id': False}))
-    return jsonify({'contents': contents})
-
-
 # 게시물 타임스탬프
 @app.route("/timestamp", methods=["GET"])
 def timestamp_get():
@@ -266,8 +256,8 @@ def comment_post():
 
     token_receive = request.cookies.get('mytoken')
     user = db.citista_users.find_one({'token': token_receive})
-    print(user)
     my_id = user['username']  # 현재 로그인 유저 아이디
+
     comment_count = db.citista_comments.find({}, {'_id': False}).collection.estimated_document_count()  # 전체 코멘트 개수
 
     doc = {
@@ -286,6 +276,7 @@ def comment_post():
 def comment_get():
     comments = list(db.citista_comments.find({}, {'_id': False}))
     return jsonify({'comments': comments})
+
 
 
 ######################################## 좋아요 처리/구현 ########################################
